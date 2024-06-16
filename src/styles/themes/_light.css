@@ -1,0 +1,19 @@
+:root {
+  --color-bg-action-primary: var(--neutral-900);
+  --color-bg-action-secondary: var(--neutral-100);
+  --color-bg-base: var(--neutral-0);
+  --color-bg-brand: var(--brand-600);
+  --color-bg-brand-overlay: var(--alpha-brand-brand-50);
+  --color-bg-inverse: var(--neutral-900);
+  --color-bg-raised: var(--neutral-0);
+  --color-border-primary: var(--neutral-200);
+  --color-border-secondary: var(--neutral-300);
+  --color-icon-primary: var(--neutral-900);
+  --color-icon-secondary: var(--neutral-200);
+  --color-icon-tertiary: var(--neutral-0);
+  --color-text-on-action-primary: var(--neutral-0);
+  --color-text-on-action-secondary: var(--neutral-900);
+  --color-text-primary: var(--neutral-900);
+  --color-text-secondary: var(--neutral-400);
+  --color-text-tertiary: var(--neutral-200);
+}
