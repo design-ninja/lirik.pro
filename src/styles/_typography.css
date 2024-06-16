@@ -1,3 +1,5 @@
+@import '_sizes.css';
+
 :root {
   --font-family-body: 'Onest Variable', sans-serif;
   --font-family-display: 'Onest Variable', sans-serif;
@@ -6,13 +8,13 @@
   --font-weight-bold: 700;
   --font-weight-black: 900;
 
-  --font-size-16: 1rem;
-  --font-size-18: 1.125rem;
-  --font-size-20: 1.25rem;
-  --font-size-24: 1.5rem;
-  --font-size-32: 2rem;
-  --font-size-40: 2.5rem;
-  --font-size-48: 3rem;
-  --font-size-64: 4rem;
-  --font-size-190: 11.875rem;
+  --font-size-16: var(--size-16);
+  --font-size-18: var(--size-18);
+  --font-size-20: var(--size-20);
+  --font-size-24: var(--size-24);
+  --font-size-32: var(--size-32);
+  --font-size-40: var(--size-40);
+  --font-size-48: var(--size-48);
+  --font-size-64: var(--size-64);
+  --font-size-190: var(--size-190);
 }

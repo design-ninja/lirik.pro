@@ -1,18 +1,20 @@
+@import '_sizes.css';
+
 :root {
-  --space-1: 0.0625rem;
-  --space-2: 0.125rem;
-  --space-4: 0.25rem;
-  --space-8: 0.5rem;
-  --space-12: 0.75rem;
-  --space-16: 1rem;
-  --space-24: 1.5rem;
-  --space-32: 2rem;
-  --space-40: 2.5rem;
-  --space-48: 3rem;
-  --space-56: 3.5rem;
-  --space-64: 4rem;
-  --space-72: 4.5rem;
-  --space-80: 5rem;
-  --space-96: 6rem;
-  --space-200: 12.5rem;
+  --space-1: var(--size-1);
+  --space-2: var(--size-2);
+  --space-4: var(--size-4);
+  --space-8: var(--size-8);
+  --space-12: var(--size-12);
+  --space-16: var(--size-16);
+  --space-24: var(--size-24);
+  --space-32: var(--size-32);
+  --space-40: var(--size-40);
+  --space-48: var(--size-48);
+  --space-56: var(--size-56);
+  --space-64: var(--size-64);
+  --space-72: var(--size-72);
+  --space-80: var(--size-80);
+  --space-96: var(--size-96);
+  --space-200: var(--size-200);
 }
