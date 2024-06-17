@@ -12,23 +12,16 @@ interface Props {
 const { title, text, tags, link, preview } = Astro.props as Props;
 ---
 
-<li class="project">
+<a href={link} target="_blank" title={title} class="project">
   <div class="project__content">
     <h3 class="project__title">{title}</h3>
     <p class="project__text">{text}</p>
     <div class="project__meta">
       {tags && <p class="project__tags">{tags}</p>}
-      {
-        link && (
-          <a href={link} class="project__link">
-            {link}
-          </a>
-        )
-      }
     </div>
   </div>
   <Image src={preview} alt={title} class="project__image" />
-</li>
+</a>
 
 <style lang="scss">
   .project {
@@ -37,6 +30,8 @@ const { title, text, tags, link, preview } = Astro.props as Props;
     grid-template-columns: 1fr 1fr;
     border-bottom: 1px solid var(--color-border-primary);
     padding-bottom: var(--space-24);
+    text-decoration: none;
+    color: inherit;
 
     &__content {
       display: flex;
@@ -49,14 +44,14 @@ const { title, text, tags, link, preview } = Astro.props as Props;
       margin-top: auto;
     }
 
-    &__link {
-      color: var(--color-text-link-secondary);
-    }
-
     &__image {
       width: 100%;
       height: auto;
       object-fit: cover;
+    }
+
+    &:hover {
+      background-color: var(--color-bg-hover);
     }
   }
 </style>

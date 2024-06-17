@@ -20,7 +20,7 @@ const { title } = Astro.props;
     <slot />
   </body>
 </html>
-<style is:global>
+<style is:global lang="scss">
   :root {
     scroll-behavior: smooth;
   }
@@ -46,25 +46,31 @@ const { title } = Astro.props;
     font-size: var(--font-size-48);
     font-weight: var(--font-weight-regular);
     line-height: 100%;
-    margin-bottom: var(--space-16);
+    margin-bottom: var(--space-24);
   }
 
   h3 {
     font-size: var(--font-size-40);
     font-weight: var(--font-weight-regular);
     line-height: 100%;
-    margin-bottom: var(--space-16);
+    margin-bottom: var(--space-24);
   }
 
   p {
     font-size: var(--font-size-18);
-    line-height: 140%;
+    line-height: 150%;
     margin-bottom: var(--space-16);
     max-width: 48ch;
   }
 
   a {
     color: var(--color-text-link-primary);
+    text-decoration: none;
+    transition: opacity .2s ease;
+
+    &:hover {
+      opacity: .8;
+    }
   }
 
   section {
