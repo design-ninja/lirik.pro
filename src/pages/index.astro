@@ -1,6 +1,9 @@
 ---
 import "../styles/index.css";
 import "@fontsource-variable/onest";
+
+import { Image } from "astro:assets";
+
 import Layout from "../layouts/Layout.astro";
 import Service from "../components/Service.astro";
 import Button from "../components/Button.astro";
@@ -8,6 +11,16 @@ import Footer from "../components/Footer.astro";
 import Avatar from "../components/Avatar.astro";
 import Testimonial from "../components/Testimonial.astro";
 import Project from "../components/Project.astro";
+
+import mnevabeauty from "../../public/projects/mneva_beauty.png";
+import travysamocvety from "../../public/projects/travysamocvety.png";
+import vostorg from "../../public/projects/vostorg.png";
+import proffoptimus from "../../public/projects/proff_optimus.png";
+import lingerieline from "../../public/projects/lingerie_line.png";
+import kott from "../../public/projects/kott.png";
+
+import video from "../../public/reels.png";
+
 ---
 
 <Layout title="lirik.pro / Дизайнер Кирилл Исаченко">
@@ -92,47 +105,47 @@ import Project from "../components/Project.astro";
             text="Описание"
             tags="Брендинг, Веб-дизайн, E-commerce, SEO, Контент"
             link="https://mnevabeauty.ru"
-            image="../../public/projects/mneva_beauty.png"
+            preview={mnevabeauty}
           />
           <Project
             title="Травы и Самоцветы"
             text="Описание"
             tags="Брендинг, Веб-дизайн, E-commerce, SEO, Контент"
             link="https://травысамоцветы.рф"
-            image="../../public/projects/travysamocvety.png"
+            preview={travysamocvety}
           />
           <Project
             title="VOSTORG"
             text="Описание"
             tags="1С, Веб-дизайн, E-commerce, SEO, Контент"
             link="https://vostorg-shop.ru"
-            image="../../public/projects/vostorg.png"
+            preview={vostorg}
           />
           <Project
             title="Оптимус Профи"
             text="Описание"
             tags="1С, Брендинг, Веб-дизайн, E-commerce, SEO, Контент"
             link="https://proff-optimus.ru/"
-            image="../../public/projects/proff_optimus.png"
+            preview={proffoptimus}
           />
           <Project
             title="Lingerie Line"
             text="Описание"
             tags="Прототипирование, Брендинг, Веб-дизайн"
             link="https://lingerie-line.ru"
-            image="../../public/projects/lingerie_line.png"
+            preview={lingerieline}
           />
           <Project
             title="KOTT. Wear"
             text="Описание"
             tags="Брендинг, Веб-дизайн, E-commerce"
-            image="../../public/projects/kott.png"
+            preview={kott}
           />
         </div>
       </section>
     <section class="about">
       <div class="about__video">
-        <img src="../../public/reels.png" alt="Kirill Isachenko" />
+        <Image src={video} alt="Kirill Isachenko" />
       </div>
       <div class="about__text">
         <h2>Обо мне</h2>

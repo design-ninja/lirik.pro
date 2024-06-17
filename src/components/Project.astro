@@ -1,13 +1,15 @@
 ---
+import { Image } from "astro:assets";
+
 interface Props {
   title: string;
   text: string;
   tags?: string;
   link?: string;
-  image: string;
+  preview: ImageMetadata;
 }
 
-const { title, text, tags, link, image } = Astro.props;
+const { title, text, tags, link, preview } = Astro.props as Props;
 ---
 
 <li class="project">
@@ -19,8 +21,9 @@ const { title, text, tags, link, image } = Astro.props;
       {link && <a href={link} class="project__link">{link}</a>}
     </div>
   </div>
-  <img class="project__image" src={image} alt="{title}" />
+  <Image src={preview} alt={title} class="project__image" />
 </li>
+
 <style>
   .project {
     list-style: none;
@@ -40,5 +43,10 @@ const { title, text, tags, link, image } = Astro.props;
   }
   .project__link {
     color: var(--color-text-link-secondary);
+  }
+  .project__image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
 </style>

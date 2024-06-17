@@ -1,8 +1,10 @@
 ---
+import { Image } from "astro:assets";
 
+import avatar from "../../public/avatar.png";
 ---
 
-<img class="avatar" src="../../public/avatar.png" alt="Kirill Isachenko">
+<Image src={avatar} alt="Kirill Isachenko" class="avatar" />
 
 <style>
   .avatar {
