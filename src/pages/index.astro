@@ -2,46 +2,201 @@
 import "../styles/index.css";
 import "@fontsource-variable/onest";
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
+import Service from "../components/Service.astro";
+import Button from "../components/Button.astro";
+import Footer from "../components/Footer.astro";
+import Avatar from "../components/Avatar.astro";
+import Testimonial from "../components/Testimonial.astro";
+import Project from "../components/Project.astro";
 ---
 
 <Layout title="lirik.pro / Дизайнер Кирилл Исаченко">
   <main>
     <section class="hero">
       <h1>Я всё сделаю сам.</h1>
-      <p>Создаю стильные, продающие интернет-магазины.</p>
-      <p>
-        Беру всё на себя — никаких лишних вопросов и постоянных согласований.
-      </p>
-      <p>
-        Вы получаете готовый, современный сайтс классным дизайном в разумные
-        сроки.
-      </p>
+      <div class="hero__wrap">
+        <div class="hero__text">
+          <p>Создаю стильные, продающие интернет-магазины.</p>
+          <p>
+            Беру всё на себя — никаких лишних вопросов и постоянных
+            согласований.
+          </p>
+          <p>
+            Вы получаете готовый, современный сайт с классным дизайном в
+            разумные сроки.
+          </p>
+        </div>
+        <div>
+          <Button
+            color="primary"
+            size="medium"
+            isIcon
+            href="https://wa.me/79620726666"
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21.7759 18.5409C21.4591 18.3819 19.9007 17.6161 19.6105 17.5094C19.3193 17.4038 19.1081 17.3515 18.8959 17.6694C18.6857 17.9862 18.0777 18.6998 17.8932 18.911C17.7087 19.1233 17.5231 19.1489 17.2063 18.991C16.8895 18.831 15.8676 18.4971 14.6569 17.4177C13.7151 16.5771 13.0783 15.5393 12.8937 15.2214C12.7092 14.9046 12.8745 14.7329 13.0324 14.575C13.1753 14.4331 13.3503 14.2049 13.5081 14.0203C13.6671 13.8347 13.7193 13.7025 13.826 13.4902C13.9316 13.279 13.8793 13.0945 13.7993 12.9355C13.7193 12.7766 13.0857 11.2161 12.8223 10.5814C12.5641 9.96379 12.3028 10.0481 12.1087 10.0374C11.9241 10.0289 11.7129 10.0267 11.5007 10.0267C11.2895 10.0267 10.946 10.1057 10.6559 10.4235C10.3657 10.7403 9.54653 11.5073 9.54653 13.0678C9.54653 14.6273 10.6825 16.1345 10.8404 16.3467C10.9993 16.5579 13.0761 19.7601 16.2559 21.1329C17.0121 21.4593 17.602 21.6545 18.0628 21.7995C18.8223 22.0417 19.5135 22.0075 20.0585 21.9254C20.6676 21.8347 21.9337 21.1585 22.1983 20.4182C22.4628 19.6779 22.4628 19.0433 22.3828 18.911C22.3039 18.7787 22.0937 18.6998 21.7759 18.5409ZM15.9924 26.4374H15.9881C14.0999 26.4375 12.2463 25.9299 10.6217 24.9675L10.2367 24.7393L6.24626 25.7867L7.31079 21.8955L7.06013 21.4966C6.00459 19.8158 5.4462 17.8707 5.44946 15.8859C5.45053 10.0726 10.1812 5.34299 15.9967 5.34299C18.8127 5.34299 21.4601 6.44166 23.4505 8.43419C24.4326 9.41191 25.211 10.5747 25.7407 11.8552C26.2704 13.1358 26.5408 14.5087 26.5364 15.8945C26.5332 21.7078 21.8036 26.4374 15.9924 26.4374ZM24.9663 6.92059C23.791 5.73757 22.3926 4.79956 20.8522 4.16091C19.3118 3.52226 17.6599 3.19566 15.9924 3.20006C9.00039 3.20006 3.30973 8.89072 3.30653 15.8849C3.30653 18.1206 3.88999 20.303 5.00039 22.2262L3.19986 28.8001L9.92519 27.0358C11.785 28.049 13.8691 28.5801 15.9871 28.5803H15.9924C22.9833 28.5803 28.6751 22.8897 28.6783 15.8945C28.6834 14.2275 28.358 12.5762 27.7209 11.0358C27.0837 9.49549 26.1474 8.09677 24.9663 6.92059Z"
+                fill="white"></path>
+            </svg>
+
+            Написать мне
+          </Button>
+        </div>
+      </div>
     </section>
     <section class="expertize">
       <ul role="list" class="link-card-grid">
-        <Card
-          href="https://docs.astro.build/"
-          title="Documentation"
-          body="Learn how Astro works and explore the official API docs."
+        <Service
+          number="01"
+          title="Дизайн"
+          text="Создам интуитивно понятный и современный сайт, который отражает ваш бренд."
         />
-        <Card
-          href="https://astro.build/integrations/"
-          title="Integrations"
-          body="Supercharge your project with new frameworks and libraries."
+        <Service
+          number="02"
+          title="Интеграция с 1С"
+          text="Если у вас уже есть база товарови заказов в 1С, я настрою её синхронизацию с магазином."
         />
-        <Card
-          href="https://astro.build/themes/"
-          title="Themes"
-          body="Explore a galaxy of community-built starter themes."
+        <Service
+          number="03"
+          title="Доставка"
+          text="Подключу и настрою модуль доставки, который будет автоматически считать стоимость и срок."
         />
-        <Card
-          href="https://astro.build/chat/"
-          title="Community"
-          body="Come say hi to our amazing Discord community. ❤️"
+        <Service
+          number="04"
+          title="Онлайн-платежи"
+          text="Подключу и настрою возможность оплачивать покупки в магазине, делать рассрочку и возврат средств."
+        />
+        <Service
+          number="05"
+          title="Контент"
+          text="Обеспечу полное наполнение для вашего сайта: от текстов до графики и подготовлю качественный SEO контент."
+        />
+        <Service
+          number="06"
+          title="Брендинг"
+          text="Если у вас нет лого или фирменного стиля — создам ваш бренд с нуля."
         />
       </ul>
     </section>
+    <section class="projects">
+        <h2 class="section__title">Избранные проекты</h2>
+        <div class="projects__grid">
+          <Project
+            title="Mneva Beauty"
+            text="Описание"
+            tags="Брендинг, Веб-дизайн, E-commerce, SEO, Контент"
+            link="https://mnevabeauty.ru"
+            image="../../public/projects/mneva_beauty.png"
+          />
+          <Project
+            title="Травы и Самоцветы"
+            text="Описание"
+            tags="Брендинг, Веб-дизайн, E-commerce, SEO, Контент"
+            link="https://травысамоцветы.рф"
+            image="../../public/projects/travysamocvety.png"
+          />
+          <Project
+            title="VOSTORG"
+            text="Описание"
+            tags="1С, Веб-дизайн, E-commerce, SEO, Контент"
+            link="https://vostorg-shop.ru"
+            image="../../public/projects/vostorg.png"
+          />
+          <Project
+            title="Оптимус Профи"
+            text="Описание"
+            tags="1С, Брендинг, Веб-дизайн, E-commerce, SEO, Контент"
+            link="https://proff-optimus.ru/"
+            image="../../public/projects/proff_optimus.png"
+          />
+          <Project
+            title="Lingerie Line"
+            text="Описание"
+            tags="Прототипирование, Брендинг, Веб-дизайн"
+            link="https://lingerie-line.ru"
+            image="../../public/projects/lingerie_line.png"
+          />
+          <Project
+            title="KOTT. Wear"
+            text="Описание"
+            tags="Брендинг, Веб-дизайн, E-commerce"
+            image="../../public/projects/kott.png"
+          />
+        </div>
+      </section>
+    <section class="about">
+      <div class="about__video">
+        <img src="../../public/reels.png" alt="Kirill Isachenko" />
+      </div>
+      <div class="about__text">
+        <h2>Обо мне</h2>
+        <p>
+          Привет! Меня зовут Кирилл. Я занимаюсь созданием сайтов уже 20 лет.
+          IT-технологии всегда были моей страстью, а дизайн, кофе и музыка —
+          моими увлечениями.
+        </p>
+        <p>
+          За это время я сотрудничал с известными сибирскими
+          диджитал-агентствами и зарубежными компаниями.
+        </p>
+        <p>
+          Я понимаю важность цифрового присутствия, поэтому помогаю бизнесу
+          обрести уникальное лицо в онлайн-мире.
+        </p>
+      </div>
+    </section>
+    <section class="testimonials">
+      <h2 class="section__title">Отзывы клиентов</h2>
+      <div class="testimonials__grid">
+        <Testimonial
+          text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
+          author="Антонина Мнева"
+        />
+        <Testimonial
+          text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
+          author="Юлия"
+        />
+        <Testimonial
+          text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
+          author="Полина Горчакова"
+        />
+        <Testimonial
+          text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
+          author="Екатерина Кирьянова"
+        />
+      </div>
+    </section>
+    <section class="cta">
+      <Avatar />
+      <h2>Давайте обсудим вашу идею или проект</h2>
+      <Button
+        color="primary"
+        size="medium"
+        isIcon
+        href="https://wa.me/79620726666"
+      >
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21.7759 18.5409C21.4591 18.3819 19.9007 17.6161 19.6105 17.5094C19.3193 17.4038 19.1081 17.3515 18.8959 17.6694C18.6857 17.9862 18.0777 18.6998 17.8932 18.911C17.7087 19.1233 17.5231 19.1489 17.2063 18.991C16.8895 18.831 15.8676 18.4971 14.6569 17.4177C13.7151 16.5771 13.0783 15.5393 12.8937 15.2214C12.7092 14.9046 12.8745 14.7329 13.0324 14.575C13.1753 14.4331 13.3503 14.2049 13.5081 14.0203C13.6671 13.8347 13.7193 13.7025 13.826 13.4902C13.9316 13.279 13.8793 13.0945 13.7993 12.9355C13.7193 12.7766 13.0857 11.2161 12.8223 10.5814C12.5641 9.96379 12.3028 10.0481 12.1087 10.0374C11.9241 10.0289 11.7129 10.0267 11.5007 10.0267C11.2895 10.0267 10.946 10.1057 10.6559 10.4235C10.3657 10.7403 9.54653 11.5073 9.54653 13.0678C9.54653 14.6273 10.6825 16.1345 10.8404 16.3467C10.9993 16.5579 13.0761 19.7601 16.2559 21.1329C17.0121 21.4593 17.602 21.6545 18.0628 21.7995C18.8223 22.0417 19.5135 22.0075 20.0585 21.9254C20.6676 21.8347 21.9337 21.1585 22.1983 20.4182C22.4628 19.6779 22.4628 19.0433 22.3828 18.911C22.3039 18.7787 22.0937 18.6998 21.7759 18.5409ZM15.9924 26.4374H15.9881C14.0999 26.4375 12.2463 25.9299 10.6217 24.9675L10.2367 24.7393L6.24626 25.7867L7.31079 21.8955L7.06013 21.4966C6.00459 19.8158 5.4462 17.8707 5.44946 15.8859C5.45053 10.0726 10.1812 5.34299 15.9967 5.34299C18.8127 5.34299 21.4601 6.44166 23.4505 8.43419C24.4326 9.41191 25.211 10.5747 25.7407 11.8552C26.2704 13.1358 26.5408 14.5087 26.5364 15.8945C26.5332 21.7078 21.8036 26.4374 15.9924 26.4374ZM24.9663 6.92059C23.791 5.73757 22.3926 4.79956 20.8522 4.16091C19.3118 3.52226 17.6599 3.19566 15.9924 3.20006C9.00039 3.20006 3.30973 8.89072 3.30653 15.8849C3.30653 18.1206 3.88999 20.303 5.00039 22.2262L3.19986 28.8001L9.92519 27.0358C11.785 28.049 13.8691 28.5801 15.9871 28.5803H15.9924C22.9833 28.5803 28.6751 22.8897 28.6783 15.8945C28.6834 14.2275 28.358 12.5762 27.7209 11.0358C27.0837 9.49549 26.1474 8.09677 24.9663 6.92059Z"
+            fill="white"></path>
+        </svg>
+
+        Написать мне
+      </Button>
+    </section>
+    <Footer />
   </main>
 </Layout>
 
@@ -55,19 +210,52 @@ import Card from "../components/Card.astro";
     max-width: calc(100% - 2rem);
     line-height: 1.6;
   }
-  h1 {
-    font-family: var(--font-family-display);
-    font-size: var(--font-size-190);
-    font-weight: var(--font-weight-black);
-    line-height: 80%;
-    text-transform: uppercase;
-    letter-spacing: -0.04em;
+
+  .hero__wrap {
+    display: grid;
+    gap: var(--space-40);
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+
+  .hero__text {
+    max-width: 40ch;
   }
 
   .link-card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(30ch, 1fr));
     padding: 0;
+  }
+
+  .cta {
+    display: grid;
+    gap: var(--space-40);
+    align-items: center;
+    grid-template-columns: var(--size-80) 1fr auto;
+  }
+
+  .about {
+    display: grid;
+    gap: var(--space-80);
+    align-items: end;
+    grid-template-columns: 343px 1fr;
+  }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-80);
+  }
+
+  .projects__grid {
+    display: grid;
+    gap: var(--space-80);
+  }
+
+  .section__title {
+    border-bottom: 1px solid var(--color-border-primary);
+    padding-bottom: var(--space-24);
+    margin-bottom: var(--space-64);
   }
 </style>

@@ -1,0 +1,73 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<'a'> {
+  color?: 'primary' | 'secondary';
+  size?: 'small' | 'medium' | 'large';
+  isIcon?: boolean;
+  href: string;
+}
+
+const { color = 'primary', size = 'medium', isIcon, href, ...rest } = Astro.props as Props;
+---
+
+<a
+  {...rest}
+  href={href}
+  aria-label="button"
+  class={`button button--${color} button--${size} ${isIcon ? "button--icon" : ""}`}
+>
+  <slot />
+</a>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-16);
+    border-radius: var(--radius-round);
+    transition: background-color 0.3s ease;
+  }
+
+  .button--primary {
+    background-color: var(--color-bg-action-primary);
+    color: var(--color-text-on-action-primary);
+  }
+
+  .button--secondary {
+    background-color: var(--color-bg-action-secondary);
+    color: var(--color-text-primary);
+  }
+
+  .button--small {
+    padding: var(--space-8) var(--space-16);
+    font-size: var(--font-size-16);
+  }
+
+  .button--medium {
+    padding: var(--space-16) var(--space-32);
+  }
+
+  .button--medium.button--icon {
+    padding-left: var(--space-24);
+  }
+
+  .button--large {
+    padding: var(--space-16) var(--space-48);
+    font-size: var(--font-size-20);
+  }
+
+  .button--large.button--icon {
+    padding-left: var(--space-40);
+  }
+
+  .button__icon {
+    margin-right: var(--space-8);
+    fill: var(--color-icon-tertiary);
+  }
+</style>

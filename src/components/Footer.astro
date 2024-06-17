@@ -1,0 +1,30 @@
+---
+
+---
+
+<footer class="footer">
+  <span>
+    &copy; 2003—<span id="copyright"></span> lirik.pro
+  </span>
+  <span class="footer__author">
+    Дизайн и разработка: lirik 🖤
+  </span>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-40) 0;
+    border-top: var(--size-1) solid var(--color-border-primary);
+    color: var(--color-text-secondary);
+  }
+</style>
+
+<script>
+  const copyrightElement = document.querySelector("#copyright");
+  if (copyrightElement) {
+    copyrightElement.textContent = new Date().getFullYear().toString();
+  }
+</script>

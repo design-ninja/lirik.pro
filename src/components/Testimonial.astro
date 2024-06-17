@@ -1,0 +1,27 @@
+---
+interface Props {
+  text: string;
+  author: string;
+}
+
+const { text, author } = Astro.props;
+---
+
+<li class="testimonial">
+  <div>
+    <p class="testimonial__text">{text}</p>
+    <p class="testimonial__author">{author}</p>
+  </div>
+</li>
+<style>
+  .testimonial {
+    list-style: none;
+    display: flex;
+  }
+  .testimonial__text {
+    font-size: var(--font-size-24);
+  }
+  .testimonial__author {
+    color: var(--color-text-secondary);
+  }
+</style>
