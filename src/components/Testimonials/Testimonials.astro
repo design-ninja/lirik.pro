@@ -1,0 +1,36 @@
+---
+import SectionTitle from "../SectionTitle.astro";
+import Testimonial from "./Testimonial.astro";
+---
+
+<section class="testimonials" id="testimonials">
+  <SectionTitle title="Отзывы клиентов" />
+  <div class="testimonials__grid">
+    <Testimonial
+      text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
+      author="Антонина Мнева"
+    />
+    <Testimonial
+      text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
+      author="Юлия"
+    />
+    <Testimonial
+      text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
+      author="Полина Горчакова"
+    />
+    <Testimonial
+      text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
+      author="Екатерина Кирьянова"
+    />
+  </div>
+</section>
+
+<style lang="scss">
+  .testimonials {
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-80);
+    }
+  }
+</style>

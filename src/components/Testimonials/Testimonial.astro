@@ -13,15 +13,17 @@ const { text, author } = Astro.props;
     <p class="testimonial__author">{author}</p>
   </div>
 </li>
-<style>
+<style lang="scss">
   .testimonial {
     list-style: none;
     display: flex;
-  }
-  .testimonial__text {
-    font-size: var(--font-size-24);
-  }
-  .testimonial__author {
-    color: var(--color-text-secondary);
+
+    &__text {
+      font-size: var(--font-size-24);
+    }
+
+    &__author {
+      color: var(--color-text-secondary);
+    }
   }
 </style>

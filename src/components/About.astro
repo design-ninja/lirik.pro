@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+
+import video from "../../public/reels.png";
+---
+
+<section class="about" id="about">
+  <div class="about__video">
+    <Image src={video} alt="Kirill Isachenko" />
+  </div>
+  <div class="about__text">
+    <h2>Обо мне</h2>
+    <p>
+      Привет! Меня зовут Кирилл. Я занимаюсь созданием сайтов уже 20 лет.
+      IT-технологии всегда были моей страстью, а дизайн, кофе и музыка — моими
+      увлечениями.
+    </p>
+    <p>
+      За это время я сотрудничал с известными сибирскими диджитал-агентствами и
+      зарубежными компаниями.
+    </p>
+    <p>
+      Я понимаю важность цифрового присутствия, поэтому помогаю бизнесу обрести
+      уникальное лицо в онлайн-мире.
+    </p>
+  </div>
+</section>
+
+<style lang="scss">
+  .about {
+    display: flex;
+    gap: var(--space-80);
+    align-items: end;
+
+    &__video {
+      max-width: 400px;
+      height: auto;
+
+      img {
+        aspect-ratio: 9 / 16;
+        height: auto;
+      }
+    }
+  }
+</style>

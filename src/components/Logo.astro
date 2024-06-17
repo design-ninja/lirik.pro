@@ -1,0 +1,19 @@
+---
+import Avatar from "./Avatar.astro";
+---
+
+<div class="logo">
+  <Avatar size="medium" loading="eager" />
+  <span class="logo__label">Kirill Isachenko</span>
+</div>
+
+<style>
+  .logo {
+    display: flex;
+    gap: var(--space-16);
+    align-items: center;
+  }
+  .logo__label {
+    font-size: var(--font-size-20);
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  text: string;
+  href: string;
+  target?: "_blank" | "_self";
+  title?: string;
+  style?: "primary" | "secondary";
+  icon?: {
+    name: string;
+    side: "left" | "right";
+  };
+  classes?: string;
+}
+
+const { text, href, style = "primary", icon, classes, ...rest } = Astro.props as Props;
+---
+
+<a href={href} class:list={["link", classes]} {...rest}>
+  {
+    icon && icon.side === "left" && (
+      <Icon name={icon.name} height={24} width={24} />
+    )
+  }
+
+  <span>{text}</span>
+
+  {
+    icon && icon.side === "right" && (
+      <Icon name={icon.name} height={24} width={24} />
+    )
+  }
+</a>
+
+<style lang="scss">
+  .link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    opacity: 1;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &--primary {
+      color: var(--color-text-link-primary);
+    }
+
+    &--secondary {
+      color: var(--color-text-link-secondary);
+    }
+  }
+</style>

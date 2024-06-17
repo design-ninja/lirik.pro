@@ -1,0 +1,28 @@
+---
+import { Icon } from "astro-icon/components";
+
+import Avatar from "../components/Avatar.astro";
+import Button from "./Button.astro";
+---
+
+<section class="cta" id="cta">
+  <Avatar size="large" />
+  <h2 class="cta__title">Давайте обсудим вашу идею или проект</h2>
+  <Button color="primary" size="large" isIcon href="https://wa.me/79620726666">
+    <Icon name="whatsapp" width={24} height={24} />
+    Написать мне
+  </Button>
+</section>
+
+<style lang="scss">
+  .cta {
+    display: grid;
+    gap: var(--space-40);
+    align-items: center;
+    grid-template-columns: var(--size-80) 1fr auto;
+
+    &__title {
+      margin: 0;
+    }
+  }
+</style>

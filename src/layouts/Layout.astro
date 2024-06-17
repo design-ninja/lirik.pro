@@ -21,6 +21,10 @@ const { title } = Astro.props;
   </body>
 </html>
 <style is:global>
+  :root {
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: var(--font-family-body);
     background: var(--color-bg-base);
@@ -30,12 +34,11 @@ const { title } = Astro.props;
 
   h1 {
     font-family: var(--font-family-display);
-    font-size: var(--font-size-200);
+    font-size: 13vw;
     font-weight: var(--font-weight-black);
     line-height: 80%;
     text-transform: uppercase;
     letter-spacing: -0.04em;
-    margin-top: var(--space-64);
     margin-bottom: var(--space-64);
   }
 
@@ -56,11 +59,19 @@ const { title } = Astro.props;
   p {
     font-size: var(--font-size-18);
     line-height: 140%;
-    margin-bottom: var(--space-16); 
+    margin-bottom: var(--space-16);
     max-width: 48ch;
   }
 
   a {
     color: var(--color-text-link-primary);
+  }
+
+  section {
+    padding: var(--space-40) 0;
+  }
+
+  button {
+    cursor: pointer;
   }
 </style>

@@ -1,0 +1,66 @@
+---
+import Logo from "./Logo.astro";
+import Link from "./Link.astro";
+import ThemeToggle from './ThemeToggle.astro';
+---
+
+<header>
+  <nav aria-label="Primary" class="nav">
+    <Logo />
+    <ul class="menu">
+      <li>
+        <Link
+          text="Экспертиза"
+          href="#expertize"
+          data-navLink
+        />
+      </li>
+      <li>
+        <Link
+          text="Работы"
+          href="#projects"
+          data-navLink
+        />
+      </li>
+      <li>
+        <Link
+          text="Обо мне"
+          href="#about"
+          data-navLink
+        />
+      </li>
+      <li>
+        <Link
+          text="Отзывы"
+          href="#testimonials"
+          data-navLink
+        />
+      </li>
+      <li>
+        <Link
+          text="Контакты"
+          href="#cta"
+          data-navLink
+        />
+      </li>
+    </ul>
+    <ThemeToggle />
+  </nav>
+</header>
+
+<style lang="scss">
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-40);
+  }
+
+  .menu li {
+    list-style: none;
+  }

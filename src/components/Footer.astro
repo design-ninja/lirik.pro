@@ -1,14 +1,61 @@
 ---
-
+import Link from "./Link.astro";
 ---
 
 <footer class="footer">
   <span>
     &copy; 2003—<span id="copyright"></span> lirik.pro
   </span>
-  <span class="footer__author">
-    Дизайн и разработка: lirik 🖤
-  </span>
+  <nav aria-label="Primary" class="nav">
+    <ul class="menu">
+      <li>
+        <Link
+          text="Telegram"
+          href="https://t.me/lirikpro"
+          title="Telegram"
+          target="_blank"
+          data-navLink
+        />
+      </li>
+      <li>
+        <Link
+          text="WhatsApp"
+          href="https://wa.me/79620726666"
+          title="WhatsApp"
+          target="_blank"
+          data-navLink
+        />
+      </li>
+      <li>
+        <Link
+          text="X"
+          href="https://x.com/lirik1986"
+          title="X"
+          target="_blank"
+          data-navLink
+        />
+      </li>
+      <li>
+        <Link
+          text="Behance"
+          href="https://behance.net/design-ninja"
+          title="Behance"
+          target="_blank"
+          data-navLink
+        />
+      </li>
+      <li>
+        <Link
+          text="GitHub"
+          href="https://github.com/design-ninja"
+          title="GitHub"
+          target="_blank"
+          data-navLink
+        />
+      </li>
+    </ul>
+  </nav>
+  <span class="footer__author"> Дизайн и разработка: lirik 🖤 </span>
 </footer>
 
 <style>
@@ -19,6 +66,16 @@
     padding: var(--space-40) 0;
     border-top: var(--size-1) solid var(--color-border-primary);
     color: var(--color-text-secondary);
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-40);
+  }
+
+  .menu li {
+    list-style: none;
   }
 </style>
 

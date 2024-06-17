@@ -1,15 +1,40 @@
 ---
 import { Image } from "astro:assets";
 
+interface Props {
+  size?: "small" | "medium" | "large";
+  loading?: "lazy" | "eager";
+}
+
 import avatar from "../../public/avatar.png";
+
+const { size = "medium", loading } = Astro.props as Props;
 ---
 
-<Image src={avatar} alt="Kirill Isachenko" class="avatar" />
+<Image
+  src={avatar}
+  alt="Kirill Isachenko"
+  class={`avatar avatar--${size}`}
+  loading={loading}
+/>
 
-<style>
+<style lang="scss">
   .avatar {
     border-radius: var(--radius-round);
-    width: var(--size-80);
-    height: var(--size-80);
+
+    &--small {
+      width: var(--size-48);
+      height: var(--size-48);
+    }
+
+    &--medium {
+      width: var(--size-64);
+      height: var(--size-64);
+    }
+
+    &--large {
+      width: var(--size-80);
+      height: var(--size-80);
+    }
   }
 </style>
