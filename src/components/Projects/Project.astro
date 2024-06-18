@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 
 interface Props {
   title: string;
@@ -28,7 +28,7 @@ const { title, text, tags, link, image } = Astro.props as Props;
     </div>
   </div>
   <div class="project__image-container">
-    <Image {...image} class="project__image" />
+    <Picture {...image} formats={['avif']} alt={title} />
   </div>
 </a>
 

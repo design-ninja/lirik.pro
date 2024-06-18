@@ -2,11 +2,11 @@
 title: Травы и Самоцветы
 text: Лавка чудес
 image:
-  src: "/projects/travysamocvety.png"
+  src: "/projects/travysamocvety.avif"
   alt: "Травы и Самоцветы"
   width: 1360
-  height: 764
-  format: "png"
+  height: "auto"
+  format: "avif"
 tags: Брендинг, Веб-дизайн, E-commerce, SEO, Контент
 link: https://травысамоцветы.рф
 ---
