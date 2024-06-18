@@ -8,5 +8,5 @@ image:
   height: 764
   format: "png"
 tags: Брендинг, Веб-дизайн, E-commerce, SEO, Контент
-link: "https://травысамоцветы.рф"
+link: https://травысамоцветы.рф
 ---

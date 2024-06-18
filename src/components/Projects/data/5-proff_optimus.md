@@ -8,5 +8,5 @@ image:
   height: 764
   format: "png"
 tags: 1С, Брендинг, Веб-дизайн, E-commerce, SEO, Контент
-link: "https://proff-optimus.ru/"
+link: https://proff-optimus.ru
 ---

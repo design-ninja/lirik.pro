@@ -1,12 +1,18 @@
 ---
-import { Image } from "astro:assets";
-
-import video from "../../public/reels.png";
+import videoSrc from "/video.mp4";
 ---
 
 <section class="about" id="about">
   <div class="about__video">
-    <Image src={video} alt="Kirill Isachenko" />
+    <div class="video-container">
+      <video id="reelsVideo" class="video-player" poster="/video_preview.png">
+        <source src={videoSrc} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <button id="playButton" class="play-button" aria-label="Play Video">
+        <span class="play-button__play">▶</span>
+      </button>
+    </div>
   </div>
   <div class="about__text">
     <h2>Обо мне</h2>
@@ -46,10 +52,63 @@ import video from "../../public/reels.png";
         max-width: 100%;
       }
 
-      img {
-        aspect-ratio: 9 / 16;
+      .video-container {
+        position: relative;
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .video-player {
+        width: 100%;
         height: auto;
+      }
+
+      .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        font-size: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+
+        &__play {
+          transform: translateX(var(--space-4));
+        }
+      }
+
+      .play-button:focus {
+        outline: none;
       }
     }
   }
 </style>
+
+<script is:inline>
+  const video = document.getElementById("reelsVideo");
+  const playButton = document.getElementById("playButton");
+
+  playButton.addEventListener("click", function () {
+    video.play();
+    playButton.style.display = "none";
+  });
+
+  video.addEventListener("click", function () {
+    if (video.paused) {
+      video.play();
+      playButton.style.display = "none";
+    } else {
+      video.pause();
+      playButton.style.display = "block";
+    }
+  });
+</script>

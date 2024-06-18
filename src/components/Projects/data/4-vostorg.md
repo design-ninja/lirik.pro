@@ -8,5 +8,5 @@ image:
   height: 764
   format: "png"
 tags: 1С, Веб-дизайн, E-commerce, SEO, Контент
-link: "https://vostorg-shop.ru"
+link: https://vostorg-shop.ru
 ---

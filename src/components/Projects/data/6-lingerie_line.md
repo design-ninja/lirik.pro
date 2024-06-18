@@ -8,5 +8,5 @@ image:
   height: 764
   format: "png"
 tags: Прототипирование, Брендинг, Веб-дизайн
-link: "https://lingerie-line.ru"
+link: https://lingerie-line.ru
 ---
