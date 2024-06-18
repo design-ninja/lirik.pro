@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+
 import videoSrc from "/video.mp4";
 ---
 
@@ -10,7 +12,12 @@ import videoSrc from "/video.mp4";
         Your browser does not support the video tag.
       </video>
       <button id="playButton" class="play-button" aria-label="Play Video">
-        <span class="play-button__play">▶</span>
+        <Icon
+          name="play"
+          class="play-button__play"
+          width={40}
+          height={40}
+        />
       </button>
     </div>
   </div>
@@ -68,21 +75,20 @@ import videoSrc from "/video.mp4";
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.6);
-        color: white;
+        background: var(--color-bg-black-overlay);
+        color: var(--color-icon-static-white);
         border: none;
         border-radius: 50%;
         width: 80px;
         height: 80px;
         font-size: 40px;
-        cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         z-index: 2;
 
         &__play {
-          transform: translateX(var(--space-4));
+          transform: translateX(var(--space-2));
         }
       }
 
@@ -90,6 +96,9 @@ import videoSrc from "/video.mp4";
         outline: none;
       }
     }
+  }
+  [data-icon] {
+    color: var(--color-icon-static-white);
   }
 </style>
 
@@ -108,7 +117,7 @@ import videoSrc from "/video.mp4";
       playButton.style.display = "none";
     } else {
       video.pause();
-      playButton.style.display = "block";
+      playButton.style.display = "flex";
     }
   });
 </script>

@@ -1,8 +1,10 @@
 ---
+import { Icon } from "astro-icon/components";
+
 import Logo from "./Logo.astro";
 import Link from "./Link.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-import { Icon } from "astro-icon/components";
+
 ---
 
 <header>
@@ -25,7 +27,7 @@ import { Icon } from "astro-icon/components";
         <li>
           <Link text="Контакты" href="#cta" data-navLink />
         </li>
-        <li><ThemeToggle /></li>
+        <ThemeToggle />
       </ul>
       <div class="menu__actions">
         <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">

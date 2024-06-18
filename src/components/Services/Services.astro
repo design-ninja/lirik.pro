@@ -36,6 +36,8 @@ const services = frontmatter.services;
     &__grid {
       display: grid;
       padding: 0;
+      border-collapse: collapse;
+      border: 0.5px solid var(--color-border-primary);
 
       @media (max-width: 767px) {
         grid-template-columns: 1fr;
