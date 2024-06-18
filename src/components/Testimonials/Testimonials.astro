@@ -19,20 +19,22 @@ const testimonials = frontmatter.testimonials;
 
 <section class="testimonials" id="testimonials">
   <SectionTitle title="Отзывы клиентов" />
-  <div class="testimonials__grid">
+  <ul class="testimonials__grid">
     {
       testimonials.map((testimonial) => (
         <Testimonial text={testimonial.text} author={testimonial.author} />
       ))
     }
-  </div>
+  </ul>
 </section>
 
 <style lang="scss">
   .testimonials {
+
     .testimonials__grid {
       display: grid;
       gap: var(--space-80);
+      padding: 0;
       grid-template-columns: repeat(2, 1fr);
 
       @media (max-width: 767px) {
