@@ -29,7 +29,6 @@ import ThemeToggle from "./ThemeToggle.astro";
         </li>
         <li><ThemeToggle /></li>
       </ul>
-      <div class="menu__actions">
         <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">
           <Icon
             id="menuIcon"
@@ -46,7 +45,6 @@ import ThemeToggle from "./ThemeToggle.astro";
             style="display: none;"
           />
         </button>
-      </div>
     </div>
   </nav>
 </header>
@@ -95,19 +93,6 @@ import ThemeToggle from "./ThemeToggle.astro";
 
     &__icon svg {
       fill: var(--color-icon-primary);
-    }
-
-    &__actions {
-      display: flex;
-      gap: var(--space-16);
-
-      @media (max-width: 992px) {
-        gap: var(--space-8);
-      }
-
-      * {
-        flex: none;
-      }
     }
 
     &__toggle {
