@@ -25,13 +25,28 @@ import { Icon } from "astro-icon/components";
         <li>
           <Link text="Контакты" href="#cta" data-navLink />
         </li>
+        <li><ThemeToggle /></li>
       </ul>
       <div class="menu__actions">
         <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">
-          <Icon id="menuIcon" name="menu" class="menu__icon" />
-          <Icon id="closeIcon" name="close" style="display: none;" />
+          <Icon
+            id="menuIcon"
+            name="menu"
+            class="menu__icon"
+            width={32}
+            height={32}
+          />
+          <Icon
+            id="closeIcon"
+            name="close"
+            width={32}
+            height={32}
+            style="display: none;"
+          />
         </button>
-        <ThemeToggle class="theme-toggle-desktop" />
+        <!-- <div class="menu__theme-toggle--desktop">
+          <ThemeToggle />
+        </div> -->
       </div>
     </div>
   </nav>
@@ -80,11 +95,18 @@ import { Icon } from "astro-icon/components";
     &__actions {
       display: flex;
       gap: var(--space-16);
+
+      @media (max-width: 992px) {
+        gap: var(--space-8);
+      }
+
+      * {
+        flex: none;
+      }
     }
 
     &__toggle {
       display: none;
-      font-size: 2rem;
       background: none;
       border: none;
       cursor: pointer;
@@ -143,8 +165,9 @@ import { Icon } from "astro-icon/components";
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
       // Get the viewport width
-      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-      
+      const viewportWidth =
+        window.innerWidth || document.documentElement.clientWidth;
+
       // Only toggle the menu if the viewport width is less than or equal to 992px
       if (viewportWidth <= 992) {
         toggleMenu();
