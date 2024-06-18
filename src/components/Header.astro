@@ -44,9 +44,6 @@ import { Icon } from "astro-icon/components";
             style="display: none;"
           />
         </button>
-        <!-- <div class="menu__theme-toggle--desktop">
-          <ThemeToggle />
-        </div> -->
       </div>
     </div>
   </nav>
@@ -64,6 +61,7 @@ import { Icon } from "astro-icon/components";
     display: flex;
     align-items: center;
     gap: var(--space-40);
+    list-style: none;
 
     &__wrap {
       display: flex;
@@ -82,6 +80,7 @@ import { Icon } from "astro-icon/components";
       gap: var(--space-40);
       padding: var(--space-40);
       border-bottom: 1px solid var(--color-border-primary);
+      display: none;
     }
 
     li {
@@ -121,6 +120,9 @@ import { Icon } from "astro-icon/components";
     .menu {
       display: none;
     }
+    .menu--mobile {
+      display: flex;
+    }
     .menu__toggle {
       display: block;
     }
@@ -147,13 +149,11 @@ import { Icon } from "astro-icon/components";
   const navLinks = document.querySelectorAll("[data-navLink]");
 
   function toggleMenu() {
-    if (menu.style.display === "flex") {
-      menu.style.display = "none";
+    if (menu.classList.contains("menu--mobile")) {
       menu.classList.remove("menu--mobile");
       menuIcon.style.display = "block";
       closeIcon.style.display = "none";
     } else {
-      menu.style.display = "flex";
       menu.classList.add("menu--mobile");
       menuIcon.style.display = "none";
       closeIcon.style.display = "block";
@@ -164,22 +164,12 @@ import { Icon } from "astro-icon/components";
 
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
-      // Get the viewport width
       const viewportWidth =
         window.innerWidth || document.documentElement.clientWidth;
 
-      // Only toggle the menu if the viewport width is less than or equal to 992px
       if (viewportWidth <= 992) {
         toggleMenu();
       }
     });
-  });
-
-  document.addEventListener("click", function (event) {
-    if (!menu.contains(event.target) && !event.target.matches("#menuToggle")) {
-      if (menu.style.display === "flex") {
-        toggleMenu();
-      }
-    }
   });
 </script>
