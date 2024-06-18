@@ -17,7 +17,7 @@
   --color-text-on-action-secondary: var(--neutral-900);
   --color-text-primary: var(--neutral-900);
   --color-text-secondary: var(--neutral-500);
-  --color-text-tertiary: var(--neutral-200);
+  --color-text-tertiary: var(--neutral-300);
   --color-text-link-primary: var(--neutral-900);
   --color-text-link-secondary: var(--neutral-400);
 }
