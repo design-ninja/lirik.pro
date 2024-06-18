@@ -6,13 +6,7 @@ interface Props {
   text: string;
   tags?: string;
   link?: string;
-  image: {
-    src: string;
-    alt: string;
-    width: number;
-    height: number;
-    format: string;
-  };
+  image?: ImageMetadata;
 }
 
 const { title, text, tags, link, image } = Astro.props as Props;
@@ -28,7 +22,17 @@ const { title, text, tags, link, image } = Astro.props as Props;
     </div>
   </div>
   <div class="project__image-container">
-    <Picture {...image} formats={['avif']} alt={title} class="project__image" />
+    {
+      image && (
+        <Picture
+          src={image}
+          alt={title}
+          formats={["avif", "webp"]}
+          fallbackFormat="png"
+          class="project__image"
+        />
+      )
+    }
   </div>
 </a>
 

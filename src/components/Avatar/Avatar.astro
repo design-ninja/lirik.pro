@@ -6,13 +6,13 @@ interface Props {
   loading?: "lazy" | "eager";
 }
 
-import avatar from "../../public/avatar.png";
+import avatarImage from "./avatar.png";
 
 const { size = "medium", loading } = Astro.props as Props;
 ---
 
 <Image
-  src={avatar}
+  src={avatarImage}
   alt="Kirill Isachenko"
   class={`avatar avatar--${size}`}
   loading={loading}

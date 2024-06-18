@@ -1,29 +1,9 @@
 ---
+import { getCollection } from "astro:content";
 import Project from "./Project.astro";
 import SectionTitle from "../SectionTitle.astro";
 
-interface Frontmatter {
-  title: string;
-  text: string;
-  tags?: string;
-  link?: string;
-  image: {
-    src: string;
-    alt: string;
-    width: number;
-    height: number;
-    format: string;
-  };
-}
-
-const projectFiles = import.meta.glob<{ frontmatter: Frontmatter }>('./data/*.md');
-
-const projects = await Promise.all(
-  Object.values(projectFiles).map(async (file) => {
-    const { frontmatter } = await file();
-    return frontmatter;
-  })
-);
+const projects = await getCollection("projects");
 ---
 
 <section class="projects" id="projects">
@@ -31,11 +11,11 @@ const projects = await Promise.all(
   <div class="projects__grid">
     {projects.map((project) => (
       <Project
-        title={project.title}
-        text={project.text}
-        tags={project.tags}
-        link={project.link}
-        image={project.image}
+        title={project.data.title}
+        text={project.data.text}
+        tags={project.data.tags}
+        link={project.data.link}
+        image={project.data.image}
       />
     ))}
   </div>

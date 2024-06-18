@@ -1,14 +1,16 @@
 ---
 import { Icon } from "astro-icon/components";
 
-import videoSrc from "/video/video.mp4";
-import captions from "/video/captions.vtt";
+import videoSrc from "./video/video.mp4";
+import captions from "./video/captions.vtt";
+
+import posterImage from "./video/poster.avif";
 ---
 
 <section class="about" id="about">
   <div class="about__video">
     <div class="video-container">
-      <video id="reelsVideo" class="video-player" poster="/video/video_preview.avif">
+      <video id="reelsVideo" class="video-player" poster={posterImage.src}>
         <source src={videoSrc} type="video/mp4" />
         <track src={captions} kind="captions" srclang="en" label="English" default />
         Your browser does not support the video tag.
