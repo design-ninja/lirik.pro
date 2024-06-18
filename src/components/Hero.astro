@@ -34,6 +34,11 @@ import Button from "../components/Button.astro";
 <style lang="scss">
   .hero {
 
+    @media (max-width: 992px) {
+      padding-top: var(--space-24);
+      padding-bottom: 0;
+    }
+
     &__wrap {
       display: grid;
       gap: var(--space-40);
@@ -42,7 +47,7 @@ import Button from "../components/Button.astro";
 
       @media (max-width: 992px) {
         grid-template-columns: 1fr;
-        gap: var(--space-24);
+        gap: var(--space-16);
       }
     }
 

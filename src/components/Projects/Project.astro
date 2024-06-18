@@ -36,6 +36,7 @@ const { title, text, tags, link, image } = Astro.props as Props;
   .project {
     list-style: none;
     display: grid;
+    gap: var(--space-40);
     grid-template-columns: 1fr 1fr;
     border-bottom: 1px solid var(--color-border-primary);
     padding-bottom: var(--space-24);
@@ -44,6 +45,7 @@ const { title, text, tags, link, image } = Astro.props as Props;
 
     @media (max-width: 992px) {
       grid-template-columns: 1fr;
+      gap: var(--space-8);
     }
 
     &__content {
@@ -56,6 +58,10 @@ const { title, text, tags, link, image } = Astro.props as Props;
     &__meta {
       color: var(--color-text-secondary);
       margin-top: auto;
+
+      p {
+        margin-bottom: var(--space-8);
+      }
     }
 
     &__image-container {

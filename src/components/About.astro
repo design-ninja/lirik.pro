@@ -12,12 +12,7 @@ import videoSrc from "/video.mp4";
         Your browser does not support the video tag.
       </video>
       <button id="playButton" class="play-button" aria-label="Play Video">
-        <Icon
-          name="play"
-          class="play-button__play"
-          width={40}
-          height={40}
-        />
+        <Icon name="play" class="play-button__play" width={40} height={40} />
       </button>
     </div>
   </div>
@@ -75,21 +70,15 @@ import videoSrc from "/video.mp4";
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: var(--color-bg-black-overlay);
-        color: var(--color-icon-static-white);
+        background: rgba(0, 0, 0, 0.5);
         border: none;
         border-radius: 50%;
         width: 80px;
         height: 80px;
-        font-size: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
         z-index: 2;
-
-        &__play {
-          transform: translateX(var(--space-2));
-        }
       }
 
       .play-button:focus {
@@ -99,6 +88,7 @@ import videoSrc from "/video.mp4";
   }
   [data-icon] {
     color: var(--color-icon-static-white);
+    transform: translateX(var(--space-4));
   }
 </style>
 
