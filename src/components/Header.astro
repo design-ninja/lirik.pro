@@ -9,7 +9,7 @@ import { Icon } from "astro-icon/components";
   <nav aria-label="Primary" class="nav">
     <Logo />
     <div class="menu__wrap">
-      <ul class="menu">
+      <ul class="menu" id="menu">
         <li>
           <Link text="Экспертиза" href="#expertize" data-navLink />
         </li>
@@ -31,7 +31,7 @@ import { Icon } from "astro-icon/components";
           <Icon id="menuIcon" name="menu" class="menu__icon" />
           <Icon id="closeIcon" name="close" style="display: none;" />
         </button>
-        <ThemeToggle />
+        <ThemeToggle class="theme-toggle-desktop" />
       </div>
     </div>
   </nav>
@@ -73,8 +73,8 @@ import { Icon } from "astro-icon/components";
       list-style: none;
     }
 
-    &__icon svg{
-      fill: red;
+    &__icon svg {
+      fill: var(--color-icon-primary);
     }
 
     &__actions {
@@ -141,7 +141,15 @@ import { Icon } from "astro-icon/components";
   document.getElementById("menuToggle").addEventListener("click", toggleMenu);
 
   navLinks.forEach((link) => {
-    link.addEventListener("click", toggleMenu);
+    link.addEventListener("click", () => {
+      // Get the viewport width
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      
+      // Only toggle the menu if the viewport width is less than or equal to 992px
+      if (viewportWidth <= 992) {
+        toggleMenu();
+      }
+    });
   });
 
   document.addEventListener("click", function (event) {
