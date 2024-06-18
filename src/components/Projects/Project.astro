@@ -28,7 +28,7 @@ const { title, text, tags, link, image } = Astro.props as Props;
     </div>
   </div>
   <div class="project__image-container">
-    <Picture {...image} formats={['avif']} alt={title} />
+    <Picture {...image} formats={['avif']} alt={title} class="project__image" />
   </div>
 </a>
 
@@ -77,7 +77,7 @@ const { title, text, tags, link, image } = Astro.props as Props;
       width: 100%;
       height: auto;
       object-fit: cover;
-      transition: transform 0.5s ease-in-out;
+      transition: transform 1s ease-in-out;
     }
 
     &:hover {
