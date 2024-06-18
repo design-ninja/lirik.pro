@@ -1,6 +1,6 @@
 ---
 title: VOSTORG
-text: Описание
+text: Интернет-магазин одежды и аксессуаров для стильных и современных женщин
 image:
   src: "/projects/vostorg.png"
   alt: "VOSTORG"

@@ -1,6 +1,6 @@
 ---
 title: Lingerie Line
-text: Описание
+text: Магазин элегантного и удобного нижнего белья
 image:
   src: "/projects/lingerie_line.png"
   alt: "Lingerie Line"

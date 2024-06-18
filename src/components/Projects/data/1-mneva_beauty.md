@@ -1,6 +1,6 @@
 ---
 title: Mneva Beauty
-text: Описание
+text: Премиум-косметология и уход за кожей с акцентом на инновационные технологии
 image:
   src: "/projects/mneva_beauty.png"
   alt: "Mneva Beauty"

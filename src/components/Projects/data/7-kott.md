@@ -1,6 +1,6 @@
 ---
 title: KOTT. Wear
-text: Описание
+text: Авторская одежда от Марии Кот
 image:
   src: "/projects/kott.png"
   alt: "KOTT. Wear"

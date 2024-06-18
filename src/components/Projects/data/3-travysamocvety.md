@@ -1,6 +1,6 @@
 ---
 title: Травы и Самоцветы
-text: Описание
+text: Лавка чудес
 image:
   src: "/projects/travysamocvety.png"
   alt: "Травы и Самоцветы"
