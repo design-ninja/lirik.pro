@@ -1,11 +1,11 @@
 ---
 interface Props {
+  number: string;
   title: string;
   text: string;
-  number: string;
 }
 
-const { title, text, number } = Astro.props;
+const { number, title, text } = Astro.props;
 ---
 
 <li class="service">
@@ -22,6 +22,10 @@ const { title, text, number } = Astro.props;
     padding: var(--space-40);
     position: relative;
     border: 1px solid var(--color-border-primary);
+
+    @media (max-width: 992px) {
+      padding: var(--space-24);
+    }
 
     &__number {
       color: var(--color-text-tertiary);

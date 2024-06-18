@@ -32,9 +32,19 @@ import video from "../../public/reels.png";
     gap: var(--space-80);
     align-items: end;
 
+    @media (max-width: 992px) {
+      flex-direction: column;
+      align-items: start;
+      gap: var(--space-40);
+    }
+
     &__video {
       max-width: 400px;
       height: auto;
+
+      @media (max-width: 767px) {
+        max-width: 100%;
+      }
 
       img {
         aspect-ratio: 9 / 16;

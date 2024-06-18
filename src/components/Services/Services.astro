@@ -1,39 +1,33 @@
 ---
 import Service from "./Service.astro";
+
+interface ServiceItem {
+  number: string;
+  title: string;
+  text: string;
+}
+
+interface Frontmatter {
+  services: ServiceItem[];
+}
+
+const { frontmatter } = await import("./data/services.md").then(
+  (module) => module as unknown as { frontmatter: Frontmatter }
+);
+const services = frontmatter.services;
 ---
 
 <section class="services" id="expertize">
   <ul role="list" class="services__grid">
-    <Service
-      number="01"
-      title="Дизайн"
-      text="Создам интуитивно понятный и современный сайт, который отражает ваш бренд."
-    />
-    <Service
-      number="02"
-      title="Интеграция с 1С"
-      text="Если у вас уже есть база товарови заказов в 1С, я настрою её синхронизацию с магазином."
-    />
-    <Service
-      number="03"
-      title="Доставка"
-      text="Подключу и настрою модуль доставки, который будет автоматически считать стоимость и срок."
-    />
-    <Service
-      number="04"
-      title="Онлайн-платежи"
-      text="Подключу и настрою возможность оплачивать покупки в магазине, делать рассрочку и возврат средств."
-    />
-    <Service
-      number="05"
-      title="Контент"
-      text="Обеспечу полное наполнение для вашего сайта: от текстов до графики и подготовлю качественный SEO контент."
-    />
-    <Service
-      number="06"
-      title="Брендинг"
-      text="Если у вас нет лого или фирменного стиля — создам ваш бренд с нуля."
-    />
+    {
+      services.map((service) => (
+        <Service
+          number={service.number}
+          title={service.title}
+          text={service.text}
+        />
+      ))
+    }
   </ul>
 </section>
 
@@ -41,8 +35,19 @@ import Service from "./Service.astro";
   .services {
     &__grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(40ch, 1fr));
       padding: 0;
+
+      @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+      }
+
+      @media (min-width: 768px) and (max-width: 1199px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (min-width: 1200px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   }
 </style>

@@ -58,20 +58,32 @@ import Link from "./Link.astro";
   <span class="footer__author"> Дизайн и разработка: lirik 🖤 </span>
 </footer>
 
-<style>
+<style lang="scss">
   .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: var(--space-40);
     padding: var(--space-40) 0;
     border-top: var(--size-1) solid var(--color-border-primary);
     color: var(--color-text-secondary);
+
+    @media (max-width: 992px) {
+      flex-direction: column;
+      align-items: start;
+    }
   }
 
   .menu {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: var(--space-40);
+    padding: 0;
+
+    @media (max-width: 992px) {
+      gap: var(--space-16);
+    }
   }
 
   .menu li {

@@ -1,27 +1,30 @@
 ---
 import SectionTitle from "../SectionTitle.astro";
 import Testimonial from "./Testimonial.astro";
+
+interface TestimonialItem {
+  text: string;
+  author: string;
+}
+
+interface Frontmatter {
+  testimonials: TestimonialItem[];
+}
+
+const { frontmatter } = await import("./data/testimonials.md").then(
+  (module) => module as unknown as { frontmatter: Frontmatter }
+);
+const testimonials = frontmatter.testimonials;
 ---
 
 <section class="testimonials" id="testimonials">
   <SectionTitle title="Отзывы клиентов" />
   <div class="testimonials__grid">
-    <Testimonial
-      text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
-      author="Антонина Мнева"
-    />
-    <Testimonial
-      text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
-      author="Юлия"
-    />
-    <Testimonial
-      text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
-      author="Полина Горчакова"
-    />
-    <Testimonial
-      text="«Сотрудничество с Кириллом было замечательным. Он понял наше видение и воплотил его в жизнь в новом сайте.»"
-      author="Екатерина Кирьянова"
-    />
+    {
+      testimonials.map((testimonial) => (
+        <Testimonial text={testimonial.text} author={testimonial.author} />
+      ))
+    }
   </div>
 </section>
 
@@ -29,8 +32,12 @@ import Testimonial from "./Testimonial.astro";
   .testimonials {
     .testimonials__grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: var(--space-80);
+      grid-template-columns: repeat(2, 1fr);
+
+      @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+      }
     }
   }
 </style>

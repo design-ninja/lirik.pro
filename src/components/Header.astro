@@ -1,7 +1,8 @@
 ---
 import Logo from "./Logo.astro";
 import Link from "./Link.astro";
-import ThemeToggle from './ThemeToggle.astro';
+import ThemeToggle from "./ThemeToggle.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <header>
@@ -9,42 +10,27 @@ import ThemeToggle from './ThemeToggle.astro';
     <Logo />
     <ul class="menu">
       <li>
-        <Link
-          text="Экспертиза"
-          href="#expertize"
-          data-navLink
-        />
+        <Link text="Экспертиза" href="#expertize" data-navLink />
       </li>
       <li>
-        <Link
-          text="Работы"
-          href="#projects"
-          data-navLink
-        />
+        <Link text="Работы" href="#projects" data-navLink />
       </li>
       <li>
-        <Link
-          text="Обо мне"
-          href="#about"
-          data-navLink
-        />
+        <Link text="Обо мне" href="#about" data-navLink />
       </li>
       <li>
-        <Link
-          text="Отзывы"
-          href="#testimonials"
-          data-navLink
-        />
+        <Link text="Отзывы" href="#testimonials" data-navLink />
       </li>
       <li>
-        <Link
-          text="Контакты"
-          href="#cta"
-          data-navLink
-        />
+        <Link text="Контакты" href="#cta" data-navLink />
       </li>
     </ul>
-    <ThemeToggle />
+    <div class="menu__actions">
+      <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">
+        <Icon name="menu" />
+      </button>
+      <ThemeToggle />
+    </div>
   </nav>
 </header>
 
@@ -59,8 +45,47 @@ import ThemeToggle from './ThemeToggle.astro';
     display: flex;
     align-items: center;
     gap: var(--space-40);
+
+    li {
+      list-style: none;
+    }
+
+    &__actions {
+      display: flex;
+      gap: var(--space-24);
+    }
+
+    &__toggle {
+      display: none;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
   }
 
-  .menu li {
-    list-style: none;
+  @media (max-width: 992px) {
+    .menu {
+      display: none;
+    }
+    .menu__toggle {
+      display: block;
+    }
   }
+
+  @media (min-width: 992px) {
+    .menu {
+      display: flex;
+    }
+    .menu__toggle {
+      display: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  document.getElementById("menuToggle").addEventListener("click", function () {
+    const menu = document.querySelector(".menu");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+  });
+</script>

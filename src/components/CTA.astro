@@ -21,6 +21,11 @@ import Button from "./Button.astro";
     align-items: center;
     grid-template-columns: var(--size-80) 1fr auto;
 
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
+
     &__title {
       margin: 0;
     }

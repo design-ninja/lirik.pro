@@ -2,58 +2,42 @@
 import Project from "./Project.astro";
 import SectionTitle from "../SectionTitle.astro";
 
-import mnevabeauty from "../../../public/projects/mneva_beauty.png";
-import travysamocvety from "../../../public/projects/travysamocvety.png";
-import vostorg from "../../../public/projects/vostorg.png";
-import proffoptimus from "../../../public/projects/proff_optimus.png";
-import lingerieline from "../../../public/projects/lingerie_line.png";
-import kott from "../../../public/projects/kott.png";
+interface Frontmatter {
+  title: string;
+  text: string;
+  tags?: string;
+  link?: string;
+  image: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    format: string;
+  };
+}
+
+const projectFiles = import.meta.glob<{ frontmatter: Frontmatter }>('./data/*.md');
+
+const projects = await Promise.all(
+  Object.values(projectFiles).map(async (file) => {
+    const { frontmatter } = await file();
+    return frontmatter;
+  })
+);
 ---
 
 <section class="projects" id="projects">
   <SectionTitle title="Избранные проекты" />
   <div class="projects__grid">
-    <Project
-      title="Mneva Beauty"
-      text="Описание"
-      tags="Брендинг, Веб-дизайн, E-commerce, SEO, Контент"
-      link="https://mnevabeauty.ru"
-      preview={mnevabeauty}
-    />
-    <Project
-      title="Травы и Самоцветы"
-      text="Описание"
-      tags="Брендинг, Веб-дизайн, E-commerce, SEO, Контент"
-      link="https://травысамоцветы.рф"
-      preview={travysamocvety}
-    />
-    <Project
-      title="VOSTORG"
-      text="Описание"
-      tags="1С, Веб-дизайн, E-commerce, SEO, Контент"
-      link="https://vostorg-shop.ru"
-      preview={vostorg}
-    />
-    <Project
-      title="Оптимус Профи"
-      text="Описание"
-      tags="1С, Брендинг, Веб-дизайн, E-commerce, SEO, Контент"
-      link="https://proff-optimus.ru/"
-      preview={proffoptimus}
-    />
-    <Project
-      title="Lingerie Line"
-      text="Описание"
-      tags="Прототипирование, Брендинг, Веб-дизайн"
-      link="https://lingerie-line.ru"
-      preview={lingerieline}
-    />
-    <Project
-      title="KOTT. Wear"
-      text="Описание"
-      tags="Брендинг, Веб-дизайн, E-commerce"
-      preview={kott}
-    />
+    {projects.map((project) => (
+      <Project
+        title={project.title}
+        text={project.text}
+        tags={project.tags}
+        link={project.link}
+        image={project.image}
+      />
+    ))}
   </div>
 </section>
 
