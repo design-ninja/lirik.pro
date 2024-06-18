@@ -8,34 +8,38 @@ import { Icon } from "astro-icon/components";
 <header>
   <nav aria-label="Primary" class="nav">
     <Logo />
-    <ul class="menu">
-      <li>
-        <Link text="Экспертиза" href="#expertize" data-navLink />
-      </li>
-      <li>
-        <Link text="Работы" href="#projects" data-navLink />
-      </li>
-      <li>
-        <Link text="Обо мне" href="#about" data-navLink />
-      </li>
-      <li>
-        <Link text="Отзывы" href="#testimonials" data-navLink />
-      </li>
-      <li>
-        <Link text="Контакты" href="#cta" data-navLink />
-      </li>
-    </ul>
-    <div class="menu__actions">
-      <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">
-        <Icon name="menu" />
-      </button>
-      <ThemeToggle />
+    <div class="menu__wrap">
+      <ul class="menu">
+        <li>
+          <Link text="Экспертиза" href="#expertize" data-navLink />
+        </li>
+        <li>
+          <Link text="Работы" href="#projects" data-navLink />
+        </li>
+        <li>
+          <Link text="Обо мне" href="#about" data-navLink />
+        </li>
+        <li>
+          <Link text="Отзывы" href="#testimonials" data-navLink />
+        </li>
+        <li>
+          <Link text="Контакты" href="#cta" data-navLink />
+        </li>
+      </ul>
+      <div class="menu__actions">
+        <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">
+          <Icon id="menuIcon" name="menu" class="menu__icon" />
+          <Icon id="closeIcon" name="close" style="display: none;" />
+        </button>
+        <ThemeToggle />
+      </div>
     </div>
   </nav>
 </header>
 
 <style lang="scss">
   nav {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -46,13 +50,36 @@ import { Icon } from "astro-icon/components";
     align-items: center;
     gap: var(--space-40);
 
+    &__wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--space-40);
+    }
+
+    &--mobile {
+      flex-direction: column;
+      position: absolute;
+      top: var(--size-80);
+      left: 0;
+      right: 0;
+      background: var(--color-bg-base);
+      z-index: 100;
+      gap: var(--space-40);
+      padding: var(--space-40);
+      border-bottom: 1px solid var(--color-border-primary);
+    }
+
     li {
       list-style: none;
     }
 
+    &__icon svg{
+      fill: red;
+    }
+
     &__actions {
       display: flex;
-      gap: var(--space-24);
+      gap: var(--space-16);
     }
 
     &__toggle {
@@ -61,6 +88,10 @@ import { Icon } from "astro-icon/components";
       background: none;
       border: none;
       cursor: pointer;
+
+      svg {
+        pointer-events: none;
+      }
     }
   }
 
@@ -81,11 +112,43 @@ import { Icon } from "astro-icon/components";
       display: none;
     }
   }
+
+  [data-icon] {
+    color: var(--color-icon-primary);
+  }
 </style>
 
 <script is:inline>
-  document.getElementById("menuToggle").addEventListener("click", function () {
-    const menu = document.querySelector(".menu");
-    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+  const menu = document.querySelector(".menu");
+  const menuIcon = document.getElementById("menuIcon");
+  const closeIcon = document.getElementById("closeIcon");
+  const navLinks = document.querySelectorAll("[data-navLink]");
+
+  function toggleMenu() {
+    if (menu.style.display === "flex") {
+      menu.style.display = "none";
+      menu.classList.remove("menu--mobile");
+      menuIcon.style.display = "block";
+      closeIcon.style.display = "none";
+    } else {
+      menu.style.display = "flex";
+      menu.classList.add("menu--mobile");
+      menuIcon.style.display = "none";
+      closeIcon.style.display = "block";
+    }
+  }
+
+  document.getElementById("menuToggle").addEventListener("click", toggleMenu);
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", toggleMenu);
+  });
+
+  document.addEventListener("click", function (event) {
+    if (!menu.contains(event.target) && !event.target.matches("#menuToggle")) {
+      if (menu.style.display === "flex") {
+        toggleMenu();
+      }
+    }
   });
 </script>
