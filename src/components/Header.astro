@@ -27,7 +27,7 @@ import ThemeToggle from "./ThemeToggle.astro";
         <li>
           <Link text="Контакты" href="#cta" data-navLink />
         </li>
-        <ThemeToggle />
+        <li><ThemeToggle /></li>
       </ul>
       <div class="menu__actions">
         <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">
@@ -87,6 +87,10 @@ import ThemeToggle from "./ThemeToggle.astro";
 
     li {
       list-style: none;
+
+      &:last-child {
+        font-size: 0;
+      }
     }
 
     &__icon svg {
