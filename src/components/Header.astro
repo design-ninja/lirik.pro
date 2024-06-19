@@ -29,22 +29,22 @@ import ThemeToggle from "./ThemeToggle.astro";
         </li>
         <li><ThemeToggle /></li>
       </ul>
-        <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">
-          <Icon
-            id="menuIcon"
-            name="menu"
-            class="menu__icon"
-            width={32}
-            height={32}
-          />
-          <Icon
-            id="closeIcon"
-            name="close"
-            width={32}
-            height={32}
-            style="display: none;"
-          />
-        </button>
+      <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">
+        <Icon
+          id="menuIcon"
+          name="menu"
+          class="menu__icon"
+          width={32}
+          height={32}
+        />
+        <Icon
+          id="closeIcon"
+          name="close"
+          width={32}
+          height={32}
+          style="display: none;"
+        />
+      </button>
     </div>
   </nav>
 </header>
@@ -137,6 +137,7 @@ import ThemeToggle from "./ThemeToggle.astro";
   const menu = document.querySelector(".menu");
   const menuIcon = document.getElementById("menuIcon");
   const closeIcon = document.getElementById("closeIcon");
+  const menuToggle = document.getElementById("menuToggle");
   const navLinks = document.querySelectorAll("[data-navLink]");
 
   function toggleMenu() {
@@ -151,7 +152,17 @@ import ThemeToggle from "./ThemeToggle.astro";
     }
   }
 
-  document.getElementById("menuToggle").addEventListener("click", toggleMenu);
+  function handleClickOutside(event) {
+    if (!menu.contains(event.target) && event.target !== menuToggle) {
+      if (menu.classList.contains("menu--mobile")) {
+        toggleMenu();
+      }
+    }
+  }
+
+  document.addEventListener("click", handleClickOutside);
+
+  menuToggle.addEventListener("click", toggleMenu);
 
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
