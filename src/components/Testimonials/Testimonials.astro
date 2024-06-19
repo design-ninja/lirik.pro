@@ -11,7 +11,7 @@ interface Frontmatter {
   testimonials: TestimonialItem[];
 }
 
-const { frontmatter } = await import("./data/testimonials.md").then(
+const { frontmatter } = await import("../../content/testimonials/testimonials.md").then(
   (module) => module as unknown as { frontmatter: Frontmatter }
 );
 const testimonials = frontmatter.testimonials;

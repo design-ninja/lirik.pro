@@ -11,7 +11,7 @@ interface Frontmatter {
   services: ServiceItem[];
 }
 
-const { frontmatter } = await import("./data/services.md").then(
+const { frontmatter } = await import("../../content/services/services.md").then(
   (module) => module as unknown as { frontmatter: Frontmatter }
 );
 const services = frontmatter.services;
