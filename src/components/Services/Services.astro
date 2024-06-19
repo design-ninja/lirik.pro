@@ -17,7 +17,7 @@ const { frontmatter } = await import("./data/services.md").then(
 const services = frontmatter.services;
 ---
 
-<section class="services" id="expertize">
+<section class="services" id="expertize" aria-label="Экспертиза">
   <ul role="list" class="services__grid">
     {
       services.map((service) => (

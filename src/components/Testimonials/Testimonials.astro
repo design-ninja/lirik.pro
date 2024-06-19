@@ -17,7 +17,7 @@ const { frontmatter } = await import("./data/testimonials.md").then(
 const testimonials = frontmatter.testimonials;
 ---
 
-<section class="testimonials" id="testimonials">
+<section class="testimonials" id="testimonials" aria-label="Отзывы клиентов">
   <SectionTitle title="Отзывы клиентов" />
   <ul class="testimonials__grid">
     {
