@@ -1,9 +1,5 @@
 ---
-import "../styles/index.css";
-import "@fontsource-variable/onest";
-
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
 
 import Hero from "../components/Hero.astro";
 import Services from "../components/Services/Services.astro";
@@ -11,47 +7,16 @@ import Projects from "../components/Projects/Projects.astro";
 import About from "../components/About/About.astro";
 import Testimonials from "../components/Testimonials/Testimonials.astro";
 import CTA from "../components/CTA.astro";
-
-import Footer from "../components/Footer.astro";
 ---
 
-<Layout title="lirik.pro - Дизайнер Кирилл Исаченко - Разработка и дизайн интернет-магазинов">
-  <main>
-    <div class="top-wrap">
-      <Header />
-      <Hero />
-    </div>
-    <Services />
-    <Projects />
-    <About />
-    <Testimonials />
-    <CTA />
-    <Footer />
-  </main>
+<Layout
+  title="lirik.pro - Дизайнер Кирилл Исаченко - Профессиональная разработка и дизайн интернет-магазинов"
+  description="lirik.pro - Профессиональная разработка и дизайн интернет-магазинов"
+>
+  <Hero />
+  <Services />
+  <Projects />
+  <About />
+  <Testimonials />
+  <CTA />
 </Layout>
-
-<style lang="scss">
-  main {
-    display: grid;
-    gap: var(--space-120);
-    margin: auto;
-    padding: var(--space-40);
-    max-width: 1920px;
-    line-height: 1.6;
-
-    @media (max-width: 1441px) {
-      gap: var(--space-80);
-      padding: var(--space-24);
-    }
-
-    @media (max-width: 992px) {
-      gap: var(--space-80);
-      padding: var(--space-16);
-    }
-  }
-
-  .top-wrap {
-    display: grid;
-    gap: var(--space-40);
-  }
-</style>

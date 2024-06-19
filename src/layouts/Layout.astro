@@ -1,145 +1,125 @@
 ---
-import { SEO } from "astro-seo";
+import "../styles/index.css";
+import "@fontsource-variable/onest";
+
+import Head from "./Head.astro";
+
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
 interface Props {
   title: string;
+  description: string;
 }
 
-const { title } = Astro.props;
+const {
+  title = "lirik.pro - Дизайнер Кирилл Исаченко - Профессиональная разработка и дизайн интернет-магазинов",
+  description = "lirik.pro - Профессиональная разработка и дизайн интернет-магазинов",
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <SEO
-      title={title}
-      description="lirik.pro — Персональный сайт Кирилла Исаченко. Профессиональная разработка и дизайн интернет-магазинов, SEO, брендинг, контент и UX/UI дизайн."
-      openGraph={{
-        basic: {
-          title: "lirik.pro - Дизайнер Кирилл Исаченко",
-          type: "website",
-          image: "https://lirik.pro/video/video_preview.png",
-          url: "https://lirik.pro",
-        },
-      }}
-      twitter={{
-        creator: "@lirik1986",
-        card: "summary_large_image",
-        title: "lirik.pro - Дизайнер Кирилл Исаченко",
-        description:
-          "Профессиональная разработка и дизайн интернет-магазинов, SEO, брендинг, контент и UX/UI дизайн.",
-        image: "https://lirik.pro/video/video_preview.png",
-      }}
-      extend={{
-        meta: [
-          {
-            name: "twitter:image",
-            content: "https://lirik.pro/video/video_preview.png",
-          },
-          {
-            name: "twitter:title",
-            content: "lirik.pro - Дизайнер Кирилл Исаченко",
-          },
-          {
-            name: "twitter:description",
-            content:
-              "Профессиональная разработка и дизайн интернет-магазинов, SEO, брендинг, контент и UX/UI дизайн.",
-          },
-        ],
-      }}
-    />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicon/favicon-16x16.png"
-    />
-    <link rel="manifest" href="favicon/site.webmanifest" />
-    <meta name="generator" content={Astro.generator} />
-  </head>
+  <Head {title} {description} />
   <body>
-    <slot />
-  </body><style is:global lang="scss">
-    :root {
-      scroll-behavior: smooth;
-    }
+    <main>
+      <Header />
+      <slot />
+      <Footer />
+    </main>
+    <style is:global lang="scss">
+      :root {
+        scroll-behavior: smooth;
+      }
 
-    body {
-      font-family: var(--font-family-body);
-      background: var(--color-bg-base);
-      color: var(--color-text-primary);
-      font-size: var(--font-size-18);
-      transition:
-        background-color 0.5s ease,
-        color 0.5s ease;
-    }
+      main {
+        display: grid;
+        gap: var(--space-120);
+        margin: auto;
+        padding: var(--space-40);
+        max-width: 1920px;
+        line-height: 1.6;
 
-    h1 {
-      font-family: var(--font-family-display);
-      font-size: 13vw;
-      font-weight: var(--font-weight-black);
-      line-height: 90%;
-      text-transform: uppercase;
-      letter-spacing: -0.04em;
-      margin-bottom: var(--space-64);
+        @media (max-width: 1441px) {
+          gap: var(--space-80);
+          padding: var(--space-24);
+        }
 
-      @media (max-width: 992px) {
-        font-size: 20vw;
-        margin-bottom: var(--space-24);
+        @media (max-width: 992px) {
+          gap: var(--space-80);
+          padding: var(--space-16);
+        }
+      }
+
+      body {
+        font-family: var(--font-family-body);
+        background: var(--color-bg-base);
+        color: var(--color-text-primary);
+        font-size: var(--font-size-18);
+        transition:
+          background-color 0.5s ease,
+          color 0.5s ease;
+      }
+
+      h1 {
+        font-family: var(--font-family-display);
+        font-size: 13vw;
+        font-weight: var(--font-weight-black);
+        line-height: 90%;
+        text-transform: uppercase;
+        letter-spacing: -0.04em;
+        margin-bottom: var(--space-64);
+
+        @media (max-width: 992px) {
+          font-size: 20vw;
+          margin-bottom: var(--space-24);
+          line-height: 100%;
+        }
+
+        &.inner {
+          font-size: var(--font-size-64);
+          margin-bottom: var(--space-40);
+        }
+      }
+
+      h2 {
+        font-size: var(--font-size-48);
+        font-weight: var(--font-weight-regular);
         line-height: 100%;
+        margin-bottom: var(--space-24);
       }
-    }
 
-    h2 {
-      font-size: var(--font-size-48);
-      font-weight: var(--font-weight-regular);
-      line-height: 100%;
-      margin-bottom: var(--space-24);
-    }
-
-    h3 {
-      font-size: var(--font-size-40);
-      font-weight: var(--font-weight-regular);
-      line-height: 100%;
-      margin-bottom: var(--space-16);
-    }
-
-    p {
-      font-size: var(--font-size-18);
-      line-height: 150%;
-      margin-bottom: var(--space-16);
-      max-width: 48ch;
-    }
-
-    a {
-      color: var(--color-text-link-primary);
-      text-decoration: none;
-      transition: opacity 0.2s ease;
-
-      &:hover {
-        opacity: 0.8;
+      h3 {
+        font-size: var(--font-size-40);
+        font-weight: var(--font-weight-regular);
+        line-height: 100%;
+        margin-bottom: var(--space-16);
       }
-    }
 
-    section {
-      padding: var(--space-40) 0;
-    }
+      p {
+        font-size: var(--font-size-18);
+        line-height: 150%;
+        margin-bottom: var(--space-16);
+        max-width: 48ch;
+      }
 
-    button {
-      cursor: pointer;
-    }
-  </style>
+      a {
+        color: var(--color-text-link-primary);
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      section {
+        padding: var(--space-40) 0;
+      }
+
+      button {
+        cursor: pointer;
+      }
+    </style>
+  </body>
 </html>
