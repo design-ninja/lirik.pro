@@ -10,12 +10,20 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^3.0.2",
+    "@astrojs/sitemap": "^3.0.0",
+    "@staticcms/core": "^3.3.3",
     "@astrojs/check": "^0.7.0",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "@fontsource-variable/onest": "^5.0.4",
     "astro": "^4.10.2",
     "astro-icon": "^1.1.0",
+    "astro-robots": "^1.0.2",
     "astro-seo": "^0.8.4",
     "autoprefixer": "^10.4.19",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "cssnano": "^7.0.2",
     "sass": "^1.77.5",
     "typescript": "^5.4.5"

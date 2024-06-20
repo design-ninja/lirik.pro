@@ -1,24 +1,26 @@
 ---
 import { Picture } from "astro:assets";
 
-interface Props {
-  title: string;
-  description: string;
-  tags?: string;
-  link?: string;
-  image?: ImageMetadata;
-}
-
-const { title, description, tags, link, image } = Astro.props as Props;
+const { slug, title, description, image, tags, link } = Astro.props;
 ---
 
-<a href={link} target="_blank" class="project">
+<a
+  href={`/project/${slug}`}
+  aria-label={title}
+  class="project"
+>
   <div class="project__content">
     <h3 class="project__title">{title}</h3>
     <p class="project__text">{description}</p>
     <div class="project__meta">
       {tags && <p class="project__tags">{tags}</p>}
-      {link && <span class="project__link">{link}</span>}
+      {
+        link && (
+          <span class="project__link" class="project__link">
+            {link}
+          </span>
+        )
+      }
     </div>
   </div>
   <div class="project__image-container">

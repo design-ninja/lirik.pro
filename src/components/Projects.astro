@@ -1,0 +1,39 @@
+---
+import { getCollection } from "astro:content";
+
+import ProjectCard from "./ProjectCard.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => {
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+---
+
+<section class="projects" id="projects" aria-label="Избранные проекты">
+  <SectionTitle title="Избранные проекты" />
+  <div class="projects__grid">
+    {
+      projects.map((project, index) => (
+        <ProjectCard
+          index={index + 1}
+          slug={project.slug}
+          title={project.data.title}
+          description={project.data.description}
+          image={project.data.image}
+          tags={project.data.tag}
+          link={project.data.link}
+        />
+      ))
+    }
+  </div>
+</section>
+
+<style lang="scss">
+  .projects {
+    &__grid {
+      display: grid;
+      gap: var(--space-80);
+    }
+  }
+</style>

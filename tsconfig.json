@@ -1,4 +1,13 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": ["declarations.d.ts", "src"]
+  "include": ["declarations.d.ts", "src"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "assets/*": ["src/assets/*"]
+    }
+  }
 }

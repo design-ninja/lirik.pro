@@ -3,10 +3,12 @@ import Layout from "../layouts/Layout.astro";
 
 import Hero from "../components/Hero.astro";
 import Services from "../components/Services/Services.astro";
-import Projects from "../components/Projects/Projects.astro";
+import Projects from "../components/Projects.astro";
 import About from "../components/About/About.astro";
 import Testimonials from "../components/Testimonials/Testimonials.astro";
 import CTA from "../components/CTA.astro";
+
+
 ---
 
 <Layout
@@ -20,3 +22,13 @@ import CTA from "../components/CTA.astro";
   <Testimonials />
   <CTA />
 </Layout>
+
+<style lang="scss">
+
+.projects {
+  &__grid {
+    display: grid;
+    gap: var(--space-80);
+  }
+}
+</style>
