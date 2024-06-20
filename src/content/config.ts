@@ -8,7 +8,7 @@ const projectsCollection = defineCollection({
       description: z.string(),
       image: image(),
       date: z.date(),
-      tag: z.array(z.string()),
+      tags: z.array(z.string()),
       link: z.string(),
     }),
 });

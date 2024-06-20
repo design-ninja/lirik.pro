@@ -2,9 +2,10 @@
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import { getEntry, getCollection } from "astro:content";
+import type { CollectionEntry } from 'astro:content';
 
 const projectEntries = await getCollection("projects");
-const projects = projectEntries.sort((a,b)=>{return b.data.date - a.data.date});
+const projects = projectEntries.sort((a, b) => b.data.date - a.data.date);
 
 const { slug } = Astro.params;
 
@@ -12,64 +13,101 @@ if (slug === undefined) {
   throw new Error("Slug is required");
 }
 
-const entry = await getEntry("projects", slug);
+const entry: CollectionEntry<"projects"> | undefined = await getEntry("projects", slug);
 
 if (entry === undefined) {
   return Astro.redirect("/404");
 }
 
-let previous = null, next = null
+let previous: CollectionEntry<"projects"> | null = null;
+let next: CollectionEntry<"projects"> | null = null;
 
-const currentIndex = projects.findIndex(entry=>entry.slug===slug)
+const currentIndex = projects.findIndex(project => project.slug === slug);
 
-if(currentIndex > 0) {
-    previous = projects[currentIndex-1]
+if (currentIndex > 0) {
+  previous = projects[currentIndex - 1];
 }
 
-if(currentIndex < projects.length) {
-    next = projects[currentIndex+1]
+if (currentIndex < projects.length - 1) {
+  next = projects[currentIndex + 1];
 }
 
 const { Content } = await entry.render();
 ---
 
 <Layout title={entry.data.title}>
-  <div>
-    <div>
-      <div>
-        <Image width="1000" src={entry.data.image} alt={entry.data.title} />
-      </div>
-      <div>
-        <h4>
-          <strong>{entry.data.title}</strong>
-        </h4>
-        <h6>for {entry.data.tag.join(', ').replace(/,(?!.*,)/gmi, ' &')}</h6>
-        <div>
-          <Content />
-        </div>
-      </div>
-      <div>
-        {previous ? (
-          <a href={`/project/${previous.slug}`}>
-            <span>
-              <Image width={244} loading="lazy" alt="" src={previous.data.image} />
-            </span>
-            <span>Previous Project</span>
-          </a>
-        ) : (
-          <span />
-        )}
-        {next ? (
-          <a href={`/project/${next.slug}`}>
-            <span class="relative block transition duration-500 ease-in-out transform rounded hover:scale-105">
-              <Image width={244} loading="lazy" alt="" src={next.data.image} />
-            </span>
-            <span>Next Project</span>
-          </a>
-        ) : (
-          <span />
-        )}
-      </div>
-    </div>
-  </div>
+  <article>
+
+  <Image width="720" loading="eager" src={entry.data.image} alt={entry.data.title} />
+
+  <h1 class="inner">{entry.data.title}</h1>
+  <span class="tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' &')}</span>
+
+    <Content />
+
+    <nav>
+  {previous ? (
+    <a href={`/project/${previous.slug}`}>
+      <span>
+        <Image width={300} loading="eager" alt="" src={previous.data.image} />
+      </span>
+      <span>Previous Project</span>
+    </a>
+  ) : (
+    <span />
+  )}
+  {next ? (
+    <a href={`/project/${next.slug}`}>
+      <span>
+        <Image width={300} loading="eager" alt="" src={next.data.image} />
+      </span>
+      <span>Next Project</span>
+    </a>
+  ) : (
+    <span />
+  )}
+  </nav>
+</article>
 </Layout>
+
+<style lang="scss">
+  article {
+    display: grid;
+    gap: 2rem;
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 1rem;
+  }
+
+  .inner {
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 400;
+    text-transform:inherit;
+  }
+
+  nav {
+    display: grid;
+    gap: 4rem;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 2rem;
+    text-decoration: none;
+  }
+
+  .tags {
+    color: var(--color-text-secondary);
+  }
+
+  span {
+    align-items: center;
+    display: grid;
+    gap: 1rem;
+    grid-auto-flow: column;
+  }
+
+  img {
+    border-radius: 1rem;
+    height: auto;
+    width: 100%;
+  }
+</style>
