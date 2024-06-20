@@ -10,14 +10,11 @@ import posterImage from "./video/poster.avif";
 <section class="about" id="about" aria-label="Обо мне">
   <div class="about__video">
     <div class="video-container">
-      <video id="reelsVideo" class="video-player" poster={posterImage.src}>
+      <video id="reelsVideo" class="video-player" poster={posterImage.src} controls>
         <source src={videoSrc} type="video/mp4" />
         <track src={captions} kind="captions" srclang="ru" label="Русский" default />
-        Your browser does not support the video tag.
+        Ваш браузер не поддерживает тег видео.
       </video>
-      <button id="playButton" class="play-button" aria-label="Смотреть видео">
-        <Icon name="play" class="play-button__play" width={40} height={40} />
-      </button>
     </div>
   </div>
   <div class="about__text">
@@ -69,25 +66,25 @@ import posterImage from "./video/poster.avif";
         height: auto;
       }
 
-      .play-button {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.5);
-        border: none;
-        border-radius: 50%;
-        width: 80px;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 2;
-      }
+      // .play-button {
+      //   position: absolute;
+      //   top: 50%;
+      //   left: 50%;
+      //   transform: translate(-50%, -50%);
+      //   background: rgba(0, 0, 0, 0.5);
+      //   border: none;
+      //   border-radius: 50%;
+      //   width: 80px;
+      //   height: 80px;
+      //   display: flex;
+      //   align-items: center;
+      //   justify-content: center;
+      //   z-index: 2;
+      // }
 
-      .play-button:focus {
-        outline: none;
-      }
+      // .play-button:focus {
+      //   outline: none;
+      // }
     }
   }
   [data-icon] {
@@ -96,7 +93,7 @@ import posterImage from "./video/poster.avif";
   }
 </style>
 
-<script is:inline>
+<!-- <script is:inline>
   const video = document.getElementById("reelsVideo");
   const playButton = document.getElementById("playButton");
 
@@ -114,4 +111,4 @@ import posterImage from "./video/poster.avif";
       playButton.style.display = "flex";
     }
   });
-</script>
+</script> -->
