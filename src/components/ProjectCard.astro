@@ -13,7 +13,7 @@ const { slug, title, description, image, tags, link } = Astro.props;
     <h3 class="project__title">{title}</h3>
     <p class="project__text">{description}</p>
     <div class="project__meta">
-      {tags && <p class="project__tags">{tags.join(', ').replace(/,(?!.*,)/gmi, ' &')}</p>}
+      {tags && <p class="project__tags">{tags.join(', ').replace(/,(?!.*,)/gmi, ' и')}</p>}
       {
         link && (
           <span class="project__link">
@@ -29,6 +29,7 @@ const { slug, title, description, image, tags, link } = Astro.props;
         <Picture
           src={image}
           alt={title}
+          width={794}
           formats={["avif", "webp"]}
           fallbackFormat="png"
           class="project__image"

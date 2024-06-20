@@ -44,7 +44,7 @@ const { Content } = await entry.render();
     <Image width="900" loading="eager" src={entry.data.image} alt={entry.data.title} class="article__cover" />
     <div class="article__top">
       <h1 class="h1--inner">{entry.data.title}</h1>
-      <span class="article__tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' &')}</span>
+      <span class="article__tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' и')}</span>
     </div>
     <div class="article__content">
       <Content />
@@ -117,7 +117,7 @@ const { Content } = await entry.render();
   }
 
   .h1--inner {
-    font-size: 3rem;
+    font-size: var(--font-size-48);
     margin: 0;
     font-weight: 400;
     text-transform: inherit;
