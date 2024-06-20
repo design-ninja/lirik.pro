@@ -40,30 +40,32 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={entry.data.title}>
-  <article>
-    <Image width="720" loading="eager" src={entry.data.image} alt={entry.data.title} />
-    <h1 class="inner">{entry.data.title}</h1>
-    <span class="tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' &')}</span>
-
-    <Content />
-
-    <nav>
+  <article class="article">
+    <Image width="900" loading="eager" src={entry.data.image} alt={entry.data.title} class="article__cover" />
+    <div class="article__top">
+      <h1 class="h1--inner">{entry.data.title}</h1>
+      <span class="article__tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' &')}</span>
+    </div>
+    <div class="article__content">
+      <Content />
+    </div>
+    <nav class="article__nav">
       {previous ? (
-        <a href={`/project/${previous.slug}`}>
+        <a href={`/project/${previous.slug}`} title="Предыдущий проект" class="article__navItem">
           <span>
-            <Image width={300} loading="eager" alt="" src={previous.data.image} />
+            <Image width={300} loading="eager" alt="Предыдущий проект" src={previous.data.image} class="article__navImage"/>
           </span>
-          <span>Previous Project</span>
+          <span>Предыдущий проект</span>
         </a>
       ) : (
         <span />
       )}
       {next ? (
-        <a href={`/project/${next.slug}`}>
+        <a href={`/project/${next.slug}`} title="Следующий проект" class="article__navItem">
           <span>
-            <Image width={300} loading="eager" alt="" src={next.data.image} />
+            <Image width={300} loading="eager" alt="Следующий проект" src={next.data.image} class="article__navImage"/>
           </span>
-          <span>Next Project</span>
+          <span>Следующий проект</span>
         </a>
       ) : (
         <span />
@@ -73,43 +75,51 @@ const { Content } = await entry.render();
 </Layout>
 
 <style lang="scss">
-  article {
+  .article {
     display: grid;
-    gap: 2rem;
+    gap: var(--space-64);
     margin: 0 auto;
     max-width: 900px;
-    padding: 1rem;
+
+    &__cover {
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    &__top {
+      display: grid;
+      gap: var(--space-24);
+    }
+
+    &__tags {
+      color: var(--color-text-secondary);
+    }
+
+    &__content {
+      display: grid;
+    }
+
+    &__nav {
+      display: flex;
+      gap: var(--space-24);
+      justify-content: space-between;
+      text-decoration: none;
+
+      &Item {
+        display: inline-grid;
+        gap: var(--space-24);
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
   }
 
-  .inner {
+  .h1--inner {
     font-size: 3rem;
     margin: 0;
     font-weight: 400;
     text-transform: inherit;
-  }
-
-  nav {
-    display: grid;
-    gap: 4rem;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 2rem;
-    text-decoration: none;
-  }
-
-  .tags {
-    color: var(--color-text-secondary);
-  }
-
-  span {
-    align-items: center;
-    display: grid;
-    gap: 1rem;
-    grid-auto-flow: column;
-  }
-
-  img {
-    border-radius: 1rem;
-    height: auto;
-    width: 100%;
   }
 </style>
