@@ -8,7 +8,7 @@ import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 <header>
-  <nav aria-label="Primary" class="nav">
+  <nav aria-label="Главное меню" class="nav">
     <Logo />
     <div class="menu__wrap">
       <ul class="menu" id="menu">
@@ -29,7 +29,7 @@ import ThemeToggle from "./ThemeToggle.astro";
         </li>
         <li><ThemeToggle /></li>
       </ul>
-      <button id="menuToggle" class="menu__toggle" aria-label="Toggle menu">
+      <button id="menuToggle" class="menu__toggle" aria-label="Показать меню">
         <Icon
           id="menuIcon"
           name="menu"
@@ -134,11 +134,20 @@ import ThemeToggle from "./ThemeToggle.astro";
 </style>
 
 <script is:inline>
+document.addEventListener('astro:page-load', () => {
   const menu = document.querySelector(".menu");
   const menuIcon = document.getElementById("menuIcon");
   const closeIcon = document.getElementById("closeIcon");
   const menuToggle = document.getElementById("menuToggle");
   const navLinks = document.querySelectorAll("[data-navLink]");
+
+  function handleClickOutside(event) {
+    if (!menu.contains(event.target) && event.target !== menuToggle) {
+      if (menu.classList.contains("menu--mobile")) {
+        toggleMenu();
+      }
+    }
+  }
 
   function toggleMenu() {
     if (menu.classList.contains("menu--mobile")) {
@@ -152,26 +161,16 @@ import ThemeToggle from "./ThemeToggle.astro";
     }
   }
 
-  function handleClickOutside(event) {
-    if (!menu.contains(event.target) && event.target !== menuToggle) {
-      if (menu.classList.contains("menu--mobile")) {
-        toggleMenu();
-      }
-    }
-  }
-
   document.addEventListener("click", handleClickOutside);
-
   menuToggle.addEventListener("click", toggleMenu);
-
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
       const viewportWidth =
         window.innerWidth || document.documentElement.clientWidth;
-
       if (viewportWidth <= 992) {
         toggleMenu();
       }
     });
   });
+});
 </script>
