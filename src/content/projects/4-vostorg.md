@@ -2,8 +2,7 @@
 title: VOSTORG
 description: Интернет-магазин одежды и аксессуаров для стильных и современных женщин
 image: assets/vostorg.png
-date: 2023-09-28
-tag:
+tags:
   - 1С
   - Брендинг
   - Веб-дизайн

@@ -2,8 +2,7 @@
 title: Травы и Самоцветы
 description: Лавка чудес
 image: assets/travysamocvety.png
-date: 2023-09-28
-tag:
+tags:
   - Брендинг
   - Веб-дизайн
   - E-commerce

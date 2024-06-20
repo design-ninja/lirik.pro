@@ -2,8 +2,7 @@
 title: DrMneva Men
 description: Первая клиника мужской косметологии в Санкт-Петербурге
 image: assets/drmneva_men.png
-date: 2023-09-28
-tag:
+tags:
   - Брендинг
   - Веб-дизайн
   - SEO

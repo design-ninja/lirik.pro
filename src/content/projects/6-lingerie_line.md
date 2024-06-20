@@ -2,8 +2,7 @@
 title: Lingerie Line
 description: Магазин элегантного и удобного нижнего белья
 image: assets/lingerie_line.png
-date: 2023-09-28
-tag:
+tags:
   - Прототипирование
   - Брендинг
   - Веб-дизайн

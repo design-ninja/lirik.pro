@@ -13,10 +13,10 @@ const { slug, title, description, image, tags, link } = Astro.props;
     <h3 class="project__title">{title}</h3>
     <p class="project__text">{description}</p>
     <div class="project__meta">
-      {tags && <p class="project__tags">{tags}</p>}
+      {tags && <p class="project__tags">{tags.join(', ').replace(/,(?!.*,)/gmi, ' &')}</p>}
       {
         link && (
-          <span class="project__link" class="project__link">
+          <span class="project__link">
             {link}
           </span>
         )

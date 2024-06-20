@@ -1,28 +1,32 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
-import { getEntry, getCollection } from "astro:content";
+import { getCollection } from "astro:content";
 import type { CollectionEntry } from 'astro:content';
 
-const projectEntries = await getCollection("projects");
-const projects = projectEntries.sort((a, b) => b.data.date - a.data.date);
+export async function getStaticPaths() {
+  const projectEntries = await getCollection("projects");
 
+  return projectEntries.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
 const { slug } = Astro.params;
 
-if (slug === undefined) {
-  throw new Error("Slug is required");
+if (!project) {
+  throw new Error("Project is required");
 }
 
-const entry: CollectionEntry<"projects"> | undefined = await getEntry("projects", slug);
-
-if (entry === undefined) {
-  return Astro.redirect("/404");
-}
+const entry: CollectionEntry<"projects"> = project;
 
 let previous: CollectionEntry<"projects"> | null = null;
 let next: CollectionEntry<"projects"> | null = null;
 
-const currentIndex = projects.findIndex(project => project.slug === slug);
+const projects = await getCollection("projects");
+const currentIndex = projects.findIndex(proj => proj.slug === slug);
 
 if (currentIndex > 0) {
   previous = projects[currentIndex - 1];
@@ -37,37 +41,35 @@ const { Content } = await entry.render();
 
 <Layout title={entry.data.title}>
   <article>
-
-  <Image width="720" loading="eager" src={entry.data.image} alt={entry.data.title} />
-
-  <h1 class="inner">{entry.data.title}</h1>
-  <span class="tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' &')}</span>
+    <Image width="720" loading="eager" src={entry.data.image} alt={entry.data.title} />
+    <h1 class="inner">{entry.data.title}</h1>
+    <span class="tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' &')}</span>
 
     <Content />
 
     <nav>
-  {previous ? (
-    <a href={`/project/${previous.slug}`}>
-      <span>
-        <Image width={300} loading="eager" alt="" src={previous.data.image} />
-      </span>
-      <span>Previous Project</span>
-    </a>
-  ) : (
-    <span />
-  )}
-  {next ? (
-    <a href={`/project/${next.slug}`}>
-      <span>
-        <Image width={300} loading="eager" alt="" src={next.data.image} />
-      </span>
-      <span>Next Project</span>
-    </a>
-  ) : (
-    <span />
-  )}
-  </nav>
-</article>
+      {previous ? (
+        <a href={`/project/${previous.slug}`}>
+          <span>
+            <Image width={300} loading="eager" alt="" src={previous.data.image} />
+          </span>
+          <span>Previous Project</span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {next ? (
+        <a href={`/project/${next.slug}`}>
+          <span>
+            <Image width={300} loading="eager" alt="" src={next.data.image} />
+          </span>
+          <span>Next Project</span>
+        </a>
+      ) : (
+        <span />
+      )}
+    </nav>
+  </article>
 </Layout>
 
 <style lang="scss">
@@ -83,7 +85,7 @@ const { Content } = await entry.render();
     font-size: 3rem;
     margin: 0;
     font-weight: 400;
-    text-transform:inherit;
+    text-transform: inherit;
   }
 
   nav {

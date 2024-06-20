@@ -2,8 +2,7 @@
 title: KOTT. Wear
 description: Авторская одежда от Марии Кот
 image: assets/kott.png
-date: 2023-09-28
-tag:
+tags:
   - Брендинг
   - Веб-дизайн
   - E-commerce
