@@ -7,5 +7,6 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: 'https://lirik.pro',
   integrations: [icon(), sitemap(), robots()],
-  renderers: ['@astrojs/renderer-postcss']
+  renderers: ['@astrojs/renderer-postcss'],
+  output: "server",
 });
