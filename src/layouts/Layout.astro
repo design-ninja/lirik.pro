@@ -7,20 +7,18 @@ import Head from "./Head.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
-interface Props {
-  title: string;
-  description: string;
-}
-
 const {
-  title = "lirik.pro - Дизайнер Кирилл Исаченко - Профессиональная разработка и дизайн интернет-магазинов",
-  description = "lirik.pro - Профессиональная разработка и дизайн интернет-магазинов",
+  title = "My Astro Blog",
+  description = "My musings about the Astro framework",
+  image,
+  data,
+  robots,
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-  <Head {title} {description} />
+  <Head {title} {description} {image} {data} {robots} />
   <body>
     <main>
       <Header />

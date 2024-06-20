@@ -3,19 +3,19 @@ import { Picture } from "astro:assets";
 
 interface Props {
   title: string;
-  text: string;
+  description: string;
   tags?: string;
   link?: string;
   image?: ImageMetadata;
 }
 
-const { title, text, tags, link, image } = Astro.props as Props;
+const { title, description, tags, link, image } = Astro.props as Props;
 ---
 
 <a href={link} target="_blank" class="project">
   <div class="project__content">
     <h3 class="project__title">{title}</h3>
-    <p class="project__text">{text}</p>
+    <p class="project__text">{description}</p>
     <div class="project__meta">
       {tags && <p class="project__tags">{tags}</p>}
       {link && <span class="project__link">{link}</span>}

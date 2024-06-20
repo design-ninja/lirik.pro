@@ -1,52 +1,18 @@
 ---
-import { SEO } from "astro-seo";
+import Seo from "../components/Seo.astro";
 
 interface Props {
   title: string;
   description: string;
+  image: string;
+  data: any;
+  robots: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, image, data, robots } = Astro.props;
 ---
 
 <head>
-  <SEO
-    title={title}
-    description={description}
-    openGraph={{
-      basic: {
-        title: "lirik.pro - Дизайнер Кирилл Исаченко",
-        type: "website",
-        image: "https://lirik.pro/video/video_preview.png",
-        url: "https://lirik.pro",
-      },
-    }}
-    twitter={{
-      creator: "@lirik1986",
-      card: "summary_large_image",
-      title: "lirik.pro - Дизайнер Кирилл Исаченко",
-      description:
-        "Профессиональная разработка и дизайн интернет-магазинов, SEO, брендинг, контент и UX/UI дизайн.",
-      image: "https://lirik.pro/video/video_preview.png",
-    }}
-    extend={{
-      meta: [
-        {
-          name: "twitter:image",
-          content: "https://lirik.pro/video/video_preview.png",
-        },
-        {
-          name: "twitter:title",
-          content: "lirik.pro - Дизайнер Кирилл Исаченко",
-        },
-        {
-          name: "twitter:description",
-          content:
-            "Профессиональная разработка и дизайн интернет-магазинов, SEO, брендинг, контент и UX/UI дизайн.",
-        },
-      ],
-    }}
-  />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
@@ -68,4 +34,8 @@ const { title, description } = Astro.props;
   />
   <link rel="manifest" href="favicon/site.webmanifest" />
   <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <Seo {title} {description} url={Astro.url} {image} {data} {robots} />
 </head>

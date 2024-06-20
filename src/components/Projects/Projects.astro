@@ -4,6 +4,7 @@ import Project from "./Project.astro";
 import SectionTitle from "../SectionTitle.astro";
 
 const projects = await getCollection("projects");
+
 ---
 
 <section class="projects" id="projects" aria-label="Избранные проекты">
@@ -12,7 +13,7 @@ const projects = await getCollection("projects");
     {projects.map((project) => (
       <Project
         title={project.data.title}
-        text={project.data.text}
+        description={project.data.description}
         tags={project.data.tags}
         link={project.data.link}
         image={project.data.image}
