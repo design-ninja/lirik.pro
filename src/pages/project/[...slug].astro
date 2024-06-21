@@ -50,10 +50,6 @@ const { Content } = await entry.render();
     <div class="article__top">
       <h1 class="h1--inner">{entry.data.title}</h1>
       <p>{entry.data.description}</p>
-      <div class="article__meta">
-        <span class="article__tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' и')}</span>
-        <Link href={entry.data.link} target="_blank" text={entry.data.link} title={entry.data.title} isUnderlined />
-      </div>
     </div>
     <div class="article__content">
       <Image
@@ -66,6 +62,10 @@ const { Content } = await entry.render();
       />
       <div class="article__contentMain">
         <Content />
+      </div>
+      <div class="article__meta">
+        <span class="article__tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' и')}</span>
+        <Link href={entry.data.link} target="_blank" text={entry.data.link} title={entry.data.title} isUnderlined />
       </div>
     </div>
     <nav class="article__nav">
@@ -131,7 +131,7 @@ const { Content } = await entry.render();
 
     &__content {
       display: grid;
-      gap: var(--space-64);
+      gap: var(--space-40);
 
       &Main {
         display: grid;

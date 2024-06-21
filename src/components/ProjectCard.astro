@@ -13,7 +13,7 @@ const { slug, title, description, image, tags, link } = Astro.props;
     <h3 class="project__title">{title}</h3>
     <p class="project__text">{description}</p>
     <div class="project__meta">
-      {tags && <p class="project__tags">{tags.join(', ').replace(/,(?!.*,)/gmi, ' и')}</p>}
+      {tags && <span class="project__tags">{tags.join(', ').replace(/,(?!.*,)/gmi, ' и')}</span>}
       {
         link && (
           <span class="project__link">
@@ -58,17 +58,22 @@ const { slug, title, description, image, tags, link } = Astro.props;
     &__content {
       display: flex;
       flex-direction: column;
-      gap: var(--space-16);
       transition: opacity 0.2s ease;
     }
 
+    &__title {
+      margin-bottom: var(--space-16);
+    }
+
+    &__text {
+      margin-bottom: var(--space-24);
+    }
+
     &__meta {
+      display: grid;
+      gap: var(--space-8);
       color: var(--color-text-secondary);
       margin-top: auto;
-
-      p {
-        margin-bottom: var(--space-8);
-      }
     }
 
     &__image-container {
