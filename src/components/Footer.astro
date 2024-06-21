@@ -14,7 +14,7 @@ const footer = await getEntry('base','footer');
 
 <footer class="footer">
   <span>
-    &copy; 2003—<span id="copyright"></span> lirik.pro
+    &copy; 2003—<span set:html={new Date().getFullYear()}></span> lirik.pro
   </span>
   <nav aria-label="Primary" class="nav">
     <ul class="menu">
@@ -62,9 +62,3 @@ const footer = await getEntry('base','footer');
   }
 </style>
 
-<script>
-  const copyrightElement = document.querySelector("#copyright");
-  if (copyrightElement) {
-    copyrightElement.textContent = new Date().getFullYear().toString();
-  }
-</script>
