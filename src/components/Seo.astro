@@ -18,7 +18,7 @@ const jsonLD = jsonLDGenerator({
 });
 ---
 
-{robots && <meta name="robots" content="index, follow" />}
+{robots && <meta name="robots" content={robots ? robots : "index, follow"} />}
 
 <!-- SEO -->
 <link rel="canonical" href={url} />
@@ -30,13 +30,10 @@ const jsonLD = jsonLDGenerator({
 <meta property="og:url" content={url} />
 <meta property="og:image" content={image?.src || siteData.image.src} />
 <meta property="og:image:url" content={image?.src || siteData.image.src} />
-<meta
-  property="og:image:secure_url"
-  content={image?.src || siteData.image.src}
-/>
+<meta property="og:image:secure_url" content={image?.src || siteData.image.src} />
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="600" />
+<meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={image?.alt || siteData.image.alt} />
 
 <!-- Twitter -->
