@@ -18,6 +18,8 @@ const jsonLD = jsonLDGenerator({
 });
 ---
 
+{robots && <meta name="robots" content="index, follow" />}
+
 <!-- SEO -->
 <link rel="canonical" href={url} />
 
@@ -44,8 +46,6 @@ const jsonLD = jsonLDGenerator({
 <meta name="twitter:image" content={image?.src || siteData.image.src} />
 <meta name="twitter:image:alt" content={title} />
 <meta name="twitter:domain" content={import.meta.env.SITE} />
-
-{robots && <meta name="robots" content="noindex, nofollow" />}
 
 <!-- JSON LD -->
 <Fragment set:html={jsonLD} />

@@ -40,7 +40,12 @@ if (currentIndex < projects.length - 1) {
 const { Content } = await entry.render();
 ---
 
-<Layout title={entry.data.title}>
+<Layout
+  title={`${entry.data.title} - lirik.pro`}
+  description={entry.data.description}
+  image={entry.data.image}
+  robots
+>
   <article class="article">
     <div class="article__top">
       <h1 class="h1--inner">{entry.data.title}</h1>
