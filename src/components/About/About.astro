@@ -1,6 +1,4 @@
 ---
-import { Icon } from "astro-icon/components";
-
 import videoSrc from "./video/video.mp4";
 import captions from "./video/captions.vtt";
 
@@ -65,26 +63,6 @@ import posterImage from "./video/poster.avif";
         width: 100%;
         height: auto;
       }
-
-      // .play-button {
-      //   position: absolute;
-      //   top: 50%;
-      //   left: 50%;
-      //   transform: translate(-50%, -50%);
-      //   background: rgba(0, 0, 0, 0.5);
-      //   border: none;
-      //   border-radius: 50%;
-      //   width: 80px;
-      //   height: 80px;
-      //   display: flex;
-      //   align-items: center;
-      //   justify-content: center;
-      //   z-index: 2;
-      // }
-
-      // .play-button:focus {
-      //   outline: none;
-      // }
     }
   }
   [data-icon] {
@@ -92,23 +70,3 @@ import posterImage from "./video/poster.avif";
     transform: translateX(var(--space-4));
   }
 </style>
-
-<!-- <script is:inline>
-  const video = document.getElementById("reelsVideo");
-  const playButton = document.getElementById("playButton");
-
-  playButton.addEventListener("click", function () {
-    video.play();
-    playButton.style.display = "none";
-  });
-
-  video.addEventListener("click", function () {
-    if (video.paused) {
-      video.play();
-      playButton.style.display = "none";
-    } else {
-      video.pause();
-      playButton.style.display = "flex";
-    }
-  });
-</script> -->
