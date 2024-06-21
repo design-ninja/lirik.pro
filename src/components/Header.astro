@@ -1,10 +1,17 @@
 ---
+import { getEntry } from 'astro:content';
 import { Icon } from "astro-icon/components";
 
 import Logo from "./Logo.astro";
 import Link from "./Link.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 
+interface MenuLink {
+  link: string;
+  name: string;
+}
+
+const menu = await getEntry('base','menu');
 ---
 
 <header>
@@ -12,21 +19,11 @@ import ThemeToggle from "./ThemeToggle.astro";
     <Logo />
     <div class="menu__wrap">
       <ul class="menu" id="menu">
-        <li>
-          <Link text="Экспертиза" href="/#expertize" data-navLink />
-        </li>
-        <li>
-          <Link text="Работы" href="/#projects" data-navLink />
-        </li>
-        <li>
-          <Link text="Обо мне" href="/#about" data-navLink />
-        </li>
-        <li>
-          <Link text="Отзывы" href="/#testimonials" data-navLink />
-        </li>
-        <li>
-          <Link text="Контакты" href="/#cta" data-navLink />
-        </li>
+        {menu.data.links.map((menu: MenuLink) =>
+          <li>
+            <Link href={menu.link} text={menu.name} title={menu.name} aria-label={menu.name} data-navLink></Link>
+          </li>
+        )}
         <li><ThemeToggle /></li>
       </ul>
       <button id="menuToggle" class="menu__toggle" aria-label="Показать меню">

@@ -1,5 +1,15 @@
 ---
+import { getEntry } from 'astro:content';
+
 import Link from "./Link.astro";
+
+interface SocialLink {
+  link: string;
+  name: string;
+  target: string;
+}
+
+const footer = await getEntry('base','footer');
 ---
 
 <footer class="footer">
@@ -8,54 +18,14 @@ import Link from "./Link.astro";
   </span>
   <nav aria-label="Primary" class="nav">
     <ul class="menu">
-      <li>
-        <Link
-          text="Telegram"
-          href="https://t.me/lirikpro"
-          title="Telegram"
-          target="_blank"
-          data-navLink
-        />
-      </li>
-      <li>
-        <Link
-          text="WhatsApp"
-          href="https://wa.me/79620726666"
-          title="WhatsApp"
-          target="_blank"
-          data-navLink
-        />
-      </li>
-      <li>
-        <Link
-          text="X"
-          href="https://x.com/lirik1986"
-          title="X"
-          target="_blank"
-          data-navLink
-        />
-      </li>
-      <li>
-        <Link
-          text="Behance"
-          href="https://behance.net/design-ninja"
-          title="Behance"
-          target="_blank"
-          data-navLink
-        />
-      </li>
-      <li>
-        <Link
-          text="GitHub"
-          href="https://github.com/design-ninja"
-          title="GitHub"
-          target="_blank"
-          data-navLink
-        />
-      </li>
+      {footer.data.socials.map((footer: SocialLink) =>
+        <li>
+          <Link href={footer.link} target="_blank" text={footer.name} title={footer.name} aria-label={footer.name} data-rel="noopener"></Link>
+        </li>
+      )}
     </ul>
   </nav>
-  <span class="footer__author"> Дизайн и разработка: lirik 🖤 </span>
+  <span class="footer__author">{footer.data.author}</span>
 </footer>
 
 <style lang="scss">

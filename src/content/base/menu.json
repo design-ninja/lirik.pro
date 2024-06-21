@@ -1,0 +1,29 @@
+{
+    "links": [
+        {
+            "name": "Экспертиза",
+            "target": "_self",
+            "link": "/#expertize"
+        },
+        {
+            "name": "Работы",
+            "target": "_self",
+            "link": "/#projects"
+        },
+        {
+            "name": "Обо мне",
+            "target": "_self",
+            "link": "/#about"
+        },
+        {
+            "name": "Отзывы",
+            "target": "_self",
+            "link": "/#testimonials"
+        },
+        {
+            "name": "Контакты",
+            "target": "_self",
+            "link": "/#contacts"
+        }
+    ]
+}

@@ -35,8 +35,7 @@ import Button from "../components/Button.astro";
   .hero {
 
     @media (max-width: 992px) {
-      padding-top: var(--space-24);
-      padding-bottom: 0;
+      padding: 0;
     }
 
     &__wrap {
@@ -53,6 +52,13 @@ import Button from "../components/Button.astro";
 
     &__text {
       max-width: 40ch;
+
+      @media (max-width: 992px) {
+
+        p {
+          font-size: var(--font-size-20);
+        }
+      }
 
       p:last-child {
         margin-bottom: var(--space-16);

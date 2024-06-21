@@ -5,6 +5,7 @@ interface Props {
   text: string;
   href: string;
   target?: "_blank" | "_self";
+  rel?: string;
   title?: string;
   style?: "primary" | "secondary";
   isUnderlined?: boolean;
@@ -15,7 +16,7 @@ interface Props {
   classes?: string;
 }
 
-const { text, href, style = "primary", isUnderlined, icon, classes, ...rest } = Astro.props as Props;
+const { text, href, rel, style = "primary", isUnderlined, icon, classes, ...rest } = Astro.props as Props;
 ---
 
 <a href={href} class:list={["link", `link--${style}`, isUnderlined && "link--underlined", classes].filter(Boolean).join(" ")} {...rest}>
