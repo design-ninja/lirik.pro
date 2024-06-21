@@ -140,6 +140,7 @@ document.addEventListener('astro:page-load', () => {
   const closeIcon = document.getElementById("closeIcon");
   const menuToggle = document.getElementById("menuToggle");
   const navLinks = document.querySelectorAll("[data-navLink]");
+  const themeToggle = document.getElementById("themeToggle");
 
   function handleClickOutside(event) {
     if (!menu.contains(event.target) && event.target !== menuToggle) {
@@ -163,10 +164,15 @@ document.addEventListener('astro:page-load', () => {
 
   document.addEventListener("click", handleClickOutside);
   menuToggle.addEventListener("click", toggleMenu);
+  themeToggle.addEventListener("click", () => {
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    if (viewportWidth <= 992 && menu.classList.contains("menu--mobile")) {
+      toggleMenu();
+    }
+  });
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
-      const viewportWidth =
-        window.innerWidth || document.documentElement.clientWidth;
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
       if (viewportWidth <= 992) {
         toggleMenu();
       }
