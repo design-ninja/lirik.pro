@@ -7,6 +7,7 @@ interface Props {
   target?: "_blank" | "_self";
   title?: string;
   style?: "primary" | "secondary";
+  isUnderlined?: boolean;
   icon?: {
     name: string;
     side: "left" | "right";
@@ -14,10 +15,10 @@ interface Props {
   classes?: string;
 }
 
-const { text, href, style = "primary", icon, classes, ...rest } = Astro.props as Props;
+const { text, href, style = "primary", isUnderlined, icon, classes, ...rest } = Astro.props as Props;
 ---
 
-<a href={href} class:list={["link", classes]} {...rest}>
+<a href={href} class:list={["link", `link--${style}`, isUnderlined && "link--underlined", classes].filter(Boolean).join(" ")} {...rest}>
   {
     icon && icon.side === "left" && (
       <Icon name={icon.name} height={24} width={24} />
@@ -45,6 +46,14 @@ const { text, href, style = "primary", icon, classes, ...rest } = Astro.props as
 
     &:hover {
       opacity: 0.6;
+    }
+
+    &--underlined {
+      text-decoration: underline;
+      text-underline-offset: var(--size-4);
+      text-decoration-thickness: var(--size-1);
+      text-decoration-skip-ink: none;
+      text-decoration-color: var(--color-text-link-secondary)
     }
 
     &--primary {

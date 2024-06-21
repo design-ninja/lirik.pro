@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
+import Link from '../../components/Link.astro';
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from 'astro:content';
 
@@ -41,13 +42,19 @@ const { Content } = await entry.render();
 
 <Layout title={entry.data.title}>
   <article class="article">
-    <Image width="900" loading="eager" src={entry.data.image} alt={entry.data.title} class="article__cover" />
     <div class="article__top">
       <h1 class="h1--inner">{entry.data.title}</h1>
-      <span class="article__tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' и')}</span>
+      <p>{entry.data.description}</p>
+      <div class="article__meta">
+        <span class="article__tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' и')}</span>
+        <Link href={entry.data.link} target="_blank" text={entry.data.link} title={entry.data.title} isUnderlined />
+      </div>
     </div>
     <div class="article__content">
-      <Content />
+      <Image width="900" loading="eager" src={entry.data.image} alt={entry.data.title} class="article__cover" />
+      <div class="article__contentMain">
+        <Content />
+      </div>
     </div>
     <nav class="article__nav">
       {previous ? (
@@ -55,7 +62,7 @@ const { Content } = await entry.render();
           <span>
             <Image width={300} loading="eager" alt="Предыдущий проект" src={previous.data.image} class="article__navImage"/>
           </span>
-          <span>Предыдущий проект</span>
+          <span>← {previous.data.title}</span>
         </a>
       ) : (
         <span />
@@ -65,7 +72,7 @@ const { Content } = await entry.render();
           <span>
             <Image width={300} loading="eager" alt="Следующий проект" src={next.data.image} class="article__navImage"/>
           </span>
-          <span>Следующий проект</span>
+          <span>{next.data.title} →</span>
         </a>
       ) : (
         <span />
@@ -91,12 +98,23 @@ const { Content } = await entry.render();
       gap: var(--space-24);
     }
 
+    &__meta {
+      display: grid;
+      gap: var(--space-8);
+      justify-items: start;
+    }
+
     &__tags {
       color: var(--color-text-secondary);
     }
 
     &__content {
       display: grid;
+      gap: var(--space-64);
+
+      &Main {
+        display: grid;
+      }
     }
 
     &__nav {
@@ -104,6 +122,8 @@ const { Content } = await entry.render();
       gap: var(--space-24);
       justify-content: space-between;
       text-decoration: none;
+      padding-top: var(--space-24);
+      border-top: 1px solid var(--color-border-primary);
 
       &Item {
         display: inline-grid;
