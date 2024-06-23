@@ -1,10 +1,10 @@
 ---
 import { getEntry } from 'astro:content';
-import { Icon } from "astro-icon/components";
 
 import Logo from "./Logo.astro";
 import Link from "./Link.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+import MenuToggle from './MenuToggle.astro';
 
 interface MenuLink {
   link: string;
@@ -24,29 +24,14 @@ const menu = await getEntry('base','menu');
             <Link href={menu.link} text={menu.name} title={menu.name} aria-label={menu.name} data-navLink></Link>
           </li>
         )}
-        <li><ThemeToggle /></li>
+        <li><ThemeToggle class="theme-toggle" id="themeToggle" /></li>
       </ul>
-      <button id="menuToggle" class="menu__toggle" aria-label="Показать меню">
-        <Icon
-          id="menuIcon"
-          name="menu"
-          class="menu__icon"
-          width={32}
-          height={32}
-        />
-        <Icon
-          id="closeIcon"
-          name="close"
-          width={32}
-          height={32}
-          style="display: none;"
-        />
-      </button>
+      <MenuToggle />
     </div>
   </nav>
 </header>
 
-<style is:global lang="scss" >
+<style is:global lang="scss">
   nav {
     position: relative;
     display: flex;
@@ -88,21 +73,6 @@ const menu = await getEntry('base','menu');
         font-size: 0;
       }
     }
-
-    &__icon svg {
-      fill: var(--color-icon-primary);
-    }
-
-    &__toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-
-      svg {
-        pointer-events: none;
-      }
-    }
   }
 
   @media (max-width: 992px) {
@@ -112,17 +82,11 @@ const menu = await getEntry('base','menu');
     .menu--mobile {
       display: flex;
     }
-    .menu__toggle {
-      display: block;
-    }
   }
 
   @media (min-width: 992px) {
     .menu {
       display: flex;
-    }
-    .menu__toggle {
-      display: none;
     }
   }
 
@@ -130,51 +94,3 @@ const menu = await getEntry('base','menu');
     color: var(--color-icon-primary);
   }
 </style>
-
-<script is:inline>
-document.addEventListener('astro:page-load', () => {
-  const menu = document.querySelector(".menu");
-  const menuIcon = document.getElementById("menuIcon");
-  const closeIcon = document.getElementById("closeIcon");
-  const menuToggle = document.getElementById("menuToggle");
-  const navLinks = document.querySelectorAll("[data-navLink]");
-  const themeToggle = document.getElementById("themeToggle");
-
-  function handleClickOutside(event) {
-    if (!menu.contains(event.target) && event.target !== menuToggle) {
-      if (menu.classList.contains("menu--mobile")) {
-        toggleMenu();
-      }
-    }
-  }
-
-  function toggleMenu() {
-    if (menu.classList.contains("menu--mobile")) {
-      menu.classList.remove("menu--mobile");
-      menuIcon.style.display = "block";
-      closeIcon.style.display = "none";
-    } else {
-      menu.classList.add("menu--mobile");
-      menuIcon.style.display = "none";
-      closeIcon.style.display = "block";
-    }
-  }
-
-  document.addEventListener("click", handleClickOutside);
-  menuToggle.addEventListener("click", toggleMenu);
-  themeToggle.addEventListener("click", () => {
-    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-    if (viewportWidth <= 992 && menu.classList.contains("menu--mobile")) {
-      toggleMenu();
-    }
-  });
-  navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-      if (viewportWidth <= 992) {
-        toggleMenu();
-      }
-    });
-  });
-});
-</script>
