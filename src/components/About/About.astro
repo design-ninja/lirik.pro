@@ -8,7 +8,7 @@ import posterImage from "./video/poster.avif";
 <section class="about" id="about" aria-label="Обо мне">
   <div class="about__video">
     <div class="video-container">
-      <video id="reelsVideo" class="video-player" poster={posterImage.src} controls preload="none" data-src={videoSrc}>
+      <video id="reelsVideo" class="video-player" poster={posterImage.src} controls preload="none" src={videoSrc}>
         <track src={captions} kind="captions" srclang="ru" label="Русский" default />
         Ваш браузер не поддерживает тег видео.
       </video>
@@ -69,26 +69,3 @@ import posterImage from "./video/poster.avif";
     transform: translateX(var(--space-4));
   }
 </style>
-
-<script is:inline>
-  document.addEventListener('astro:page-load', () => {
-    const video = document.getElementById("reelsVideo");
-
-    const lazyLoadVideo = () => {
-      const videoSrc = video.getAttribute('data-src');
-      video.setAttribute('src', videoSrc);
-      video.load();
-    };
-
-    const videoObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          lazyLoadVideo();
-          observer.disconnect();
-        }
-      });
-    });
-
-    videoObserver.observe(video);
-  });
-</script>
