@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets';
-import Layout from '../../layouts/Layout.astro';
-import Link from '../../components/Link.astro';
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import Link from "../../components/Link.astro";
 import { getCollection } from "astro:content";
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const projectEntries = await getCollection("projects");
@@ -27,7 +27,7 @@ let previous: CollectionEntry<"projects"> | null = null;
 let next: CollectionEntry<"projects"> | null = null;
 
 const projects = await getCollection("projects");
-const currentIndex = projects.findIndex(proj => proj.slug === slug);
+const currentIndex = projects.findIndex((proj) => proj.slug === slug);
 
 if (currentIndex > 0) {
   previous = projects[currentIndex - 1];
@@ -64,45 +64,65 @@ const { Content } = await entry.render();
         <Content />
       </div>
       <div class="article__meta">
-        <span class="article__tags">{entry.data.tags?.join(', ').replace(/,(?!.*,)/gmi, ' и')}</span>
-        <Link href={entry.data.link} target="_blank" text={entry.data.link} title={entry.data.title} isUnderlined />
+        <span class="article__tags"
+          >{entry.data.tags?.join(", ").replace(/,(?!.*,)/gim, " и")}</span
+        >
+        <Link
+          href={entry.data.link}
+          target="_blank"
+          text={entry.data.link}
+          title={entry.data.title}
+          isUnderlined
+        />
       </div>
     </div>
     <nav class="article__nav">
-      {previous ? (
-        <a href={`/project/${previous.slug}`} title="Предыдущий проект" class="article__navItem">
-          <span>
-            <Image
-              width="300"
-              height="168"
-              loading="eager"
-              alt="Предыдущий проект"
-              src={previous.data.image}
-              class="article__navImage"
-            />
-          </span>
-          <span>← {previous.data.title}</span>
-        </a>
-      ) : (
-        <span />
-      )}
-      {next ? (
-        <a href={`/project/${next.slug}`} title="Следующий проект" class="article__navItem">
-          <span>
-            <Image
-              width="300"
-              height="168"
-              loading="eager"
-              alt="Следующий проект"
-              src={next.data.image}
-              class="article__navImage"
-            />
-          </span>
-          <span>{next.data.title} →</span>
-        </a>
-      ) : (
-        <span />
-      )}
+      {
+        previous ? (
+          <a
+            href={`/project/${previous.slug}`}
+            title="Предыдущий проект"
+            class="article__navItem"
+          >
+            <span>
+              <Image
+                width="300"
+                height="168"
+                loading="eager"
+                alt="Предыдущий проект"
+                src={previous.data.image}
+                class="article__navImage"
+              />
+            </span>
+            <span>← {previous.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next ? (
+          <a
+            href={`/project/${next.slug}`}
+            title="Следующий проект"
+            class="article__navItem"
+          >
+            <span>
+              <Image
+                width="300"
+                height="168"
+                loading="eager"
+                alt="Следующий проект"
+                src={next.data.image}
+                class="article__navImage"
+              />
+            </span>
+            <span>{next.data.title} →</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
     </nav>
   </article>
 </Layout>

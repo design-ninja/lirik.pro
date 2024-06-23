@@ -1,25 +1,25 @@
 {
-    "author": "Дизайн и разработка: lirik 🖤",
-    "socials": [
-        {
-            "name": "Telegram",
-            "link": "https://t.me/lirikpro/"
-        },
-        {
-            "name": "WhatsApp",
-            "link": "https://wa.me/79620726666/"
-        },
-        {
-            "name": "X",
-            "link": "https://x.com/lirik1986/"
-        },
-        {
-            "name": "Behance",
-            "link": "https://behance.net/design-ninja/"
-        },
-        {
-            "name": "GitHub",
-            "link": "https://github.com/design-ninja/"
-        }
-    ]
+  "author": "Дизайн и разработка: lirik 🖤",
+  "socials": [
+    {
+      "name": "Telegram",
+      "link": "https://t.me/lirikpro/"
+    },
+    {
+      "name": "WhatsApp",
+      "link": "https://wa.me/79620726666/"
+    },
+    {
+      "name": "X",
+      "link": "https://x.com/lirik1986/"
+    },
+    {
+      "name": "Behance",
+      "link": "https://behance.net/design-ninja/"
+    },
+    {
+      "name": "GitHub",
+      "link": "https://github.com/design-ninja/"
+    }
+  ]
 }

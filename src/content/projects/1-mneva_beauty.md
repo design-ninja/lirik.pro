@@ -3,12 +3,12 @@ title: Mneva Beauty
 description: Премиум-косметология и уход за кожей с акцентом на инновационные технологии
 image: assets/mneva_beauty/mneva_beauty.png
 tags:
-    - Брендинг
-    - Веб-дизайн
-    - E-commerce
-    - SEO
-    - Контент
-    - Яндекс.Директ
+  - Брендинг
+  - Веб-дизайн
+  - E-commerce
+  - SEO
+  - Контент
+  - Яндекс.Директ
 link: https://mnevabeauty.ru
 ---
 

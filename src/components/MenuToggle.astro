@@ -5,19 +5,16 @@ export interface Props {
   label?: string;
 }
 
-const {
-  label = 'Показать меню',
-} = Astro.props;
+const { label = "Показать меню" } = Astro.props;
 ---
 
-<button type="button" class="menu__toggle" aria-label={label} data-aw-toggle-menu>
-  <Icon
-    id="menuIcon"
-    name="menu"
-    class="menu__icon"
-    width={32}
-    height={32}
-  />
+<button
+  type="button"
+  class="menu__toggle"
+  aria-label={label}
+  data-aw-toggle-menu
+>
+  <Icon id="menuIcon" name="menu" class="menu__icon" width={32} height={32} />
   <Icon
     id="closeIcon"
     name="close"
@@ -54,10 +51,10 @@ const {
 </style>
 
 <script is:inline>
-  document.addEventListener('astro:page-load', () => {
+  document.addEventListener("astro:page-load", () => {
     const initMenuToggle = () => {
       const menu = document.querySelector(".menu");
-      const menuToggle = document.querySelector('[data-aw-toggle-menu]');
+      const menuToggle = document.querySelector("[data-aw-toggle-menu]");
       const menuIcon = document.getElementById("menuIcon");
       const closeIcon = document.getElementById("closeIcon");
       const navLinks = document.querySelectorAll("[data-navLink]");
@@ -83,18 +80,25 @@ const {
       menuToggle.addEventListener("click", toggleMenu);
 
       document.addEventListener("click", (event) => {
-        if (!menu.contains(event.target) && event.target !== menuToggle && menu.classList.contains("menu--mobile")) {
+        if (
+          !menu.contains(event.target) &&
+          event.target !== menuToggle &&
+          menu.classList.contains("menu--mobile")
+        ) {
           toggleMenu();
         }
       });
 
       window.addEventListener("resize", () => {
-        if (window.innerWidth >= 992 && menu.classList.contains("menu--mobile")) {
+        if (
+          window.innerWidth >= 992 &&
+          menu.classList.contains("menu--mobile")
+        ) {
           toggleMenu();
         }
       });
 
-      navLinks.forEach(link => {
+      navLinks.forEach((link) => {
         link.addEventListener("click", () => {
           if (menu.classList.contains("menu--mobile")) {
             toggleMenu();

@@ -1,5 +1,5 @@
 ---
-import { getEntry } from 'astro:content';
+import { getEntry } from "astro:content";
 
 import Link from "./Link.astro";
 
@@ -9,20 +9,29 @@ interface SocialLink {
   target: string;
 }
 
-const footer = await getEntry('base','footer');
+const footer = await getEntry("base", "footer");
 ---
 
 <footer class="footer">
   <span>
-    &copy; 2003—<span set:html={new Date().getFullYear()}></span> lirik.pro
+    &copy; 2003—<span set:html={new Date().getFullYear()} /> lirik.pro
   </span>
   <nav aria-label="Primary" class="nav">
     <ul class="menu">
-      {footer.data.socials.map((footer: SocialLink) =>
-        <li>
-          <Link href={footer.link} target="_blank" text={footer.name} title={footer.name} aria-label={footer.name} data-rel="noopener"></Link>
-        </li>
-      )}
+      {
+        footer.data.socials.map((footer: SocialLink) => (
+          <li>
+            <Link
+              href={footer.link}
+              target="_blank"
+              text={footer.name}
+              title={footer.name}
+              aria-label={footer.name}
+              data-rel="noopener"
+            />
+          </li>
+        ))
+      }
     </ul>
   </nav>
   <span class="footer__author">{footer.data.author}</span>
@@ -61,4 +70,3 @@ const footer = await getEntry('base','footer');
     list-style: none;
   }
 </style>
-

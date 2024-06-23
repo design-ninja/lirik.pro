@@ -8,8 +8,21 @@ import posterImage from "./video/poster.avif";
 <section class="about" id="about" aria-label="Обо мне">
   <div class="about__video">
     <div class="video-container">
-      <video id="reelsVideo" class="video-player" poster={posterImage.src} controls preload="none" src={videoSrc}>
-        <track src={captions} kind="captions" srclang="ru" label="Русский" default />
+      <video
+        id="reelsVideo"
+        class="video-player"
+        poster={posterImage.src}
+        controls
+        preload="none"
+        src={videoSrc}
+      >
+        <track
+          src={captions}
+          kind="captions"
+          srclang="ru"
+          label="Русский"
+          default
+        />
         Ваш браузер не поддерживает тег видео.
       </video>
     </div>
@@ -55,7 +68,6 @@ import posterImage from "./video/poster.avif";
       .video-container {
         position: relative;
         width: 100%;
-        cursor: pointer;
       }
 
       .video-player {

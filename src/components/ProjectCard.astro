@@ -4,23 +4,19 @@ import { Picture } from "astro:assets";
 const { slug, title, description, image, tags, link } = Astro.props;
 ---
 
-<a
-  href={`/project/${slug}`}
-  aria-label={title}
-  class="project"
->
+<a href={`/project/${slug}`} aria-label={title} class="project">
   <div class="project__content">
     <h3 class="project__title">{title}</h3>
     <p class="project__text">{description}</p>
     <div class="project__meta">
-      {tags && <span class="project__tags">{tags.join(', ').replace(/,(?!.*,)/gmi, ' и')}</span>}
       {
-        link && (
-          <span class="project__link">
-            {link}
+        tags && (
+          <span class="project__tags">
+            {tags.join(", ").replace(/,(?!.*,)/gim, " и")}
           </span>
         )
       }
+      {link && <span class="project__link">{link}</span>}
     </div>
   </div>
   <div class="project__image-container">

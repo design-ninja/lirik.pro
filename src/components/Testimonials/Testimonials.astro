@@ -11,9 +11,9 @@ interface Frontmatter {
   testimonials: TestimonialItem[];
 }
 
-const { frontmatter } = await import("../../content/testimonials/testimonials.md").then(
-  (module) => module as unknown as { frontmatter: Frontmatter }
-);
+const { frontmatter } = await import(
+  "../../content/testimonials/testimonials.md"
+).then((module) => module as unknown as { frontmatter: Frontmatter });
 const testimonials = frontmatter.testimonials;
 ---
 
@@ -30,7 +30,6 @@ const testimonials = frontmatter.testimonials;
 
 <style lang="scss">
   .testimonials {
-
     .testimonials__grid {
       display: grid;
       gap: var(--space-80);

@@ -16,10 +16,30 @@ interface Props {
   classes?: string;
 }
 
-const { text, href, rel, style = "primary", isUnderlined, icon, classes, ...rest } = Astro.props as Props;
+const {
+  text,
+  href,
+  rel,
+  style = "primary",
+  isUnderlined,
+  icon,
+  classes,
+  ...rest
+} = Astro.props as Props;
 ---
 
-<a href={href} class:list={["link", `link--${style}`, isUnderlined && "link--underlined", classes].filter(Boolean).join(" ")} {...rest}>
+<a
+  href={href}
+  class:list={[
+    "link",
+    `link--${style}`,
+    isUnderlined && "link--underlined",
+    classes,
+  ]
+    .filter(Boolean)
+    .join(" ")}
+  {...rest}
+>
   {
     icon && icon.side === "left" && (
       <Icon name={icon.name} height={24} width={24} />
@@ -54,7 +74,7 @@ const { text, href, rel, style = "primary", isUnderlined, icon, classes, ...rest
       text-underline-offset: var(--size-4);
       text-decoration-thickness: var(--size-1);
       text-decoration-skip-ink: none;
-      text-decoration-color: var(--color-text-link-secondary)
+      text-decoration-color: var(--color-text-link-secondary);
     }
 
     &--primary {
