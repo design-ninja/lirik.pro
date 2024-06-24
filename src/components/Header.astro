@@ -7,98 +7,98 @@ import ThemeToggle from "./ThemeToggle.astro";
 import MenuToggle from "./MenuToggle.astro";
 
 interface MenuLink {
-    link: string;
-    name: string;
+  link: string;
+  name: string;
 }
 
-const menu = await getEntry("base", "menu");
+const menu = await getEntry("nav", "menu");
 ---
 
 <header>
-    <nav aria-label="Главное меню" class="nav">
-        <Logo />
-        <div class="menu__wrap">
-            <ul class="menu" id="menu">
-                {
-                    menu.data.links.map((menu: MenuLink) => (
-                        <li>
-                            <Link
-                                href={menu.link}
-                                text={menu.name}
-                                title={menu.name}
-                                aria-label={menu.name}
-                                data-navLink
-                            />
-                        </li>
-                    ))
-                }
-                <li><ThemeToggle class="theme-toggle" id="themeToggle" /></li>
-            </ul>
-            <MenuToggle />
-        </div>
-    </nav>
+  <nav aria-label="Главное меню" class="nav">
+    <Logo />
+    <div class="menu__wrap">
+      <ul class="menu" id="menu">
+        {
+          menu.data.links.map((menu: MenuLink) => (
+            <li>
+              <Link
+                href={menu.link}
+                text={menu.name}
+                title={menu.name}
+                aria-label={menu.name}
+                data-navLink
+              />
+            </li>
+          ))
+        }
+        <li><ThemeToggle class="theme-toggle" id="themeToggle" /></li>
+      </ul>
+      <MenuToggle />
+    </div>
+  </nav>
 </header>
 
 <style is:global lang="scss">
-    nav {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+  nav {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-40);
+    list-style: none;
+
+    &__wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--space-40);
     }
 
+    &--mobile {
+      flex-direction: column;
+      position: absolute;
+      justify-content: start;
+      top: var(--size-80);
+      left: 0;
+      right: 0;
+      background: var(--color-bg-base);
+      z-index: 100;
+      gap: var(--space-40);
+      padding: var(--space-40);
+      border-bottom: 1px solid var(--color-border-primary);
+      display: none;
+    }
+
+    li {
+      list-style: none;
+
+      &:last-child {
+        font-size: 0;
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
     .menu {
-        display: flex;
-        align-items: center;
-        gap: var(--space-40);
-        list-style: none;
-
-        &__wrap {
-            display: flex;
-            align-items: center;
-            gap: var(--space-40);
-        }
-
-        &--mobile {
-            flex-direction: column;
-            position: absolute;
-            justify-content: start;
-            top: var(--size-80);
-            left: 0;
-            right: 0;
-            background: var(--color-bg-base);
-            z-index: 100;
-            gap: var(--space-40);
-            padding: var(--space-40);
-            border-bottom: 1px solid var(--color-border-primary);
-            display: none;
-        }
-
-        li {
-            list-style: none;
-
-            &:last-child {
-                font-size: 0;
-            }
-        }
+      display: none;
     }
-
-    @media (max-width: 992px) {
-        .menu {
-            display: none;
-        }
-        .menu--mobile {
-            display: flex;
-        }
+    .menu--mobile {
+      display: flex;
     }
+  }
 
-    @media (min-width: 992px) {
-        .menu {
-            display: flex;
-        }
+  @media (min-width: 992px) {
+    .menu {
+      display: flex;
     }
+  }
 
-    [data-icon] {
-        color: var(--color-icon-primary);
-    }
+  [data-icon] {
+    color: var(--color-icon-primary);
+  }
 </style>

@@ -8,17 +8,18 @@ interface TestimonialItem {
 }
 
 interface Frontmatter {
+  title: string;
   testimonials: TestimonialItem[];
 }
 
 const { frontmatter } = await import(
   "../../content/testimonials/testimonials.md"
 ).then((module) => module as unknown as { frontmatter: Frontmatter });
-const testimonials = frontmatter.testimonials;
+const { title, testimonials } = frontmatter;
 ---
 
-<section class="testimonials" id="testimonials" aria-label="Отзывы клиентов">
-  <SectionTitle title="Отзывы клиентов" />
+<section class="testimonials" id="testimonials" aria-label={title}>
+  <SectionTitle title={title} />
   <ul class="testimonials__grid">
     {
       testimonials.map((testimonial) => (

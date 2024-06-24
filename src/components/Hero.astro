@@ -1,22 +1,17 @@
 ---
 import { Icon } from "astro-icon/components";
-
 import Button from "../components/Button.astro";
+import * as heroContent from "../content/base/hero.md";
+import * as actionText from "../content/base/common.md";
+
+import { Content as HeroText } from "../content/base/hero.md";
 ---
 
-<section class="hero" aria-label="Я всё сделаю сам">
-  <h1>Я всё сделаю сам.</h1>
+<section class="hero" aria-label={heroContent.frontmatter.title}>
+  <h1>{heroContent.frontmatter.title}</h1>
   <div class="hero__wrap">
     <div class="hero__text">
-      <p>Создаю стильные, продающие интернет-магазины.</p>
-      <p>
-        Беру всё на себя — никаких лишних вопросов и&nbsp;постоянных
-        согласований.
-      </p>
-      <p>
-        Вы получаете готовый, современный сайт с&nbsp;классным дизайном
-        в&nbsp;разумные сроки.
-      </p>
+      <HeroText />
     </div>
     <div>
       <Button
@@ -26,7 +21,7 @@ import Button from "../components/Button.astro";
         href="https://wa.me/79620726666"
       >
         <Icon name="whatsapp" width={24} height={24} />
-        Написать мне
+        {actionText.frontmatter.action}
       </Button>
     </div>
   </div>

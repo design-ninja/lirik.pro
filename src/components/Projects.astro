@@ -1,15 +1,19 @@
 ---
 import { getCollection } from "astro:content";
-
 import ProjectCard from "./ProjectCard.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 
 const allProjects = await getCollection("projects");
 const projects = allProjects;
+
+const commonContent = await import("../content/base/common.md").then(
+  (module) => module as unknown as { frontmatter: { projectsTitle: string } }
+);
+const { projectsTitle } = commonContent.frontmatter;
 ---
 
-<section class="projects" id="projects" aria-label="Избранные проекты">
-  <SectionTitle title="Избранные проекты" />
+<section class="projects" id="projects" aria-label={projectsTitle}>
+  <SectionTitle title={projectsTitle} />
   <div class="projects__grid">
     {
       projects.map((project, index) => (

@@ -1,10 +1,15 @@
 ---
 import Avatar from "./Avatar/Avatar.astro";
+
+const label = await import("../content/base/common.md").then(
+  (module) => module as unknown as { frontmatter: { logoLabel: string } }
+);
+const { logoLabel } = label.frontmatter;
 ---
 
 <a href="/" class="logo">
   <Avatar size="medium" loading="eager" />
-  <span class="logo__label">Кирилл Исаченко</span>
+  <span class="logo__label">{logoLabel}</span>
 </a>
 
 <style>
