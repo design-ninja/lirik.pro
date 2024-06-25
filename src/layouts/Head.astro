@@ -25,10 +25,8 @@ const { title, description, image, data, robots } = Astro.props;
   <title>{title}</title>
   <meta name="description" content={description} />
 
-  <Seo {title} {description} url={Astro.url} {image} {data} {robots} />
-  <ViewTransitions />
   <!-- Yandex.Metrika counter -->
-  <script type="text/javascript">
+  <script type="text/partytown">
     (function (m, e, t, r, i, k, a) {
       m[i] =
         m[i] ||
@@ -64,4 +62,7 @@ const { title, description, image, data, robots } = Astro.props;
     </div></noscript
   >
   <!-- /Yandex.Metrika counter -->
+
+  <Seo {title} {description} url={Astro.url} {image} {data} {robots} />
+  <ViewTransitions />
 </head>
