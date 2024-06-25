@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+// import { ViewTransitions } from "astro:transitions";
 import Seo from "../components/Seo.astro";
 
 interface Props {
@@ -64,5 +64,5 @@ const { title, description, image, data, robots } = Astro.props;
   <!-- /Yandex.Metrika counter -->
 
   <Seo {title} {description} url={Astro.url} {image} {data} {robots} />
-  <ViewTransitions />
+  <!-- <ViewTransitions /> -->
 </head>
