@@ -70,7 +70,7 @@ const menu = await getEntry("nav", "menu");
   </nav>
 </header>
 
-<style is:global lang="scss">
+<style lang="scss">
   nav {
     display: flex;
     align-items: center;
@@ -144,7 +144,7 @@ const menu = await getEntry("nav", "menu");
   }
 </style>
 
-<script>
+<script is:inline>
   function initMenuToggle() {
     const menuButton = document.getElementById("menuButton");
     const navMenu = document.getElementById("navmenu");
@@ -156,6 +156,10 @@ const menu = await getEntry("nav", "menu");
     let isMenuOpen = false;
 
     const toggleMenu = () => {
+      if (window.innerWidth >= 992) {
+        return;
+      }
+
       isMenuOpen = !isMenuOpen;
 
       menuButton.setAttribute("aria-expanded", `${isMenuOpen}`);
