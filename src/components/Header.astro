@@ -150,47 +150,55 @@ const menu = await getEntry("nav", "menu");
     const navMenu = document.getElementById("navmenu");
     const menuIcon = document.getElementById("menuIcon");
     const closeIcon = document.getElementById("closeIcon");
+    const navLinks = document.querySelectorAll("[data-navLink]");
+    const themeToggle = document.getElementById("themeToggle");
 
     let isMenuOpen = false;
 
+    const toggleMenu = () => {
+      isMenuOpen = !isMenuOpen;
+
+      menuButton.setAttribute("aria-expanded", `${isMenuOpen}`);
+
+      if (isMenuOpen) {
+        navMenu.style.height = `${navMenu.scrollHeight}px`;
+        menuIcon.style.display = "none";
+        closeIcon.style.display = "block";
+        document.addEventListener("click", handleClickOutside);
+      } else {
+        navMenu.style.height = "0px";
+        menuIcon.style.display = "block";
+        closeIcon.style.display = "none";
+        document.removeEventListener("click", handleClickOutside);
+      }
+    };
+
+    const handleClickOutside = (event) => {
+      if (!navMenu.contains(event.target) && event.target !== menuButton) {
+        toggleMenu();
+      }
+    };
+
     if (menuButton && navMenu && menuIcon && closeIcon) {
-      menuButton.addEventListener("click", () => {
-        /* Handle the height transition */
-        isMenuOpen = !isMenuOpen;
-
-        menuButton.setAttribute("aria-expanded", `${isMenuOpen}`);
-
-        if (isMenuOpen) {
-          navMenu.style.height = `${navMenu.scrollHeight}px`;
-          menuIcon.style.display = "none";
-          closeIcon.style.display = "block";
-        } else {
-          navMenu.style.height = "0px";
-          menuIcon.style.display = "block";
-          closeIcon.style.display = "none";
-        }
+      menuButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleMenu();
       });
 
-      navMenu.addEventListener("click", () => {
-        /* Close menu after using it */
-        if (isMenuOpen) {
-          isMenuOpen = false;
-          navMenu.style.height = "0px";
-          navMenu.classList.remove("h-auto");
-          menuIcon.style.display = "block";
-          closeIcon.style.display = "none";
-        }
+      navLinks.forEach((link) => {
+        link.addEventListener("click", toggleMenu);
       });
+
+      if (themeToggle) {
+        themeToggle.addEventListener("click", toggleMenu);
+      }
 
       window.addEventListener("resize", () => {
-        /* Resize cleanup screen state */
-        if (window.innerWidth >= 922) {
-          /* Add height if menu was closed and then resize happened */
+        if (window.innerWidth >= 992) {
           navMenu.style.height = "auto";
           menuIcon.style.display = "block";
           closeIcon.style.display = "none";
         } else {
-          /* Prevent opened menu when going from big to small */
           navMenu.style.height = "0px";
           menuIcon.style.display = "block";
           closeIcon.style.display = "none";
