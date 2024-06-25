@@ -64,6 +64,7 @@ const menu = await getEntry("nav", "menu");
         class="menu__icon"
         width={32}
         height={32}
+        style="display: none;"
       />
     </button>
   </nav>
@@ -87,8 +88,6 @@ const menu = await getEntry("nav", "menu");
     overflow: hidden;
     transition: height 0.15s;
     height: 0;
-    padding-bottom: var(--space-24);
-    border-bottom: var(--size-1) solid var(--color-border-primary);
 
     @media (min-width: 992px) {
       background: transparent;
@@ -97,6 +96,8 @@ const menu = await getEntry("nav", "menu");
       align-items: center;
       justify-content: end;
       height: auto;
+      padding: 0;
+      border: none;
     }
   }
 
@@ -110,19 +111,20 @@ const menu = await getEntry("nav", "menu");
 
     @media (min-width: 992px) {
       flex-direction: row;
-      gap: var(--space-24);
     }
   }
 
   .navitem:last-child {
     font-size: 0;
+
+    @media (max-width: 992px) {
+      margin-bottom: var(--space-24);
+    }
   }
 
   .menu__button {
     width: 48px;
     height: 48px;
-    padding-right: 16px;
-    cursor: pointer;
     background: none;
     border: none;
     cursor: pointer;
@@ -146,10 +148,12 @@ const menu = await getEntry("nav", "menu");
   function initMenuToggle() {
     const menuButton = document.getElementById("menuButton");
     const navMenu = document.getElementById("navmenu");
+    const menuIcon = document.getElementById("menuIcon");
+    const closeIcon = document.getElementById("closeIcon");
 
     let isMenuOpen = false;
 
-    if (menuButton && navMenu) {
+    if (menuButton && navMenu && menuIcon && closeIcon) {
       menuButton.addEventListener("click", () => {
         /* Handle the height transition */
         isMenuOpen = !isMenuOpen;
@@ -158,8 +162,12 @@ const menu = await getEntry("nav", "menu");
 
         if (isMenuOpen) {
           navMenu.style.height = `${navMenu.scrollHeight}px`;
+          menuIcon.style.display = "none";
+          closeIcon.style.display = "block";
         } else {
           navMenu.style.height = "0px";
+          menuIcon.style.display = "block";
+          closeIcon.style.display = "none";
         }
       });
 
@@ -169,6 +177,8 @@ const menu = await getEntry("nav", "menu");
           isMenuOpen = false;
           navMenu.style.height = "0px";
           navMenu.classList.remove("h-auto");
+          menuIcon.style.display = "block";
+          closeIcon.style.display = "none";
         }
       });
 
@@ -177,9 +187,13 @@ const menu = await getEntry("nav", "menu");
         if (window.innerWidth >= 922) {
           /* Add height if menu was closed and then resize happened */
           navMenu.style.height = "auto";
+          menuIcon.style.display = "block";
+          closeIcon.style.display = "none";
         } else {
           /* Prevent opened menu when going from big to small */
           navMenu.style.height = "0px";
+          menuIcon.style.display = "block";
+          closeIcon.style.display = "none";
         }
       });
     }
