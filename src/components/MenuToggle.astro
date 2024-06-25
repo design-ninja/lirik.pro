@@ -66,7 +66,7 @@ const { label = "Показать меню" } = Astro.props;
       }
 
       const toggleMenu = () => {
-        const isMenuOpen = menu.classList.toggle("menu--mobile");
+        const isMenuOpen = menu.classList.toggle("expanded");
         menuToggle.classList.toggle("expanded", isMenuOpen);
         if (isMenuOpen) {
           menuIcon.style.display = "none";
@@ -83,24 +83,21 @@ const { label = "Показать меню" } = Astro.props;
         if (
           !menu.contains(event.target) &&
           event.target !== menuToggle &&
-          menu.classList.contains("menu--mobile")
+          menu.classList.contains("expanded")
         ) {
           toggleMenu();
         }
       });
 
       window.addEventListener("resize", () => {
-        if (
-          window.innerWidth >= 992 &&
-          menu.classList.contains("menu--mobile")
-        ) {
+        if (window.innerWidth >= 992 && menu.classList.contains("expanded")) {
           toggleMenu();
         }
       });
 
       navLinks.forEach((link) => {
         link.addEventListener("click", () => {
-          if (menu.classList.contains("menu--mobile")) {
+          if (menu.classList.contains("expanded")) {
             toggleMenu();
           }
         });
@@ -108,7 +105,7 @@ const { label = "Показать меню" } = Astro.props;
 
       if (themeToggle) {
         themeToggle.addEventListener("click", () => {
-          if (menu.classList.contains("menu--mobile")) {
+          if (menu.classList.contains("expanded")) {
             toggleMenu();
           }
         });
