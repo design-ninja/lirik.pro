@@ -1,7 +1,4 @@
 ---
-import "../styles/index.css";
-import "@fontsource-variable/onest";
-
 import Head from "./Head.astro";
 
 import Header from "../components/Header.astro";
@@ -18,7 +15,9 @@ const {
 
 <!doctype html>
 <html lang="ru">
-  <Head {title} {description} {image} {data} {robots} />
+  <head>
+    <Head {title} {description} {image} {data} {robots} />
+  </head>
   <body>
     <main>
       <Header />

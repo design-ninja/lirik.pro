@@ -12,7 +12,6 @@
   "dependencies": {
     "@astrojs/check": "^0.7.0",
     "@astrojs/sitemap": "^3.1.6",
-    "@fontsource-variable/onest": "^5.0.4",
     "astro": "^4.11.0",
     "astro-icon": "^1.1.0",
     "astro-robots": "^1.0.2",
