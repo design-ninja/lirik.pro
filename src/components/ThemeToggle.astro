@@ -2,7 +2,7 @@
 
 ---
 
-<button id="themeToggle" aria-label="Переключить тему">
+<button id="themeToggle">
   <svg width="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path
       class="sun"
@@ -17,19 +17,13 @@
   </svg>
 </button>
 
-<style lang="scss">
+<style>
   #themeToggle {
     border: 0;
     background: none;
-    transition: opacity 0.2s ease;
-    flex: none;
-
-    &:hover {
-      opacity: 0.7;
-    }
   }
   .sun {
-    fill: var(--color-icon-primary);
+    fill: black;
   }
   .moon {
     fill: transparent;
@@ -39,51 +33,37 @@
     fill: transparent;
   }
   :global([data-theme="dark"]) .moon {
-    fill: var(--color-icon-primary);
+    fill: white;
   }
 </style>
 
 <script is:inline>
-  const setTheme = (theme) => {
-    if (theme === "light") {
-      document.body.setAttribute("data-theme", "light");
-    } else {
-      document.body.setAttribute("data-theme", "dark");
+  const theme = (() => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
     }
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  })();
+
+  if (theme === "light") {
+    document.body.setAttribute("data-theme", "light");
+  } else {
+    document.body.setAttribute("data-theme", "dark");
+  }
+
+  window.localStorage.setItem("theme", theme);
+
+  const handleToggleClick = () => {
+    const currentTheme = document.body.getAttribute("data-theme");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    document.body.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
   };
 
-  document.addEventListener("astro:page-load", () => {
-    const theme = (() => {
-      if (
-        typeof localStorage !== "undefined" &&
-        localStorage.getItem("theme")
-      ) {
-        return localStorage.getItem("theme");
-      }
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
-      }
-      return "light";
-    })();
-
-    setTheme(theme);
-
-    window.localStorage.setItem("theme", theme);
-
-    const handleToggleClick = () => {
-      const currentTheme = document.body.getAttribute("data-theme");
-      const newTheme = currentTheme === "light" ? "dark" : "light";
-      setTheme(newTheme);
-      localStorage.setItem("theme", newTheme);
-    };
-
-    document
-      .getElementById("themeToggle")
-      .addEventListener("click", handleToggleClick);
-  });
-
-  document.addEventListener("astro:after-swap", () => {
-    const theme = localStorage.getItem("theme");
-    setTheme(theme);
-  });
+  document
+    .getElementById("themeToggle")
+    .addEventListener("click", handleToggleClick);
 </script>
