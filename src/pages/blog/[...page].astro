@@ -1,0 +1,29 @@
+---
+import type { GetStaticPathsOptions, Page } from 'astro';
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Pagination from '../../components/Pagination.astro';
+import PostPreview from '../../components/PostPreview.astro';
+import siteConfig from '../../data/site-config';
+import { sortItemsByDateDesc } from '../../utils/data-utils';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
+  return paginate(posts, { pageSize: siteConfig.postsPerPage || 4 });
+}
+
+type Props = { page: Page<CollectionEntry<'blog'>> };
+
+const { page } = Astro.props;
+const blog = page.data;
+---
+
+<BaseLayout
+  title="Блог Кирилла Исаченко"
+  description="Посты о дизайне и разработке от Кирилла Исаченко"
+  image={{ src: '/og-preview.jpg', alt: 'Дизайнер Кирилл Исаченко' }}
+>
+  <h1>Блог</h1>
+  {blog.map((post) => <PostPreview post={post} />)}
+  <Pagination page={page} />
+</BaseLayout>

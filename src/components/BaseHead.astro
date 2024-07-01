@@ -1,0 +1,110 @@
+---
+import siteConfig from '../data/site-config';
+import '../styles/index.css';
+
+export type Props = {
+  title?: string;
+  description?: string;
+  image?: { src: string; alt?: string };
+  pageType?: 'website' | 'article';
+};
+
+const { description = '', image = siteConfig.image, pageType = 'website' } = Astro.props;
+const title = [Astro.props.title, siteConfig.title].filter(Boolean).join(' | ');
+const resolvedImage = image?.src
+  ? {
+      src: new URL(image.src, Astro.site).toString(),
+      alt: image.alt
+    }
+  : undefined;
+const canonicalURL = new URL(Astro.request.url, Astro.site);
+
+/**
+ * Enforce some standard canonical URL formatting across the site.
+ */
+function formatCanonicalURL(url: string | URL) {
+  const path = url.toString();
+  const hasQueryParams = path.includes('?');
+  // If there are query params, make sure the URL has no trailing slash
+  if (hasQueryParams) {
+    path.replace(/\/?$/, '');
+  }
+  // otherwise, canonical URL always has a trailing slash
+  return path.replace(/\/?$/, hasQueryParams ? '' : '/');
+}
+---
+
+<!-- High Priority Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>{title}</title>
+<meta name="generator" content={Astro.generator} />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap" rel="stylesheet" />
+
+<!-- Low Priority Global Metadata -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="shortcut icon" href="/favicon.ico" /><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="RSS" />
+
+<!-- Page Metadata -->
+<link rel="canonical" href={formatCanonicalURL(canonicalURL)} />
+<meta name="description" content={description} />
+<meta name="robots" content="max-image-preview:large" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={pageType} />
+<meta property="og:url" content={formatCanonicalURL(canonicalURL)} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:locale" content="ru_RU" />
+<meta property="article:publisher" content="https://www.facebook.com/kirill.isachenko" />
+{resolvedImage?.src && <meta property="og:image" content={resolvedImage.src} />}
+{resolvedImage?.alt && <meta property="og:image:alt" content={resolvedImage.alt} />}
+
+<!-- X/Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={formatCanonicalURL(canonicalURL)} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+{resolvedImage?.src && <meta property="twitter:image" content={resolvedImage.src} />}
+{resolvedImage?.alt && <meta name="twitter:image:alt" content={resolvedImage?.alt} />}
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+  (function (m, e, t, r, i, k, a) {
+    m[i] =
+      m[i] ||
+      function () {
+        (m[i].a = m[i].a || []).push(arguments);
+      };
+    m[i].l = 1 * new Date();
+    for (var j = 0; j < document.scripts.length; j++) {
+      if (document.scripts[j].src === r) {
+        return;
+      }
+    }
+    (k = e.createElement(t)), (a = e.getElementsByTagName(t)[0]), (k.async = 1), (k.src = r), a.parentNode.insertBefore(k, a);
+  })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+  ym(97662917, 'init', {
+    clickmap: true,
+    trackLinks: true,
+    accurateTrackBounce: true
+  });
+</script>
+<noscript
+  ><div>
+    <img src="https://mc.yandex.ru/watch/97662917" style="position:absolute; left:-9999px;" alt="" />
+  </div></noscript
+>
+<!-- /Yandex.Metrika counter -->

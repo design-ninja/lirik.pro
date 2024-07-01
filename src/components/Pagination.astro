@@ -1,0 +1,32 @@
+---
+import Button from './Button.astro';
+
+const { page } = Astro.props;
+---
+
+<nav aria-label="Навигация">
+  {
+    page.url.prev && (
+      <Button class="paginator__button" color="ghost" href={page.url.prev} aria-label={`Перейти к странице ${page.currentPage - 1} из ${page.lastPage}`}>
+        ←
+      </Button>
+    )
+  }
+  <span aria-current="page">Страница {page.currentPage} из {page.lastPage}</span>
+  {
+    page.url.next && (
+      <Button class="paginator__button" color="ghost" href={page.url.next} aria-label={`Перейти к странице ${page.currentPage + 1} из ${page.lastPage}`}>
+        →
+      </Button>
+    )
+  }
+</nav>
+
+<style lang="scss">
+  .paginator {
+    &__button {
+      font-size: var(--font-size-24);
+      padding: var(--space-8) var(--space-16);
+    }
+  }
+</style>

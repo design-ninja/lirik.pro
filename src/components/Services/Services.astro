@@ -1,33 +1,20 @@
 ---
-import Service from "./Service.astro";
+import Service from './Service.astro';
 
-interface ServiceItem {
+import siteConfig from '../../data/site-config';
+
+interface Service {
   number: string;
   title: string;
   text: string;
 }
 
-interface Frontmatter {
-  services: ServiceItem[];
-}
-
-const { frontmatter } = await import("../../content/services/services.md").then(
-  (module) => module as unknown as { frontmatter: Frontmatter }
-);
-const services = frontmatter.services;
+const services = siteConfig.services ?? [];
 ---
 
 <section class="services" id="expertize" aria-label="Экспертиза">
   <ul role="list" class="services__grid">
-    {
-      services.map((service) => (
-        <Service
-          number={service.number}
-          title={service.title}
-          text={service.text}
-        />
-      ))
-    }
+    {services.map((service: Service) => <Service number={service.number} title={service.title} text={service.text} />)}
   </ul>
 </section>
 

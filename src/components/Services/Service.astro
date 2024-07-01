@@ -12,7 +12,7 @@ const { number, title, text } = Astro.props;
   <div>
     <h2 class="service__number">{number}</h2>
     <h3>{title}</h3>
-    <p>{text}</p>
+    <p class="service__text">{text}</p>
   </div>
 </li>
 <style lang="scss">
@@ -29,7 +29,13 @@ const { number, title, text } = Astro.props;
 
     &__number {
       color: var(--color-text-secondary);
+      margin-top: 0;
       margin-bottom: var(--space-80);
+    }
+
+    &__text {
+      margin-top: 0;
+      margin-bottom: var(--space-16);
     }
   }
 </style>

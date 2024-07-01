@@ -1,7 +1,8 @@
+@import '_global.scss';
 @import '_reset.css';
 @import '_colors.css';
 @import '_sizes.css';
-@import '_typography.css';
+@import '_typography.scss';
 @import '_spaces.css';
 @import '_breakpoints.css';
 @import '_radius.css';

@@ -1,27 +1,25 @@
 {
   "name": "lirik.pro",
   "type": "module",
-  "version": "0.2",
+  "version": "0.3",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.7.0",
+    "@astrojs/mdx": "^3.1.2",
+    "@astrojs/rss": "^4.0.7",
     "@astrojs/sitemap": "^3.1.6",
-    "astro": "^4.11.0",
+    "astro": "^4.11.3",
     "astro-icon": "^1.1.0",
-    "astro-robots": "^1.0.2",
-    "astro-yandex-metrika": "^1.0.0",
-    "autoprefixer": "^10.4.19",
-    "cssnano": "^7.0.2",
-    "react": "^18.0.0",
-    "typescript": "^5.5.2"
+    "marked": "^13.0.1"
   },
   "devDependencies": {
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "sass": "^1.77.6"
   }
 }

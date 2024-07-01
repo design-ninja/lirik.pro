@@ -2,7 +2,7 @@
 
 ---
 
-<button id="themeToggle">
+<button id="theme-toggle" aria-label="Change color scheme">
   <svg width="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path
       class="sun"
@@ -17,11 +17,58 @@
   </svg>
 </button>
 
-<style>
-  #themeToggle {
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme') || 'light';
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    })();
+
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
+
+    window.localStorage.setItem('theme', theme);
+
+    const handleToggleClick = () => {
+      const element = document.documentElement;
+      element.classList.toggle('dark');
+
+      const isDark = element.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    };
+
+    document.getElementById('theme-toggle')?.addEventListener('click', handleToggleClick);
+  });
+</script>
+
+<script>
+  document.addEventListener('astro:after-swap', () => {
+    if (localStorage.theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  });
+</script>
+
+<style lang="scss">
+  #theme-toggle {
     border: 0;
     background: none;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
+
   .sun {
     fill: black;
   }
@@ -29,41 +76,10 @@
     fill: transparent;
   }
 
-  :global([data-theme="dark"]) .sun {
+  :global(html.light) .sun {
     fill: transparent;
   }
-  :global([data-theme="dark"]) .moon {
+  :global(html.dark) .moon {
     fill: white;
   }
 </style>
-
-<script is:inline>
-  const theme = (() => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
-    }
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
-    }
-    return "light";
-  })();
-
-  if (theme === "light") {
-    document.body.setAttribute("data-theme", "light");
-  } else {
-    document.body.setAttribute("data-theme", "dark");
-  }
-
-  window.localStorage.setItem("theme", theme);
-
-  const handleToggleClick = () => {
-    const currentTheme = document.body.getAttribute("data-theme");
-    const newTheme = currentTheme === "light" ? "dark" : "light";
-    document.body.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
-
-  document
-    .getElementById("themeToggle")
-    .addEventListener("click", handleToggleClick);
-</script>

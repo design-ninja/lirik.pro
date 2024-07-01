@@ -1,0 +1,95 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectPreview from '../../components/Projects/ProjectPreview.astro';
+import { sortItemsByDateDesc } from '../../utils/data-utils';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
+  const projectCount = projects.length;
+  return projects.map((project, index) => ({
+    params: { slug: project.slug },
+    props: {
+      project,
+      prevProject: index + 1 !== projectCount ? projects[index + 1] : null,
+      nextProject: index !== 0 ? projects[index - 1] : null
+    }
+  }));
+}
+
+type Props = { project: CollectionEntry<'projects'>; prevProject: CollectionEntry<'projects'>; nextProject: CollectionEntry<'projects'> };
+
+const { project, prevProject, nextProject } = Astro.props;
+const { title, description, seo, tags, link } = project.data;
+const { Content } = await project.render();
+---
+
+<BaseLayout title={seo?.title ?? title} description={seo?.description ?? description} image={seo?.image} pageType="article">
+  <article class="article">
+    <header>
+      <h1>{title}</h1>
+    </header>
+    <div>
+      <Content />
+    </div>
+    <div class="article__meta">
+      {tags && <span class="article__tags">{tags.join(', ').replace(/,(?!.*,)/gim, ' и')}</span>}
+      {
+        link && (
+          <a href={link} target="_blank" rel="noopener noreferer" class="article__link" title={title}>
+            {link}
+          </a>
+        )
+      }
+    </div>
+    {
+      (prevProject || nextProject) && (
+        <>
+          <h2>Другие проекты</h2>
+          <div class="article__nav">
+            {nextProject && <ProjectPreview project={nextProject} headingLevel="h3" />}
+            {prevProject && <ProjectPreview project={prevProject} headingLevel="h3" />}
+          </div>
+        </>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style lang="scss">
+  .article {
+    display: grid;
+    gap: var(--space-64);
+    margin: 0 auto;
+    max-width: 900px;
+
+    &__top {
+      display: grid;
+      gap: var(--space-24);
+    }
+
+    &__meta {
+      display: grid;
+      gap: var(--space-8);
+      justify-items: start;
+    }
+
+    &__tags {
+      color: var(--color-text-secondary);
+    }
+
+    &__content {
+      display: grid;
+      gap: var(--space-40);
+
+      &Main {
+        display: grid;
+      }
+    }
+
+    &__nav {
+      display: grid;
+      gap: var(--space-24);
+    }
+  }
+</style>

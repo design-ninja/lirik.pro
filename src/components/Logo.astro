@@ -1,15 +1,13 @@
 ---
-import Avatar from "./Avatar/Avatar.astro";
+import Avatar from './Avatar/Avatar.astro';
+import siteConfig from '../data/site-config';
 
-const label = await import("../content/base/common.md").then(
-  (module) => module as unknown as { frontmatter: { logoLabel: string } }
-);
-const { logoLabel } = label.frontmatter;
+const author = siteConfig.author;
 ---
 
 <a href="/" class="logo">
   <Avatar size="medium" loading="eager" />
-  <span class="logo__label">{logoLabel}</span>
+  <span class="logo__label">{author}</span>
 </a>
 
 <style>

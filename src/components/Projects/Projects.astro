@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import { sortItemsByDateDesc } from '../../utils/data-utils';
+import siteConfig from '../../data/site-config';
+
+import ProjectPreview from './ProjectPreview.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+
+const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
+const featuredProjects = projects.filter(({ data }) => data.isFeatured);
+
+const { title } = siteConfig.projects || {};
+
+interface Projects {
+  title: string;
+}
+---
+
+<section class="projects" id="projects" aria-label={title}>
+  <SectionTitle title={title || 'Избранные проекты'} />
+
+  <div class="projects__grid">
+    {featuredProjects.map((project) => <ProjectPreview project={project} headingLevel="h3" />)}
+  </div>
+</section>
+
+<style lang="scss">
+  .projects {
+    &__grid {
+      display: grid;
+      gap: var(--space-80);
+    }
+  }
+</style>

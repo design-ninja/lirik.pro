@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sortItemsByDateDesc, getAllTags, getPostsByTag } from '../../utils/data-utils';
+
+const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
+const tags = getAllTags(posts).sort((tagA, tagB) => {
+  const postCountTagA = getPostsByTag(posts, tagA.slug).length;
+  const postCountTagB = getPostsByTag(posts, tagB.slug).length;
+  return postCountTagB - postCountTagA;
+});
+---
+
+<BaseLayout
+  title="Tags"
+  description="Explore tag directory for easy navigation and discovery. Find a wide range of topics, articles, and insights organized by tags, making it effortless to locate the content that interests you most."
+>
+  <h1>All Tags</h1>
+  {
+    tags.map((tag) => {
+      const postCount = getPostsByTag(posts, tag.slug).length;
+      return (
+        <a href={`/tags/${tag.slug}`}>
+          <div>
+            <h2>{tag.name}</h2>
+            <div class="mt-1 text-sm leading-normal">
+              {postCount} {postCount === 1 ? 'post' : 'posts'}
+            </div>
+          </div>
+          <div>View Tag Archive →</div>
+        </a>
+      );
+    })
+  }
+</BaseLayout>

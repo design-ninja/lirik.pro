@@ -1,38 +1,36 @@
 ---
-import { Icon } from "astro-icon/components";
-import Button from "../components/Button.astro";
-import * as heroContent from "../content/base/hero.md";
-import * as actionText from "../content/base/common.md";
+import { marked } from 'marked';
+import { Icon } from 'astro-icon/components';
 
-import { Content as HeroText } from "../content/base/hero.md";
+import Button from './Button.astro';
+import siteConfig from '../data/site-config';
+
+const hero = siteConfig.hero;
 ---
 
-<section class="hero" aria-label={heroContent.frontmatter.title}>
-  <h1>{heroContent.frontmatter.title}</h1>
-  <div class="hero__wrap">
-    <div class="hero__text">
-      <HeroText />
-    </div>
-    <div>
-      <Button
-        color="primary"
-        size="large"
-        isIcon
-        href="https://wa.me/79620726666"
-      >
-        <Icon name="whatsapp" width={24} height={24} />
-        {actionText.frontmatter.action}
-      </Button>
-    </div>
-  </div>
-</section>
+{
+  (hero?.title || hero?.text || hero?.actions) && (
+    <section class="hero" id="hero" aria-label={hero.title}>
+      {hero.title && <h1 class="hero__title">{hero.title}</h1>}
+      <div class="hero__wrap">
+        {hero.text && <div class="hero__text" set:html={marked.parse(hero.text)} />}
+        {hero.actions && (
+          <div>
+            {hero.actions.map((action) => (
+              <Button color="primary" size="large" isIcon href={action.href} target="_blank">
+                <Icon name="whatsapp" width={24} height={24} />
+                {action.text}
+              </Button>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
 
 <style lang="scss">
   .hero {
-    @media (max-width: 992px) {
-      padding: 0;
-    }
-
     &__wrap {
       display: grid;
       gap: var(--space-40);
@@ -42,6 +40,20 @@ import { Content as HeroText } from "../content/base/hero.md";
       @media (max-width: 992px) {
         grid-template-columns: 1fr;
         gap: var(--space-16);
+      }
+    }
+
+    &__title {
+      font-size: 13vw;
+      line-height: 90%;
+      letter-spacing: -0.04em;
+      margin-top: -4rem;
+      margin-bottom: var(--space-64);
+
+      @media (max-width: 992px) {
+        font-size: 20vw;
+        margin-bottom: var(--space-24);
+        line-height: 100%;
       }
     }
 

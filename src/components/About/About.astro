@@ -1,38 +1,27 @@
 ---
-import videoSrc from "./video/video.mp4";
-import captions from "./video/captions.vtt";
+import { marked } from 'marked';
+import videoSrc from './video/video.mp4';
+import captions from './video/captions.vtt';
 
-import posterImage from "./video/poster.avif";
+import posterImage from './video/poster.avif';
 
-import * as aboutContent from "../../content/base/about.md";
-import { Content as AboutText } from "../../content/base/about.md";
+import siteConfig from '../../data/site-config';
+
+const about = siteConfig.about ?? {};
 ---
 
-<section class="about" id="about" aria-label={aboutContent.frontmatter.title}>
+<section class="about" id="about" aria-label={about.title}>
   <div class="about__video">
     <div class="video-container">
-      <video
-        id="reelsVideo"
-        class="video-player"
-        poster={posterImage.src}
-        controls
-        preload="none"
-        src={videoSrc}
-      >
-        <track
-          src={captions}
-          kind="captions"
-          srclang="ru"
-          label="Русский"
-          default
-        />
+      <video id="reelsVideo" class="video-player" poster={posterImage.src} controls preload="none" src={videoSrc}>
+        <track src={captions} kind="captions" srclang="ru" label="Русский" default />
         Ваш браузер не поддерживает тег видео.
       </video>
     </div>
   </div>
   <div class="about__text">
-    <h2>{aboutContent.frontmatter.title}</h2>
-    <AboutText />
+    <h2>{about.title}</h2>
+    {about.text && <div class="about__text" set:html={marked.parse(about.text)} />}
   </div>
 </section>
 
@@ -46,6 +35,10 @@ import { Content as AboutText } from "../../content/base/about.md";
       flex-direction: column;
       align-items: start;
       gap: var(--space-40);
+    }
+
+    &__text {
+      max-width: 47ch;
     }
 
     &__video {

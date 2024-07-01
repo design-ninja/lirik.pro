@@ -1,15 +1,8 @@
 ---
-import { getEntry } from "astro:content";
+import siteConfig from '../data/site-config';
 
-import Link from "./Link.astro";
-
-interface SocialLink {
-  link: string;
-  name: string;
-  target: string;
-}
-
-const footer = await getEntry("nav", "footer");
+const socialLinks = siteConfig.socialLinks || [];
+const footer = siteConfig.footer;
 ---
 
 <footer class="footer">
@@ -19,22 +12,19 @@ const footer = await getEntry("nav", "footer");
   <nav aria-label="Primary" class="nav">
     <ul class="menu">
       {
-        footer.data.socials.map((footer: SocialLink) => (
-          <li>
-            <Link
-              href={footer.link}
-              target="_blank"
-              text={footer.name}
-              title={footer.name}
-              aria-label={footer.name}
-              data-rel="noopener"
-            />
-          </li>
-        ))
+        socialLinks.length > 0 && (
+          <ul class="menu">
+            {socialLinks.map((link) => (
+              <a href={link.href} target="_blank" rel="noopener noreferer">
+                {link.text}
+              </a>
+            ))}
+          </ul>
+        )
       }
     </ul>
   </nav>
-  <span class="footer__author">{footer.data.author}</span>
+  <span class="footer__author">{footer?.author && footer.author}</span>
 </footer>
 
 <style lang="scss">

@@ -1,0 +1,94 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+
+type Props = { project: CollectionEntry<'projects'>; class?: string; headingLevel?: 'h2' | 'h3' };
+
+const { project, headingLevel = 'h2' } = Astro.props;
+const { title, description, tags, link, cover } = project.data;
+const TitleTag = headingLevel;
+---
+
+<a href={`/projects/${project.slug}/`} aria-label={title} class="project">
+  <div class="project__content">
+    <TitleTag class="project__title">
+      {title}
+    </TitleTag>
+    <p class="project__text">{description}</p>
+    <div class="project__meta">
+      {tags && <span class="project__tags">{tags.join(', ').replace(/,(?!.*,)/gim, ' и')}</span>}
+      {link && <span class="project__link">{link}</span>}
+    </div>
+  </div>
+  <div class="project__image-container">
+    {cover && <Picture src={cover} alt={title} width={794} height={506} formats={['avif', 'webp']} fallbackFormat="png" class="project__image" />}
+  </div>
+</a>
+
+<style lang="scss">
+  .project {
+    list-style: none;
+    display: grid;
+    gap: var(--space-40);
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--color-border-primary);
+    padding-bottom: var(--space-24);
+    text-decoration: none;
+    color: inherit;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      transition: opacity 0.2s ease;
+    }
+
+    &__title {
+      margin-top: 0;
+      margin-bottom: var(--space-16);
+    }
+
+    &__text {
+      margin-bottom: var(--space-40);
+    }
+
+    &__meta {
+      display: grid;
+      gap: var(--space-8);
+      color: var(--color-text-secondary);
+      margin-top: auto;
+    }
+
+    &__image-container {
+      overflow: hidden;
+
+      @media (max-width: 992px) {
+        order: -1;
+        margin-bottom: var(--space-24);
+      }
+    }
+
+    &__image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 1s ease-in-out;
+    }
+
+    &:hover {
+      opacity: 1;
+
+      .project__content {
+        opacity: 0.7;
+      }
+
+      .project__image {
+        transform: scale(1.03);
+      }
+    }
+  }
+</style>

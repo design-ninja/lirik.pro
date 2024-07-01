@@ -1,33 +1,17 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-interface Props extends HTMLAttributes<"a"> {
-  color?: "primary" | "secondary";
-  size?: "small" | "medium" | "large";
+interface Props extends HTMLAttributes<'a'> {
+  color?: 'primary' | 'secondary' | 'ghost';
+  size?: 'small' | 'medium' | 'large';
   isIcon?: boolean;
   href: string;
 }
 
-const {
-  color = "primary",
-  size = "medium",
-  isIcon,
-  href,
-  ...rest
-} = Astro.props as Props;
+const { color = 'primary', size = 'medium', isIcon, href, ...rest } = Astro.props as Props;
 ---
 
-<a
-  {...rest}
-  href={href}
-  aria-label="button"
-  class:list={[
-    "button",
-    `button--${color}`,
-    `button--${size}`,
-    { "button--icon": isIcon },
-  ]}
->
+<a {...rest} href={href} aria-label="button" class:list={['button', `button--${color}`, `button--${size}`, { 'button--icon': isIcon }]}>
   <slot />
 </a>
 
@@ -55,6 +39,11 @@ const {
 
     &--secondary {
       background-color: var(--color-bg-action-secondary);
+      color: var(--color-text-primary);
+    }
+
+    &--ghost {
+      background-color: transparent;
       color: var(--color-text-primary);
     }
 

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://lirik.pro/sitemap-index.xml

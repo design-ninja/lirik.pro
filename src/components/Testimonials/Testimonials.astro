@@ -1,31 +1,26 @@
 ---
-import SectionTitle from "../SectionTitle.astro";
-import Testimonial from "./Testimonial.astro";
+import SectionTitle from '../SectionTitle.astro';
+import Testimonial from './Testimonial.astro';
 
-interface TestimonialItem {
+import siteConfig from '../../data/site-config';
+
+interface Testimonial {
   text: string;
   author: string;
 }
 
-interface Frontmatter {
+interface Testimonials {
   title: string;
-  testimonials: TestimonialItem[];
+  reviews: Testimonial[];
 }
 
-const { frontmatter } = await import(
-  "../../content/testimonials/testimonials.md"
-).then((module) => module as unknown as { frontmatter: Frontmatter });
-const { title, testimonials } = frontmatter;
+const { title, reviews } = siteConfig.testimonials ?? { title: '', reviews: [] };
 ---
 
-<section class="testimonials" id="testimonials" aria-label={title}>
+<section class="testimonials" id="testimonials" aria-label="Отзывы">
   <SectionTitle title={title} />
   <ul class="testimonials__grid">
-    {
-      testimonials.map((testimonial) => (
-        <Testimonial text={testimonial.text} author={testimonial.author} />
-      ))
-    }
+    {reviews.map((review, index) => <Testimonial text={review.text} author={review.author} />)}
   </ul>
 </section>
 

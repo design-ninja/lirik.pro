@@ -1,4 +1,4 @@
-:root [data-theme="dark"] {
+html.dark {
   --color-bg-action-primary: var(--brand-700);
   --color-bg-action-secondary: var(--neutral-100);
   --color-bg-base: var(--neutral-900);
