@@ -1,9 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
-
 import NavLink from './NavLink.astro';
 import ThemeToggle from './ThemeToggle.astro';
-
 import siteConfig from '../data/site-config';
 
 const navLinks = siteConfig.headerNavLinks || [];
@@ -13,8 +11,9 @@ const navLinks = siteConfig.headerNavLinks || [];
   {
     navLinks.length > 0 && (
       <div class="wrap">
-        <button class="menu-toggle" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items">
-          <Icon id="menuIcon" name="menu" class="menu__icon" width={32} height={32} />
+        <button class="menu__toggle" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items">
+          <Icon id="menuIcon" name="menu" class="menu__icon menu__icon--menu" width={32} height={32} />
+          <Icon id="closeIcon" name="close" class="menu__icon menu__icon--close" width={32} height={32} style="display: none;" />
         </button>
         <ul id="menu-items" class="menu">
           {navLinks.map((link) => (
@@ -38,36 +37,6 @@ const navLinks = siteConfig.headerNavLinks || [];
 <style lang="scss">
   nav {
     .wrap {
-      .menu-toggle {
-        width: var(--size-40);
-        height: var(--size-40);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        z-index: 30;
-        cursor: pointer;
-        background-color: transparent;
-        border: none;
-        outline: none;
-
-        @media (min-width: 1000px) {
-          display: none;
-        }
-
-        &-icon {
-          width: 1.5rem;
-          height: 1px;
-          position: relative;
-          background-color: currentColor;
-        }
-
-        &.is-active .menu-toggle-icon {
-          width: 0;
-          transition: width 0.1 ease-in-out;
-        }
-      }
-
       .menu {
         display: flex;
         gap: var(--space-40);
@@ -96,6 +65,24 @@ const navLinks = siteConfig.headerNavLinks || [];
           }
         }
 
+        &__toggle {
+          width: var(--size-40);
+          height: var(--size-40);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          cursor: pointer;
+          background-color: transparent;
+          border: none;
+          outline: none;
+          padding: 0;
+
+          @media (min-width: 1000px) {
+            display: none;
+          }
+        }
+
         .navitem {
           padding: 0.25rem 0;
 
@@ -107,20 +94,70 @@ const navLinks = siteConfig.headerNavLinks || [];
       }
     }
   }
+
+  .menu__icon--menu {
+    display: block;
+  }
+
+  .menu__icon--close {
+    display: none;
+  }
+
+  .is-active .menu__icon--menu {
+    display: none;
+  }
+
+  .is-active .menu__icon--close {
+    display: block;
+  }
+
+  [data-icon] {
+    color: var(--color-icon-primary);
+  }
 </style>
 
 <script is:inline>
   function menuToggle() {
     const menu = document.querySelector('.menu');
-    const menuToggleBtn = document.querySelector('.menu-toggle');
-    menuToggleBtn?.addEventListener('click', () => {
+    const menuToggleBtn = document.querySelector('.menu__toggle');
+    const menuIcon = document.getElementById('menuIcon');
+    const closeIcon = document.getElementById('closeIcon');
+
+    function closeMenu() {
+      menuToggleBtn.classList.remove('is-active');
+      menuToggleBtn.setAttribute('aria-expanded', 'false');
+      menuToggleBtn.setAttribute('aria-label', 'Open Menu');
+      menu.classList.remove('is-visible');
+    }
+
+    menuToggleBtn?.addEventListener('click', (event) => {
       const isMenuExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
       menuToggleBtn.classList.toggle('is-active');
       menuToggleBtn.setAttribute('aria-expanded', isMenuExpanded ? 'false' : 'true');
       menuToggleBtn.setAttribute('aria-label', isMenuExpanded ? 'Open Menu' : 'Close Menu');
       menu?.classList.toggle('is-visible');
+      menuIcon.style.display = isMenuExpanded ? 'block' : 'none';
+      closeIcon.style.display = isMenuExpanded ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!menu.contains(event.target) && !menuToggleBtn.contains(event.target)) {
+        closeMenu();
+        menuIcon.style.display = 'block';
+        closeIcon.style.display = 'none';
+      }
+    });
+
+    const navLinks = menu.querySelectorAll('.navlink');
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        closeMenu();
+        menuIcon.style.display = 'block';
+        closeIcon.style.display = 'none';
+      });
     });
   }
+
   menuToggle();
   document.addEventListener('astro:after-swap', menuToggle);
 </script>
