@@ -6,5 +6,6 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://lirik.pro',
-  integrations: [icon(), mdx(), sitemap()]
+  integrations: [icon(), mdx(), sitemap()],
+  renderers: ['@astrojs/renderer-postcss']
 });
