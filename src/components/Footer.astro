@@ -9,22 +9,20 @@ const footer = siteConfig.footer;
   <span>
     &copy; 2003—<span set:html={new Date().getFullYear()} /> lirik.pro
   </span>
-  <nav aria-label="Primary" class="nav">
-    <ul class="menu">
-      {
-        socialLinks.length > 0 && (
-          <ul class="menu">
-            {socialLinks.map((link) => (
-              <li>
-                <a href={link.href} target="_blank" rel="noopener noreferer">
-                  {link.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )
-      }
-    </ul>
+  <nav aria-label="Ссылки на мои соцсети" class="nav">
+    {
+      socialLinks.length > 0 && (
+        <ul class="menu">
+          {socialLinks.map((link) => (
+            <li>
+              <a href={link.href} target="_blank" rel="noopener noreferer" title={link.text}>
+                {link.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
   </nav>
   <span class="footer__author">{footer?.author && footer.author}</span>
 </footer>
