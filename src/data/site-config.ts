@@ -131,7 +131,7 @@ const siteConfig: SiteConfig = {
     actions: [
       {
         text: 'Написать мне',
-        href: '/contact'
+        href: 'https://wa.me/79620726666/'
       }
     ]
   },
