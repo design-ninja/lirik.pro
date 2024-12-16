@@ -1,22 +1,16 @@
 ---
-import { Image } from "astro:assets";
+import { Image } from 'astro:assets';
+import avatarImage from '../../assets/avatar.png';
 
 interface Props {
-  size?: "small" | "medium" | "large";
-  loading?: "lazy" | "eager";
+  size?: 'small' | 'medium' | 'large';
+  loading?: 'lazy' | 'eager';
 }
 
-import avatarImage from "./avatar.png";
-
-const { size = "medium", loading } = Astro.props as Props;
+const { size = 'medium', loading } = Astro.props as Props;
 ---
 
-<Image
-  src={avatarImage}
-  alt="Kirill Isachenko"
-  class={`avatar avatar--${size}`}
-  loading={loading}
-/>
+<Image src={avatarImage} alt="Kirill Isachenko" class={`avatar avatar--${size}`} loading={loading} />
 
 <style lang="scss">
   .avatar {
