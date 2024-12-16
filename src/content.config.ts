@@ -40,9 +40,7 @@ const projects = defineCollection({
       link: z.string().optional(),
       isFeatured: z.boolean().default(false),
       seo: seoSchema.optional(),
-      cover: image().refine((img) => img.width >= 1080, {
-        message: 'Cover image must be at least 1080 pixels wide!'
-      })
+      cover: image()
     })
 });
 
