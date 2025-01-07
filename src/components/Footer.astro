@@ -3,11 +3,12 @@ import siteConfig from '../data/site-config';
 
 const socialLinks = siteConfig.socialLinks || [];
 const footer = siteConfig.footer;
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="footer">
   <span>
-    &copy; 2003—<span set:html={new Date().getFullYear()} /> lirik.pro
+    &copy; 2003—{currentYear} lirik.pro
   </span>
   <nav aria-label="Ссылки на мои соцсети" class="nav">
     {
