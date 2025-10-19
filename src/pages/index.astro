@@ -18,12 +18,12 @@ const featuredPosts = posts.filter(({ data }) => data.isFeatured);
   {
     posts?.length > 0 && (
       <section aria-label="Последние записи" class="home-posts">
-        <h2>Последние записи</h2>
+        <h2>Блог</h2>
         {posts.slice(0, 3).map((post) => (
           <PostPreview post={post} />
         ))}
         <div class="home-posts__more">
-          <a href="/blog">Ещё в блоге</a>
+          <a href="/blog">Ещё в блоге...</a>
         </div>
       </section>
     )

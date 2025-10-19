@@ -28,7 +28,15 @@ interface Projects {
   .projects {
     &__grid {
       display: grid;
-      gap: var(--space-80);
+      gap: var(--space-16);
+      grid-template-columns: repeat(2, 1fr);
+
+      @media (max-width: 1200px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (max-width: 700px) {
+        grid-template-columns: 1fr;
+      }
     }
   }
 </style>
