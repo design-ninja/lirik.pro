@@ -3,8 +3,11 @@ import { ViewTransitions } from 'astro:transitions';
 import BaseHead, { type Props } from '../components/BaseHead.astro';
 
 import Footer from '../components/Footer.astro';
+import Avatar from '../components/Avatar/Avatar.astro';
+import siteConfig from '../data/site-config';
 
 const { ...head } = Astro.props;
+const isHome = Astro.url.pathname === '/';
 ---
 
 <!doctype html>
@@ -15,8 +18,28 @@ const { ...head } = Astro.props;
   </head>
   <body>
     <main>
+      {!isHome && (
+        <a href="/" class="BrandLink" aria-label={siteConfig.author}>
+          <Avatar size="small" loading="eager" />
+          <span class="BrandLink__Name">{siteConfig.author}</span>
+        </a>
+      )}
       <slot />
       <Footer />
     </main>
+    <style lang="scss">
+      .BrandLink {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-12);
+        color: var(--color-text-primary);
+        text-decoration: none;
+        margin-bottom: var(--space-40);
+      }
+
+      .BrandLink__Name {
+        font-weight: var(--font-weight-medium);
+      }
+    </style>
   </body>
 </html>

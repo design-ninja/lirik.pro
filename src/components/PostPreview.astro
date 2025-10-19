@@ -4,7 +4,7 @@ import FormattedDate from './FormattedDate.astro';
 
 type Props = { post: CollectionEntry<'blog'>; class?: string; headingLevel?: 'h2' | 'h3' };
 
-const { post, class: className, headingLevel = 'h2' } = Astro.props;
+const { post, class: className, headingLevel = 'h3' } = Astro.props;
 const { title, publishDate, updatedDate, excerpt } = post.data;
 const TitleTag = headingLevel;
 ---

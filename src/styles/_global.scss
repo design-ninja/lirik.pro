@@ -13,12 +13,6 @@ main {
   margin: auto;
   padding: var(--space-40);
   max-width: 1024px;
-  line-height: 1.6;
-
-  @media (max-width: 1441px) {
-    gap: var(--space-40);
-    padding: var(--space-24);
-  }
 
   @media (max-width: 992px) {
     gap: var(--space-80);
@@ -39,16 +33,10 @@ body {
 
 h1 {
   font-family: var(--font-family-display);
-  font-size: var(--font-size-40);
+  font-size: var(--font-size-32);
   font-weight: var(--font-weight-medium);
   line-height: 90%;
-  margin-bottom: var(--space-24);
-
-  @media (max-width: 992px) {
-    font-size: 14vw;
-    margin-bottom: var(--space-24);
-    line-height: 100%;
-  }
+  margin-bottom: var(--space-16);
 }
 
 h2 {
