@@ -18,6 +18,6 @@
   --color-text-primary: var(--neutral-900);
   --color-text-secondary: var(--neutral-500);
   --color-text-tertiary: var(--neutral-300);
-  --color-text-link-primary: var(--neutral-900);
+  --color-text-link-primary: var(--brand-600);
   --color-text-link-secondary: var(--neutral-400);
 }

@@ -1,0 +1,50 @@
+---
+import siteConfig from '../data/site-config';
+import Avatar from './Avatar/Avatar.astro';
+---
+
+<section class='Intro' aria-label='Обо мне'>
+  <div class='Intro__Header'>
+    <div class='Intro__Avatar'>
+      <Avatar size='medium' loading='eager' />
+    </div>
+    <div class='Intro__Meta'>
+      <div class='Intro__Name'>{siteConfig.author}</div>
+    </div>
+  </div>
+  <div class='Intro__Text'>
+    <p>
+      Я дизайнер с 10+ годами опыта в разработке <a href='#projects' rel='noopener' title='Проекты'>web и мобильных сервисов</a>. Проектирую интерфейсы, создаю дизайн‑системы, прототипы и реализую UI на React.
+    </p>
+    <p>
+      Играю на гитаре и пою в инди-рок группе <a href='https://www.youtube.com/@limebridge' target='_blank' rel='noopener'>Limebridge</a>. Разрабатываю <a href='#' rel='noopener'>плагины</a> для Chrome и VSCode.
+    </p>
+    <p>
+      <a href='https://t.me/lirikpro' target='_blank' rel='noopener' title='Напишите мне в Telegram'>Напишите мне</a>, если у вас есть вопросы или вам нужна
+      помощь с дизайном или разработкой.
+    </p>
+  </div>
+</section>
+
+<style lang='scss'>
+  .Intro {
+    &__Header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-16);
+      margin-bottom: var(--space-24);
+    }
+
+    &__Name {
+      font-size: var(--font-size-20);
+      font-weight: var(--font-weight-medium);
+    }
+
+    &__Text {
+      max-width: 48ch;
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+</style>

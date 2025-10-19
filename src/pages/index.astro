@@ -2,13 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-import Hero from '../components/Hero.astro';
-import Services from '../components/Services/Services.astro';
+import Intro from '../components/Intro.astro';
 import Projects from '../components/Projects/Projects.astro';
-import About from '../components/About/About.astro';
-import Testimonials from '../components/Testimonials/Testimonials.astro';
 import PostPreview from '../components/PostPreview.astro';
-import CTA from '../components/CTA.astro';
 import siteConfig from '../data/site-config';
 import { sortItemsByDateDesc } from '../utils/data-utils';
 
@@ -17,25 +13,21 @@ const featuredPosts = posts.filter(({ data }) => data.isFeatured);
 ---
 
 <BaseLayout description={siteConfig.description} image={siteConfig.image}>
-  <Hero />
-  <Services />
+  <Intro />
   <Projects />
-  <!-- {
-    featuredPosts?.length > 0 && (
-      <div>
-        <h2>Writing</h2>
-        {featuredPosts.map((post) => (
+  {
+    posts?.length > 0 && (
+      <section aria-label="Последние записи" class="home-posts">
+        <h2>Последние записи</h2>
+        {posts.slice(0, 3).map((post) => (
           <PostPreview post={post} />
         ))}
-        <div>
-          <Button href="/blog">View All Posts</Button>
+        <div class="home-posts__more">
+          <a href="/blog">Ещё в блоге</a>
         </div>
-      </div>
+      </section>
     )
-  } -->
-  <About />
-  <Testimonials />
-  <CTA />
+  }
 </BaseLayout>
 
 <style lang="scss">
@@ -43,6 +35,16 @@ const featuredPosts = posts.filter(({ data }) => data.isFeatured);
     &__grid {
       display: grid;
       gap: var(--space-80);
+    }
+  }
+
+  .home-posts {
+    h2 {
+      margin-bottom: var(--space-24);
+    }
+
+    &__more {
+      margin-top: var(--space-40);
     }
   }
 </style>

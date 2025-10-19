@@ -10,21 +10,6 @@ const currentYear = new Date().getFullYear();
   <span>
     &copy; 2003—{currentYear} lirik.pro
   </span>
-  <nav aria-label="Ссылки на мои соцсети" class="nav">
-    {
-      socialLinks.length > 0 && (
-        <ul class="menu">
-          {socialLinks.map((link) => (
-            <li>
-              <a href={link.href} target="_blank" rel="noopener noreferer" title={link.text}>
-                {link.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
-  </nav>
   <span class="footer__author">{footer?.author && footer.author}</span>
 </footer>
 

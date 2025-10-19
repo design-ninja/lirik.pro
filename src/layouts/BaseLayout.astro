@@ -2,7 +2,6 @@
 import { ViewTransitions } from 'astro:transitions';
 import BaseHead, { type Props } from '../components/BaseHead.astro';
 
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 const { ...head } = Astro.props;
@@ -12,16 +11,10 @@ const { ...head } = Astro.props;
 <html lang="ru">
   <head>
     <BaseHead {...head} />
-    <script>
-      if (localStorage.theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      }
-    </script>
     <ViewTransitions />
   </head>
   <body>
     <main>
-      <Header />
       <slot />
       <Footer />
     </main>

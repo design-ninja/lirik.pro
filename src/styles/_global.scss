@@ -4,18 +4,19 @@
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: light dark;
 }
 
 main {
   display: grid;
-  gap: var(--space-120);
+  gap: var(--space-40);
   margin: auto;
   padding: var(--space-40);
-  max-width: 1920px;
+  max-width: 1024px;
   line-height: 1.6;
 
   @media (max-width: 1441px) {
-    gap: var(--space-80);
+    gap: var(--space-40);
     padding: var(--space-24);
   }
 
@@ -38,10 +39,9 @@ body {
 
 h1 {
   font-family: var(--font-family-display);
-  font-size: 6vw;
-  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-40);
+  font-weight: var(--font-weight-medium);
   line-height: 90%;
-  text-transform: uppercase;
   margin-bottom: var(--space-24);
 
   @media (max-width: 992px) {
@@ -52,16 +52,16 @@ h1 {
 }
 
 h2 {
-  font-size: var(--font-size-48);
-  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-24);
+  font-weight: var(--font-weight-medium);
   line-height: 100%;
   margin-top: var(--space-40);
   margin-bottom: var(--space-24);
 }
 
 h3 {
-  font-size: var(--font-size-40);
-  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-20);
+  font-weight: var(--font-weight-medium);
   line-height: 100%;
   margin-top: var(--space-32);
   margin-bottom: var(--space-24);
@@ -84,7 +84,7 @@ a {
 }
 
 section {
-  padding: var(--space-40) 0;
+  padding: var(--space-24) 0;
 }
 
 button {

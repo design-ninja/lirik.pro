@@ -1,7 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
 import NavLink from './NavLink.astro';
-import ThemeToggle from './ThemeToggle.astro';
 import siteConfig from '../data/site-config';
 
 const navLinks = siteConfig.headerNavLinks || [];
@@ -23,11 +22,7 @@ const navLinks = siteConfig.headerNavLinks || [];
               </NavLink>
             </li>
           ))}
-          <li>
-            <div class="theme-toggle-wrapper">
-              <ThemeToggle />
-            </div>
-          </li>
+          
         </ul>
       </div>
     )
