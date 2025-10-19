@@ -90,6 +90,11 @@ const { Content } = await project.render();
     &__nav {
       display: grid;
       gap: var(--space-24);
+      grid-template-columns: repeat(2, 1fr);
+
+      @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+      }
     }
   }
 </style>
