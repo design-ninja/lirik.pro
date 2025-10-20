@@ -67,14 +67,13 @@ a {
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
-  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
+  text-decoration-color: color-mix(in srgb, currentColor 20%, transparent);
   transition:
-    opacity 0.2s ease-in-out,
-    text-decoration-color 0.2s ease-in-out;
+    opacity 0.2s ease-in-out;
 
   &:hover {
-    opacity: 0.9;
-    text-decoration-color: currentColor;
+    opacity: 0.8;
+    text-decoration: none;
   }
 }
 

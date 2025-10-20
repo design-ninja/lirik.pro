@@ -61,7 +61,7 @@ const { Content } = await post.render();
     {
       (prevPost || nextPost) && (
         <div>
-          <h3>Читать далее...</h3>
+          <h3>Еще в Блоге</h3>
           {nextPost && <PostPreview post={nextPost} headingLevel="h3" />}
           {prevPost && <PostPreview post={prevPost} headingLevel="h3" />}
         </div>
