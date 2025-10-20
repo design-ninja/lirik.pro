@@ -1,3 +1,4 @@
+@use 'sass:color';
 @import '_reset.css';
 
 :root {
@@ -63,11 +64,17 @@ p {
 
 a {
   color: var(--color-text-link-primary);
-  text-decoration: none;
-  transition: opacity 0.2s ease-in-out;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
+  transition:
+    opacity 0.2s ease-in-out,
+    text-decoration-color 0.2s ease-in-out;
 
   &:hover {
-    opacity: 0.8;
+    opacity: 0.9;
+    text-decoration-color: currentColor;
   }
 }
 
