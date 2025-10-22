@@ -82,64 +82,10 @@ const siteConfig: SiteConfig = {
     src: '/og-preview.jpg',
     alt: 'Дизайнер Кирилл Исаченко'
   },
-  headerNavLinks: [
-    {
-      text: 'Экспертиза',
-      href: '/#expertize'
-    },
-    {
-      text: 'Проекты',
-      href: '/#projects'
-    },
-    {
-      text: 'Обо мне',
-      href: '/#about'
-    },
-    { text: 'Блог', href: '/blog' },
-    {
-      text: 'Контакты',
-      href: '/#contacts'
-    }
-  ],
-  socialLinks: [
-    {
-      text: 'Telegram',
-      href: 'https://t.me/lirikpro/'
-    },
-    {
-      text: 'WhatsApp',
-      href: 'https://wa.me/79620726666/'
-    },
-    {
-      text: 'X',
-      href: 'https://x.com/lirik1986/'
-    },
-    {
-      text: 'Behance',
-      href: 'https://behance.net/design-ninja/'
-    },
-    {
-      text: 'GitHub',
-      href: 'https://github.com/design-ninja/'
-    }
-  ],
-  services: [
-    { number: '01', title: 'Проектирование интерфейсов', text: 'User flows, CJM, инфоархитектура, сценарии, UX‑копирайтинг.' },
-    { number: '02', title: 'Дизайн‑системы и UI‑киты', text: 'Токены, компоненты, библиотеки в Figma и для React.' },
-    { number: '03', title: 'Прототипирование', text: 'Интерактивные прототипы в Figma для валидации гипотез.' },
-    { number: '04', title: 'Реализация UI', text: 'Сопровождение внедрения, React‑компоненты, дизайн‑токены.' },
-    { number: '05', title: 'Дизайн‑аудит', text: 'UX‑ревью по эвристикам, рекомендации с приоритетами.' },
-    { number: '06', title: 'Консалтинг и менторинг', text: 'Сессии, воркшопы, рост команды и процессов.' }
-  ],
-  projects: {
-    title: 'Проекты'
-  },
-  // testimonials kept for potential future use, hidden on homepage
+  postsPerPage: 8,
   footer: {
     author: 'Дизайн и разработка: lirik 🖤'
-  },
-  postsPerPage: 8,
-  projectsPerPage: 8
+  }
 };
 
 export default siteConfig;

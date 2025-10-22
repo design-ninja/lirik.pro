@@ -1,5 +1,8 @@
 @import '_sizes.css';
 
 :root {
+  --radius-s: var(--size-4);
+  --radius-m: var(--size-8);
+  --radius-l: var(--size-12);
   --radius-round: var(--size-80);
 }

@@ -4,7 +4,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 import Intro from '../components/Intro.astro';
 import Projects from '../components/Projects/Projects.astro';
+import SideProjects from '../components/SideProjects.astro';
 import PostPreview from '../components/PostPreview.astro';
+import SectionTitle from '../components/SectionTitle.astro';
 import siteConfig from '../data/site-config';
 import { sortItemsByDateDesc } from '../utils/data-utils';
 
@@ -15,10 +17,11 @@ const featuredPosts = posts.filter(({ data }) => data.isFeatured);
 <BaseLayout description={siteConfig.description} image={siteConfig.image}>
   <Intro />
   <Projects />
+  <SideProjects />
   {
     posts?.length > 0 && (
       <section aria-label="Последние записи" class="home-posts">
-        <h2>Блог</h2>
+        <SectionTitle title="Блог" />
         {posts.slice(0, 3).map((post) => (
           <PostPreview post={post} />
         ))}
