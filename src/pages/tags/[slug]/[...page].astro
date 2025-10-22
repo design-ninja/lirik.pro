@@ -2,8 +2,8 @@
 import type { GetStaticPathsOptions, Page } from 'astro';
 import { type CollectionEntry, getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Pagination from '../../../components/Pagination.astro';
-import PostPreview from '../../../components/PostPreview.astro';
+import Pagination from '../../../components/Blog/Pagination.astro';
+import PostPreview from '../../../components/Blog/PostPreview.astro';
 import siteConfig from '../../../data/site-config';
 import { sortItemsByDateDesc, getAllTags, getPostsByTag } from '../../../utils/data-utils';
 
