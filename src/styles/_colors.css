@@ -1,29 +1,29 @@
 :root {
-  --neutral-0: #f7f7f3;
-  --neutral-25: #fbfaf8;
-  --neutral-50: #fafaf9;
-  --neutral-100: #f5f5f4;
-  --neutral-200: #e7e5e4;
-  --neutral-300: #d6d3d1;
-  --neutral-400: #a8a29e;
-  --neutral-500: #78716c;
-  --neutral-600: #57534e;
-  --neutral-700: #44403c;
-  --neutral-800: #292524;
-  --neutral-900: #1c1917;
+  --neutral-0: oklch(0.975 0.0053 106.5);
+  --neutral-25: oklch(0.9853 0.0029 84.56);
+  --neutral-50: oklch(0.9848 0.0013 106.42);
+  --neutral-100: oklch(0.9515 0.0067 97.35);
+  --neutral-200: oklch(0.9232 0.0026 48.72);
+  --neutral-300: oklch(0.8687 0.0043 56.37);
+  --neutral-400: oklch(0.7161 0.0091 56.26) 9e;
+  --neutral-500: oklch(0.5534 0.0116 58.07);
+  --neutral-600: oklch(0.4444 0.0096 73.64);
+  --neutral-700: oklch(0.3741 0.0087 67.56);
+  --neutral-800: oklch(0.2685 0.0063 34.3);
+  --neutral-900: oklch(0.2161 0.0061 56.04);
 
-  --brand-25: #fcfaff;
-  --brand-50: #f9f5ff;
-  --brand-100: #f4ebff;
-  --brand-200: #e9d7fe;
-  --brand-300: #d7bbfc;
-  --brand-400: #b692f6;
-  --brand-500: #9e77ed;
-  --brand-600: #7f56d9;
-  --brand-700: #6941c6;
-  --brand-800: #53389e;
-  --brand-900: #42307d;
+  --brand-25: oklch(0.988 0.0069 304.24);
+  --brand-50: oklch(0.9761 0.013857 304.1415);
+  --brand-100: oklch(0.953 0.0282 306.05);
+  --brand-200: oklch(0.9058 0.0559 306.14);
+  --brand-300: oklch(0.8378 0.0938 304.12);
+  --brand-400: oklch(0.7324 0.1449 299.4);
+  --brand-500: oklch(0.6595 0.1717 296.66);
+  --brand-600: oklch(0.5645 0.1916 293.78);
+  --brand-700: oklch(0.498 0.1953 291.5);
+  --brand-800: oklch(0.4308 0.1574 290.42);
+  --brand-900: oklch(0.3742 0.1248 289.76);
 
-  --alpha-brand-50: #7f56d980;
-  --alpha-black-50: #26251e80;
+  --alpha-brand-50: oklch(0.5645 0.1916 293.78 / 50.2%);
+  --alpha-black-50: oklch(0.2631 0.0127 100.51 / 50.2%);
 }
