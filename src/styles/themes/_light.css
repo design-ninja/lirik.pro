@@ -9,6 +9,7 @@
   --color-bg-raised: var(--neutral-100);
   --color-border-primary: var(--neutral-200);
   --color-border-secondary: var(--neutral-300);
+  --color-border-brand: var(--brand-500);
   --color-icon-primary: var(--neutral-900);
   --color-icon-secondary: var(--neutral-200);
   --color-icon-tertiary: var(--neutral-0);

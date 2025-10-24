@@ -28,19 +28,19 @@ const { Content } = await project.render();
   <article class="article">
     <header>
       <h1>{title}</h1>
+      <div class="article__meta">
+        {tags && <span class="article__tags">{tags.join(', ').replace(/,(?!.*,)/gim, ' и')}</span>}
+        {
+          link && (
+            <a href={link} target="_blank" rel="noopener noreferer" class="article__link" title={title}>
+              {link}
+            </a>
+          )
+        }
+      </div>
     </header>
     <div>
       <Content />
-    </div>
-    <div class="article__meta">
-      {tags && <span class="article__tags">{tags.join(', ').replace(/,(?!.*,)/gim, ' и')}</span>}
-      {
-        link && (
-          <a href={link} target="_blank" rel="noopener noreferer" class="article__link" title={title}>
-            {link}
-          </a>
-        )
-      }
     </div>
     {
       (prevProject || nextProject) && (
