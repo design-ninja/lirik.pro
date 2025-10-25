@@ -54,7 +54,7 @@
 </style>
 
 <script>
-  (async () => {
+  async function loadLocation() {
     const el = document.getElementById('location');
     if (!el) return;
 
@@ -70,12 +70,9 @@
     } catch {
       el.textContent = '—';
     }
-  })();
-</script>
+  }
 
-
-<script>
-  (async () => {
+  async function loadSpotify() {
     const el = document.getElementById('spotify') as HTMLAnchorElement | null;
     if (!el) return;
 
@@ -92,8 +89,13 @@
     } catch {
       el.textContent = '—';
     }
-  })();
+  }
 
+  // Load on initial page load and on every navigation (View Transitions)
+  document.addEventListener('astro:page-load', () => {
+    loadLocation();
+    loadSpotify();
+  });
 </script>
 
 
