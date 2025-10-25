@@ -7,9 +7,9 @@ seo:
   title: 'Дизайн сервиса видеостриминга XLIFE.COM'
   description: 'От исследований до продакшна: платёжный поток, дизайн‑система и темизация (light/dark).'
   image:
-    src: '../../assets/xlife/xlife.png'
+    src: '../../assets/xlife/cover.png'
     alt: 'XLIFE.COM — кейс'
-cover: '../../assets/xlife/xlife.png'
+cover: '../../assets/xlife/cover.png'
 isFeatured: true
 ---
 
