@@ -1,6 +1,7 @@
 ---
 import siteConfig from '../data/site-config';
 import Avatar from './Avatar.astro';
+import InfoTable from './InfoTable.astro';
 ---
 
 <section class='Intro' aria-label='Обо мне'>
@@ -12,18 +13,25 @@ import Avatar from './Avatar.astro';
       <div class='Intro__Name'>{siteConfig.author}</div>
     </div>
   </div>
-  <div class='Intro__Text'>
-    <p>
-      Я дизайнер с 10+ годами опыта в разработке <a href='#portfolio' rel='noopener' title='Проекты'>web и мобильных сервисов</a>. Проектирую интерфейсы, создаю дизайн‑системы, прототипы и реализую UI на React.
-    </p>
-    <p>
-      Разрабатываю <a href='#side-projects' rel='noopener'>плагины</a> для Chrome и VSCode.
-      Играю на гитаре и пою в инди-рок группе <a href='https://music.yandex.ru/artist/3135271' target='_blank' rel='noopener'>Limebridge</a>.
-    </p>
-    <p>
-      <a href='https://t.me/lirikpro' target='_blank' rel='noopener' title='Напишите мне в Telegram'>Напишите мне</a>, если у вас есть вопросы или вам нужна
-      помощь с дизайном или разработкой.
-    </p>
+  <div class='Intro__Content'>
+    <div class='Intro__About'>
+      <p>
+        Я дизайнер с 10+ годами опыта в разработке <a href='#portfolio' rel='noopener' title='Проекты'>web и мобильных сервисов</a>. Проектирую интерфейсы,
+        создаю дизайн‑системы, прототипы и реализую UI на React.
+      </p>
+      <p>
+        Разрабатываю <a href='#side-projects' rel='noopener'>плагины</a> для Chrome и VSCode. Играю на гитаре и пою в инди-рок группе <a
+          href='https://music.yandex.ru/artist/3135271'
+          target='_blank'
+          rel='noopener'>Limebridge</a
+        >.
+      </p>
+      <p>
+        <a href='https://t.me/lirikpro' target='_blank' rel='noopener' title='Напишите мне в Telegram'>Напишите мне</a>, если у вас есть вопросы или вам нужна
+        помощь с дизайном или разработкой.
+      </p>
+    </div>
+    <InfoTable />
   </div>
 </section>
 
@@ -36,6 +44,13 @@ import Avatar from './Avatar.astro';
       margin-bottom: var(--space-24);
     }
 
+    &__Content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      align-items: center;
+      gap: var(--space-40);
+    }
+
     &__Name {
       font-size: var(--font-size-20);
       font-weight: var(--font-weight-medium);
@@ -44,5 +59,15 @@ import Avatar from './Avatar.astro';
     &__Text {
       max-width: 46ch;
     }
+
+    &__About {
+      & > p:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
+
+  
 </style>
+
+ 
