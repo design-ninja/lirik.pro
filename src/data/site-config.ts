@@ -21,7 +21,7 @@ export type About = {
   text?: string;
 };
 
-export type Projects = {
+export type Portfolio = {
   title?: string;
 };
 
@@ -65,7 +65,7 @@ export type SiteConfig = {
   postsPerPage?: number;
   projectsPerPage?: number;
   about?: About;
-  projects?: Projects;
+  portfolio?: Portfolio;
   cta?: CTA;
   services?: Service[];
   testimonials?: Testimonials;

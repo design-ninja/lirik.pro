@@ -9,9 +9,9 @@ import SectionTitle from '../../components/SectionTitle.astro';
 const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
 const featuredProjects = projects.filter(({ data }) => data.isFeatured);
 
-const { title } = siteConfig.projects || {};
+const { title } = siteConfig.portfolio || {};
 
-interface Projects {
+interface Portfolio {
   title: string;
 }
 ---
@@ -40,3 +40,5 @@ interface Projects {
     }
   }
 </style>
+
+
