@@ -19,7 +19,25 @@ export async function getStaticPaths() {
 
 type Props = { project: CollectionEntry<'projects'>; prevProject: CollectionEntry<'projects'>; nextProject: CollectionEntry<'projects'> };
 
-const { project, prevProject, nextProject } = Astro.props;
+// Support both SSG (props from getStaticPaths) and SSR (lookup by slug)
+const { project: propProject, prevProject: propPrev, nextProject: propNext } = Astro.props as Partial<Props>;
+
+let project = propProject as CollectionEntry<'projects'> | undefined;
+let prevProject = (propPrev as CollectionEntry<'projects'> | null | undefined) ?? null;
+let nextProject = (propNext as CollectionEntry<'projects'> | null | undefined) ?? null;
+
+if (!project) {
+  const slug = Astro.params.slug as string | undefined;
+  const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
+  const index = slug ? projects.findIndex((p) => p.slug === slug) : -1;
+  if (index === -1) {
+    return new Response(null, { status: 404 });
+  }
+  project = projects[index];
+  prevProject = index !== 0 ? projects[index - 1] : null;
+  nextProject = index + 1 !== projects.length ? projects[index + 1] : null;
+}
+
 const { title, description, seo, tags, link } = project.data;
 const { Content } = await project.render();
 ---
