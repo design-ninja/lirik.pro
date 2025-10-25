@@ -3,7 +3,7 @@
     <span class='InfoTable__Row-label'>Сейчас я здесь</span> <a class='InfoTable__Row-value' href='https://www.google.com/maps/place/Пхукет' target='_blank' rel='noopener' id='location'>—</a>
   </div>
   <div class='InfoTable__Row'>
-    <span class='InfoTable__Row-label'>Слушаю</span> <a class='InfoTable__Row-value' href='https://open.spotify.com/track/1234567890' target='_blank' rel='noopener' id='spotify'>XX - Intro</a>
+    <span class='InfoTable__Row-label'>Слушаю</span> <a class='InfoTable__Row-value' href='#' target='_blank' rel='noopener' id='spotify'>—</a>
   </div>
   <div class='InfoTable__Row'>
     <span class='InfoTable__Row-label'>Читаю</span> <a class='InfoTable__Row-value' href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>The Creative Act: A Way of Being</a>
@@ -71,6 +71,29 @@
       el.textContent = '—';
     }
   })();
+</script>
+
+
+<script>
+  (async () => {
+    const el = document.getElementById('spotify') as HTMLAnchorElement | null;
+    if (!el) return;
+
+    try {
+      const res = await fetch('/api/spotify-last.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('bad status');
+      const data = await res.json();
+      if (data?.url && data?.title) {
+        el.href = data.url;
+        el.textContent = data.title;
+      } else {
+        el.textContent = '—';
+      }
+    } catch {
+      el.textContent = '—';
+    }
+  })();
+
 </script>
 
 
