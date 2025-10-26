@@ -117,3 +117,8 @@ ul {
 li {
   margin-bottom: var(--space-4);
 }
+
+article p>img {
+  border-radius: var(--radius-m);
+  display: block;
+}

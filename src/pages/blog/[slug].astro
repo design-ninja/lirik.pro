@@ -43,41 +43,53 @@ if (!post) {
   throw new Error('Post not found');
 }
 
-const { title, publishDate, updatedDate, excerpt, tags = [], seo } = post.data;
+const { title, publishDate, updatedDate, tags = [], seo } = post.data;
 const { Content } = await post.render();
+
+function getFirstParagraphFromMarkdown(markdown: string) {
+  if (!markdown) return '';
+  const firstBlock = markdown.trim().split(/\n\s*\n/)[0] || '';
+  const withoutImages = firstBlock.replace(/!\[[^\]]*\]\([^)]*\)/g, '');
+  const withoutLinks = withoutImages.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
+  const withoutFormatting = withoutLinks.replace(/[\\*_`~>]/g, '');
+  return withoutFormatting.trim();
+}
+const firstParagraph = getFirstParagraphFromMarkdown(post.body);
 ---
 
-<BaseLayout title={seo?.title ?? title} description={seo?.description ?? excerpt} image={seo?.image} pageType="article">
-  <article class="article">
+<BaseLayout title={seo?.title ?? title} description={seo?.description ?? firstParagraph} image={seo?.image} pageType="article">
+  <article class="Article">
     <header>
       <h1>{title}</h1>
-      <div>
-        <FormattedDate date={publishDate} />
-        {
-          updatedDate && (
-            <>
-              {' '}
-              <span>
-                (Обновлено: <FormattedDate date={updatedDate} />)
-              </span>
-            </>
-          )
-        }
-      </div>
     </header>
     <div>
       <Content />
-    </div>
-    <div>
-      {
-        tags.length > 0 && (
-          <div>
-            {tags.map((tag) => (
-              <a href={`/tags/${slugify(tag)}`}>#{tag}</a>
-            ))}
-          </div>
-        )
-      }
+      <div class="Article__Footer">
+        <div>
+          <FormattedDate date={publishDate} />
+          {
+            updatedDate && (
+              <>
+                {' '}
+                <span>
+                  (Обновлено: <FormattedDate date={updatedDate} />)
+                </span>
+              </>
+            )
+          }
+        </div>
+        <div class="Article__Tags">
+          {
+            tags.length > 0 && (
+              <div class="Article__TagsList">
+                {tags.map((tag) => (
+                  <a href={`/tags/${slugify(tag)}`}>#{tag}</a>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </div>
     </div>
     {
       (prevPost || nextPost) && (
@@ -114,13 +126,28 @@ const { Content } = await post.render();
 </script>
 
 <style lang="scss">
-  .article {
+  .Article {
     display: grid;
-    gap: var(--space-64);
+    gap: var(--space-40);
     margin: 0 auto;
     max-width: 900px;
 
-    &__nav {
+    &__TagsList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+      font-size: var(--font-size-14);
+    }
+
+    &__Footer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-8);
+      margin-top: var(--space-24);
+    }
+
+    &__Nav {
       display: flex;
       gap: var(--space-24);
       justify-content: space-between;
@@ -138,10 +165,5 @@ const { Content } = await post.render();
         }
       }
     }
-  }
-
-  :global(.article img) {
-    border-radius: var(--radius-m);
-    display: block;
   }
 </style>

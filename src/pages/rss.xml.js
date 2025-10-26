@@ -11,9 +11,18 @@ export async function GET(context) {
     site: context.site,
     items: posts.map((item) => ({
       title: item.data.title,
-      description: item.data.excerpt,
+      description: getFirstParagraphFromMarkdown(item.body) || item.data.seo?.description || '',
       link: `/blog/${item.slug}/`,
       pubDate: item.data.publishDate.setUTCHours(0)
     }))
   });
+}
+
+function getFirstParagraphFromMarkdown(markdown) {
+  if (!markdown) return '';
+  const firstBlock = markdown.trim().split(/\n\s*\n/)[0] || '';
+  const withoutImages = firstBlock.replace(/!\[[^\]]*\]\([^)]*\)/g, '');
+  const withoutLinks = withoutImages.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
+  const withoutFormatting = withoutLinks.replace(/[\\*_`~>]/g, '');
+  return withoutFormatting.trim();
 }

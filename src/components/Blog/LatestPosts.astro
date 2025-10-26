@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import SectionTitle from '../SectionTitle.astro';
+import FormattedDate from './FormattedDate.astro';
+import { sortItemsByDateDesc } from '../../utils/data-utils';
+import { slugify } from '../../utils/common-utils';
+
+interface Props {
+  limit?: number;
+}
+
+const { limit = 3 } = Astro.props as Props;
+
+const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
+const firstPosts = await Promise.all(
+  posts.slice(0, limit).map(async (post) => ({ post, Content: (await post.render()).Content }))
+);
+---
+
+{posts?.length > 0 && (
+  <section aria-label="Последние записи" class="LatestPosts">
+    <SectionTitle title="Блог" />
+    <div class="LatestPosts__List">
+        {firstPosts.map(({ post, Content }) => (
+        <article class="LatestPosts__Post">
+            <h3 class="LatestPosts__Title">
+            <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+            </h3>
+            <div class="LatestPosts__Body">
+            <Content />
+            </div>
+            <div class="LatestPosts__Footer">
+            <div class="LatestPosts__Date">
+                <FormattedDate date={post.data.publishDate} />
+                {post.data.updatedDate && (
+                <>
+                    {' '}
+                    <span>
+                    (Обновлено: <FormattedDate date={post.data.updatedDate} />)
+                    </span>
+                </>
+                )}
+            </div>
+            {(post.data.tags?.length ?? 0) > 0 && (
+                <div class="LatestPosts__Tags">
+                {post.data.tags.map((tag) => (
+                    <a href={`/tags/${slugify(tag)}`}>#{tag}</a>
+                ))}
+                </div>
+            )}
+            </div>
+        </article>
+        ))}
+    </div>
+    <div class="LatestPosts__More">
+      <a href="/blog">Ещё в блоге...</a>
+    </div>
+  </section>
+)}
+
+<style lang="scss">
+  .LatestPosts {
+
+    &__Post {
+      max-width: 64ch;
+    }
+
+    &__List {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-64);
+    }
+
+    &__Title {
+        margin-top: 0;
+      margin-bottom: var(--space-16);
+    }
+
+    &__Body {
+      margin-top: var(--space-16);
+    }
+
+    &__Footer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-8);
+      margin-top: var(--space-24);
+    }
+
+    &__Date {
+      font-size: var(--font-size-14);
+      color: var(--color-text-secondary);
+    }
+
+    &__Tags {
+      font-size: var(--font-size-14);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    &__More {
+      margin-top: var(--space-40);
+    }
+  }
+</style>
+
+

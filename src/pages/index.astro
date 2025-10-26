@@ -1,53 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 import Intro from '../components/Intro.astro';
 import Portfolio from '../components/Portfolio/Portfolio.astro';
 import SideProjects from '../components/SideProjects.astro';
-import PostPreview from '../components/Blog/PostPreview.astro';
-import SectionTitle from '../components/SectionTitle.astro';
+import LatestPosts from '../components/Blog/LatestPosts.astro';
 import siteConfig from '../data/site-config';
-import { sortItemsByDateDesc } from '../utils/data-utils';
-
-const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
-const featuredPosts = posts.filter(({ data }) => data.isFeatured);
 ---
 
 <BaseLayout description={siteConfig.description} image={siteConfig.image}>
   <Intro />
   <Portfolio />
   <SideProjects />
-  {
-    posts?.length > 0 && (
-      <section aria-label="Последние записи" class="home-posts">
-        <SectionTitle title="Блог" />
-        {posts.slice(0, 3).map((post) => (
-          <PostPreview post={post} />
-        ))}
-        <div class="home-posts__more">
-          <a href="/blog">Ещё в блоге...</a>
-        </div>
-      </section>
-    )
-  }
+  <LatestPosts limit={3} />
 </BaseLayout>
-
-<style lang="scss">
-  .projects {
-    &__grid {
-      display: grid;
-      gap: var(--space-80);
-    }
-  }
-
-  .home-posts {
-    h2 {
-      margin-bottom: var(--space-24);
-    }
-
-    &__more {
-      margin-top: var(--space-40);
-    }
-  }
-</style>
