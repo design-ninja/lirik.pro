@@ -1,51 +1,81 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Location to Gist – Options</title>
-    <style>
-      body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; margin: 24px; }
-      form { display: grid; gap: 12px; max-width: 560px; }
-      label { display: grid; gap: 6px; }
-      input { padding: 8px 10px; font-size: 14px; }
-      .row { display: grid; grid-template-columns: 160px 1fr; gap: 12px; align-items: center; }
-      .help { color: #666; font-size: 12px; }
-      .actions { display: flex; gap: 8px; margin-top: 8px; }
-      button { padding: 8px 12px; font-size: 14px; }
-    </style>
-  </head>
-  <body>
-    <h1>Location to Gist – Options</h1>
-    <form id="form">
-      <div class="row">
-        <label for="token">GitHub Token</label>
-        <input id="token" type="password" autocomplete="off" placeholder="ghp_***" />
-      </div>
-      <div class="row">
-        <label for="gistId">Gist ID</label>
-        <input id="gistId" type="text" placeholder="e.g. a1b2c3d4e5..." />
-      </div>
-      <div class="row">
-        <label for="filename">Filename</label>
-        <input id="filename" type="text" value="location.json" />
-      </div>
-      <div class="row">
-        <label for="gapi">Google API Key</label>
-        <input id="gapi" type="password" autocomplete="off" placeholder="AIza..." />
-      </div>
-      <div class="row">
-        <label for="lang">Language (en, ru, ...)</label>
-        <input id="lang" type="text" value="en" />
-      </div>
-      <div class="actions">
-        <button type="submit">Save</button>
-        <button id="run" type="button">Update now</button>
-      </div>
-      <p class="help">
-        RAW URL из Gist укажите как <code>PUBLIC_LOCATION_JSON_URL</code> на сайте. Google Geocoding даёт более привычные названия городов.
-      </p>
-    </form>
-    <script type="module" src="options.js"></script>
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Location to Gist – Options</title>
+  <style>
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      margin: 24px;
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+      max-width: 560px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+    }
+
+    input {
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    button {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Location to Gist – Options</h1>
+  <form id="form">
+    <div class="row">
+      <label for="token">GitHub Token</label>
+      <input id="token" type="password" autocomplete="off" placeholder="ghp_***" />
+    </div>
+    <div class="row">
+      <label for="gistId">Gist ID</label>
+      <input id="gistId" type="text" placeholder="e.g. a1b2c3d4e5..." />
+    </div>
+    <div class="row">
+      <label for="filename">Filename</label>
+      <input id="filename" type="text" value="location.json" />
+    </div>
+    <div class="row">
+      <label for="gapi">Google API Key</label>
+      <input id="gapi" type="password" autocomplete="off" placeholder="AIza..." />
+    </div>
+    <div class="row">
+      <label for="lang">Language (en, ru, ...)</label>
+      <input id="lang" type="text" value="en" />
+    </div>
+    <div class="actions">
+      <button type="submit">Save</button>
+      <button id="run" type="button">Update now</button>
+    </div>
+  </form>
+  <script type="module" src="options.js"></script>
+</body>
+
 </html>
