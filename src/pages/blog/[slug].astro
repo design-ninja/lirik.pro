@@ -58,13 +58,13 @@ const firstParagraph = getFirstParagraphFromMarkdown(post.body);
 ---
 
 <BaseLayout title={seo?.title ?? title} description={seo?.description ?? firstParagraph} image={seo?.image} pageType="article">
-  <article class="Article">
+  <article class="article">
     <header>
       <h1>{title}</h1>
     </header>
     <div>
       <Content />
-      <div class="Article__Footer">
+      <div class="article__footer">
         <div>
           <FormattedDate date={publishDate} />
           {
@@ -78,10 +78,10 @@ const firstParagraph = getFirstParagraphFromMarkdown(post.body);
             )
           }
         </div>
-        <div class="Article__Tags">
+        <div class="article__tags">
           {
             tags.length > 0 && (
-              <div class="Article__TagsList">
+              <div class="article__tagslist">
                 {tags.map((tag) => (
                   <a href={`/tags/${slugify(tag)}`}>#{tag}</a>
                 ))}
@@ -126,20 +126,20 @@ const firstParagraph = getFirstParagraphFromMarkdown(post.body);
 </script>
 
 <style lang="scss">
-  .Article {
+  .article {
     display: grid;
     gap: var(--space-40);
     margin: 0 auto;
     max-width: 900px;
 
-    &__TagsList {
+    &__tagslist {
       display: flex;
       flex-wrap: wrap;
       gap: var(--space-8);
       font-size: var(--font-size-14);
     }
 
-    &__Footer {
+    &__footer {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -147,7 +147,7 @@ const firstParagraph = getFirstParagraphFromMarkdown(post.body);
       margin-top: var(--space-24);
     }
 
-    &__Nav {
+    &__nav {
       display: flex;
       gap: var(--space-24);
       justify-content: space-between;
@@ -156,7 +156,7 @@ const firstParagraph = getFirstParagraphFromMarkdown(post.body);
       padding-top: var(--space-24);
       border-top: 1px solid var(--color-border-primary);
 
-      &Item {
+      &item {
         display: inline-grid;
         gap: var(--space-24);
 

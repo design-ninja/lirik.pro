@@ -3,7 +3,7 @@ const { id, title = 'YouTube video' } = Astro.props as { id: string; title?: str
 ---
 
 <iframe
-  class="Video__Post_ratio-16x9"
+  class="video__post_ratio-16x9"
   src={`https://www.youtube.com/embed/${id}`}
   title={title}
   loading="lazy"
@@ -13,7 +13,7 @@ const { id, title = 'YouTube video' } = Astro.props as { id: string; title?: str
 />
 
 <style lang="scss">
-  .Video__Post_ratio-16x9 {
+  .video__post_ratio-16x9 {
     width: 100%;
     aspect-ratio: 16 / 9;
     display: block;

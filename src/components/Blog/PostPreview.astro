@@ -20,13 +20,13 @@ const firstParagraph = getFirstParagraphFromMarkdown(post.body);
 const TitleTag = headingLevel;
 ---
 
-<div class:list={["PostPreview flex justify-between items-start gap-8", className]}>
+<div class:list={["postpreview flex justify-between items-start gap-8", className]}>
   <div class="grow">
     <TitleTag class="text-xl leading-tight font-serif font-medium sm:text-2xl">
       <a href={`/blog/${post.slug}/`}>{title}</a>
     </TitleTag>
     {firstParagraph && <div class="mt-3 text-sm leading-normal">{firstParagraph}</div>}
-    <div class="PostPreview__Date mt-3 text-sm leading-normal">
+    <div class="postpreview__date mt-3 text-sm leading-normal">
       <FormattedDate date={publishDate} />
       {
         updatedDate && (
@@ -43,9 +43,9 @@ const TitleTag = headingLevel;
 </div>
 
 <style lang="scss">
-  .PostPreview {
+  .postpreview {
     max-width: 64ch;
-    &__Date {
+    &__date {
       color: var(--color-text-secondary);
       margin-top: var(--space-8);
     }

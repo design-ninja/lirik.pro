@@ -19,16 +19,16 @@ const isHome = Astro.url.pathname === '/';
     <ClientRouter />
     <main>
       {!isHome && (
-        <a href="/" class="BrandLink" aria-label={siteConfig.author}>
+        <a href="/" class="brandlink" aria-label={siteConfig.author}>
           <Avatar size="small" loading="eager" />
-          <span class="BrandLink__Name">{siteConfig.author}</span>
+          <span class="brandlink__name">{siteConfig.author}</span>
         </a>
       )}
       <slot />
       <Footer />
     </main>
     <style lang="scss">
-      .BrandLink {
+      .brandlink {
         display: inline-flex;
         align-items: center;
         gap: var(--space-12);
@@ -38,7 +38,7 @@ const isHome = Astro.url.pathname === '/';
         margin-bottom: var(--space-40);
       }
 
-      .BrandLink__Name {
+      .brandlink__name {
         font-weight: var(--font-weight-medium);
       }
     </style>

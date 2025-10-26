@@ -6,9 +6,9 @@ seo:
   title: 'KOTT. Wear — бренд и сайт Shopify'
   description: 'От логотипа и носителей до минималистичного сайта Shopify и мобильного дизайна.'
   image:
-    src: '../../assets/kott.png'
+    src: '../../assets/kott/cover.png'
     alt: 'KOTT. Wear — кейс'
-cover: '../../assets/kott.png'
+cover: '../../assets/kott/cover.png'
 isFeatured: true
 ---
 

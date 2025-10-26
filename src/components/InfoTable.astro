@@ -1,23 +1,23 @@
-<div class='InfoTable'>
-  <div class='InfoTable__Row'>
-    <span class='InfoTable__Row-label'>Сейчас я здесь</span> <a class='InfoTable__Row-value' href='https://www.google.com/maps/place/Пхукет' target='_blank' rel='noopener' id='location'>—</a>
+<div class='infotable'>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Сейчас я здесь</span> <a class='infotable__row-value' href='https://www.google.com/maps/place/Пхукет' target='_blank' rel='noopener' id='location'>—</a>
   </div>
-  <div class='InfoTable__Row'>
-    <span class='InfoTable__Row-label'>Слушаю</span> <a class='InfoTable__Row-value' href='#' target='_blank' rel='noopener' id='spotify'>—</a>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Слушаю</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='spotify'>—</a>
   </div>
-  <div class='InfoTable__Row'>
-    <span class='InfoTable__Row-label'>Кодю</span> <a class='InfoTable__Row-value' href='#' target='_blank' rel='noopener' id='wakatime'>—</a>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Кодю</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='wakatime'>—</a>
   </div>
-  <div class='InfoTable__Row'>
-    <span class='InfoTable__Row-label'>Читаю</span> <a class='InfoTable__Row-value' href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>The Creative Act: A Way of Being</a>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Читаю</span> <a class='infotable__row-value' href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>The Creative Act: A Way of Being</a>
   </div>
-  <div class='InfoTable__Row'>
-    <span class='InfoTable__Row-label'>Учу</span> <a class='InfoTable__Row-value' href='https://www.youtube.com/@letslearnthai' target='_blank' rel='noopener' id='learn'>Тайский язык</a>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Учу</span> <a class='infotable__row-value' href='https://www.youtube.com/@letslearnthai' target='_blank' rel='noopener' id='learn'>Тайский язык</a>
   </div>
 </div>
 
 <style lang='scss'>
-  .InfoTable {
+  .infotable {
     display: flex;
     flex-direction: column;
     gap: var(--space-8);
@@ -25,7 +25,7 @@
     border: var(--size-1) solid var(--color-border-primary);
     padding: var(--space-20);
 
-    &__Row {
+    &__row {
       display: flex;
       align-items: center;
       gap: var(--space-16);
@@ -48,10 +48,10 @@
         padding-bottom: var(--space-12);
       }
     }
-    &__Row-label {
+    &__row-label {
       flex: 0 0 auto;
     }
-    &__Row-value {
+    &__row-value {
       width: fit-content;
       min-width: 0;
       display: inline-block;
