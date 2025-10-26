@@ -2,15 +2,13 @@ const STORAGE_KEYS = {
   token: "ghToken",
   gistId: "gistId",
   filename: "filename",
-  interval: "intervalMinutes",
   lastUpdateAt: "lastUpdateAt",
   lastError: "lastError",
   lastLocation: "lastLocation"
 };
 
 const DEFAULTS = {
-  filename: "location.json",
-  intervalMinutes: 30
+  filename: "location.json"
 };
 
 function storageGet(keys) {
@@ -26,17 +24,17 @@ async function getSettings() {
   return {
     token: data[STORAGE_KEYS.token] || "",
     gistId: data[STORAGE_KEYS.gistId] || "",
-    filename: data[STORAGE_KEYS.filename] || DEFAULTS.filename,
-    intervalMinutes: Number(data[STORAGE_KEYS.interval]) || DEFAULTS.intervalMinutes
+    filename: data[STORAGE_KEYS.filename] || DEFAULTS.filename
   };
 }
 
-async function fetchLocation() {
-  const res = await fetch("https://ipwho.is/");
-  if (!res.ok) throw new Error("Failed to query ipwho.is");
+async function reverseGeocode(lat, lon) {
+  const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to reverse geocode");
   const json = await res.json();
-  const city = json?.city || "";
-  const country = json?.country || "";
+  const city = json?.city || json?.locality || json?.principalSubdivision || "";
+  const country = json?.countryName || "";
   return { city, country };
 }
 
@@ -60,7 +58,7 @@ async function patchGist(token, gistId, filename, content) {
   }
 }
 
-async function updateOnce() {
+async function updateByCoords(lat, lon) {
   const { token, gistId, filename } = await getSettings();
   if (!token || !gistId) {
     const error = "Token or Gist ID is not set";
@@ -69,10 +67,11 @@ async function updateOnce() {
   }
 
   try {
-    const locationData = await fetchLocation();
-    const content = JSON.stringify(locationData, null, 2);
+    const { city, country } = await reverseGeocode(lat, lon);
+    const content = JSON.stringify({ city, country }, null, 2);
     await patchGist(token, gistId, filename, content);
     const now = Date.now();
+    const locationData = { city, country, method: "device" };
     await storageSet({
       [STORAGE_KEYS.lastUpdateAt]: now,
       [STORAGE_KEYS.lastError]: "",
@@ -86,39 +85,9 @@ async function updateOnce() {
   }
 }
 
-function scheduleAlarm(intervalMinutes) {
-  const minutes = Math.max(5, Number(intervalMinutes) || DEFAULTS.intervalMinutes);
-  chrome.alarms.create("updateLocation", { periodInMinutes: minutes });
-}
-
-chrome.runtime.onInstalled.addListener(async () => {
-  const { intervalMinutes } = await getSettings();
-  scheduleAlarm(intervalMinutes);
-  updateOnce();
-});
-
-chrome.runtime.onStartup.addListener(async () => {
-  const { intervalMinutes } = await getSettings();
-  scheduleAlarm(intervalMinutes);
-});
-
-chrome.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name === "updateLocation") {
-    updateOnce();
-  }
-});
-
-chrome.storage.onChanged.addListener((changes, area) => {
-  if (area !== "sync") return;
-  if (changes[STORAGE_KEYS.interval]) {
-    const newValue = changes[STORAGE_KEYS.interval].newValue;
-    scheduleAlarm(newValue);
-  }
-});
-
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if (message?.type === "updateNow") {
-    updateOnce().then(sendResponse);
+  if (message?.type === "updateNow" && typeof message?.lat === "number" && typeof message?.lon === "number") {
+    updateByCoords(message.lat, message.lon).then(sendResponse);
     return true;
   }
   if (message?.type === "getStatus") {

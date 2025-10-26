@@ -12,19 +12,46 @@ async function load() {
   const res = await chrome.runtime.sendMessage({ type: "getStatus" });
   const loc = res?.lastLocation;
   const locText = loc ? `${loc.city || ""}${loc?.city && loc?.country ? ", " : ""}${loc.country || ""}` : "–";
-  statusEl.textContent = `Last location: ${locText}`;
+  statusEl.textContent = `Last location: ${locText}${loc?.method ? ` (${loc.method})` : ""}`;
   lastEl.textContent = `Updated: ${tsToText(res?.lastUpdateAt)}`;
   if (res?.lastError) lastEl.textContent += ` • Error: ${res.lastError}`;
 }
 
+function getCurrentPosition() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) return reject(new Error("Geolocation API not available"));
+    navigator.geolocation.getCurrentPosition(
+      (pos) => resolve(pos),
+      (err) => reject(err),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+    );
+  });
+}
+
 updateBtn.addEventListener("click", async () => {
   updateBtn.disabled = true;
-  updateBtn.textContent = "Updating...";
-  const res = await chrome.runtime.sendMessage({ type: "updateNow" });
+  updateBtn.textContent = "Requesting location...";
+  try {
+    const pos = await getCurrentPosition();
+    const { latitude, longitude } = pos.coords || {};
+    updateBtn.textContent = "Updating...";
+    const res = await chrome.runtime.sendMessage({ type: "updateNow", lat: latitude, lon: longitude });
+    if (!res?.ok) alert(res?.error || "Unknown error");
+  } catch (err) {
+    const code = typeof err === "object" && err && "code" in err ? err.code : undefined;
+    const msg = err?.message || String(err);
+    if (code === 1) { // PERMISSION_DENIED
+      const go = confirm(`${msg}.\nOpen Chrome location settings?`);
+      if (go) {
+        chrome.tabs.create({ url: "chrome://settings/content/location" });
+      }
+    } else {
+      alert(msg);
+    }
+  }
   updateBtn.disabled = false;
   updateBtn.textContent = "Update now";
   await load();
-  if (!res?.ok) alert(res?.error || "Unknown error");
 });
 
 optionsBtn.addEventListener("click", () => {

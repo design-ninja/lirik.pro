@@ -16,11 +16,10 @@
     "open_in_tab": true
   },
   "permissions": [
-    "storage",
-    "alarms"
+    "storage"
   ],
   "host_permissions": [
-    "https://ipwho.is/*",
-    "https://api.github.com/*"
+    "https://api.github.com/*",
+    "https://api.bigdatacloud.net/*"
   ]
 }

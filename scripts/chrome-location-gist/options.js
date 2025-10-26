@@ -13,6 +13,17 @@ function storageSet(values) {
   return new Promise((resolve) => chrome.storage.sync.set(values, resolve));
 }
 
+function getCurrentPosition() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) return reject(new Error("Geolocation API not available"));
+    navigator.geolocation.getCurrentPosition(
+      (pos) => resolve(pos),
+      (err) => reject(err),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+    );
+  });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("form");
   const token = document.getElementById("token");
@@ -40,12 +51,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   run.addEventListener("click", async () => {
     run.disabled = true;
-    const res = await chrome.runtime.sendMessage({ type: "updateNow" });
-    run.disabled = false;
-    if (res?.ok) {
-      alert(`Updated to ${res.city || ""}${res.city && res.country ? ", " : ""}${res.country || ""}`);
-    } else {
-      alert(`Failed: ${res?.error || "Unknown error"}`);
+    try {
+      const pos = await getCurrentPosition();
+      const { latitude, longitude } = pos.coords || {};
+      const res = await chrome.runtime.sendMessage({ type: "updateNow", lat: latitude, lon: longitude });
+      if (res?.ok) {
+        alert(`Updated to ${res.city || ""}${res.city && res.country ? ", " : ""}${res.country || ""}`);
+      } else {
+        alert(`Failed: ${res?.error || "Unknown error"}`);
+      }
+    } catch (err) {
+      alert(err?.message || String(err));
     }
+    run.disabled = false;
   });
 });
