@@ -7,6 +7,8 @@ import ProjectPreview from '../../components/Portfolio/ProjectPreview.astro';
 import siteConfig from '../../data/site-config';
 import { sortItemsByDateDesc } from '../../utils/data-utils';
 
+export const prerender = true;
+
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
   return paginate(projects, { pageSize: siteConfig.projectsPerPage || 6 });
