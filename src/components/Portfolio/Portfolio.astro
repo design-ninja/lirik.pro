@@ -1,12 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
-import { sortItemsByDateDesc } from '../../utils/data-utils';
+import { sortProjectsByLeadingNumberAsc } from '../../utils/data-utils';
 import siteConfig from '../../data/site-config';
 
 import ProjectPreview from './ProjectPreview.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
 
-const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
+const projects = (await getCollection('projects')).sort(sortProjectsByLeadingNumberAsc);
 const featuredProjects = projects.filter(({ data }) => data.isFeatured);
 
 const { title } = siteConfig.portfolio || {};

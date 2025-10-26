@@ -5,6 +5,18 @@ export function sortItemsByDateDesc(itemA: CollectionEntry<'blog' | 'projects'>,
   return new Date(itemB.data.publishDate).getTime() - new Date(itemA.data.publishDate).getTime();
 }
 
+export function sortProjectsByLeadingNumberAsc(
+  itemA: CollectionEntry<'projects'>,
+  itemB: CollectionEntry<'projects'>
+) {
+  const extractLeadingNumber = (item: CollectionEntry<'projects'>) => {
+    const match = item.slug.match(/^(\d+)/);
+    return match ? parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER;
+  };
+
+  return extractLeadingNumber(itemA) - extractLeadingNumber(itemB);
+}
+
 export function getAllTags(posts: CollectionEntry<'blog'>[]) {
   const tags: string[] = [...new Set(posts.flatMap((post) => post.data.tags || []).filter(Boolean))];
   return tags
