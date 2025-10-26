@@ -58,7 +58,7 @@
 
 <script>
   async function loadLocation() {
-    const el = document.getElementById('location');
+    const el = document.getElementById('location') as HTMLAnchorElement | null;
     if (!el) return;
 
     const RAW_URL = import.meta.env.PUBLIC_LOCATION_JSON_URL;
@@ -75,6 +75,12 @@
       const data = await res.json();
       const value = [data.city, data.country].filter(Boolean).join(', ');
       el.textContent = value || '—';
+      if (value) {
+        const query = encodeURIComponent(value);
+        el.href = `https://www.google.com/maps/place/${query}`;
+      } else {
+        el.href = '#';
+      }
     } catch {
       el.textContent = '—';
     }
