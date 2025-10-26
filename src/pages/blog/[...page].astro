@@ -6,6 +6,7 @@ import Pagination from '../../components/Blog/Pagination.astro';
 import PostPreview from '../../components/Blog/PostPreview.astro';
 import siteConfig from '../../data/site-config';
 import { sortItemsByDateDesc } from '../../utils/data-utils';
+export const prerender = true;
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);

@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/Blog/FormattedDate.astro';
 import PostPreview from '../../components/Blog/PostPreview.astro';
 import { sortItemsByDateDesc } from '../../utils/data-utils';
+export const prerender = true;
 import { slugify } from '../../utils/common-utils';
 
 export async function getStaticPaths() {
