@@ -20,6 +20,6 @@
   ],
   "host_permissions": [
     "https://api.github.com/*",
-    "https://api.bigdatacloud.net/*"
+    "https://maps.googleapis.com/*"
   ]
 }

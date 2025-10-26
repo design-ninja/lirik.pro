@@ -31,15 +31,19 @@
         <input id="filename" type="text" value="location.json" />
       </div>
       <div class="row">
-        <label for="interval">Interval (minutes)</label>
-        <input id="interval" type="number" min="5" value="30" />
+        <label for="gapi">Google API Key</label>
+        <input id="gapi" type="password" autocomplete="off" placeholder="AIza..." />
+      </div>
+      <div class="row">
+        <label for="lang">Language (en, ru, ...)</label>
+        <input id="lang" type="text" value="en" />
       </div>
       <div class="actions">
         <button type="submit">Save</button>
         <button id="run" type="button">Update now</button>
       </div>
       <p class="help">
-        After updating the Gist, copy RAW file URL and set it as <code>PUBLIC_LOCATION_JSON_URL</code> in your site.
+        RAW URL из Gist укажите как <code>PUBLIC_LOCATION_JSON_URL</code> на сайте. Google Geocoding даёт более привычные названия городов.
       </p>
     </form>
     <script type="module" src="options.js"></script>
