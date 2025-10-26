@@ -14,7 +14,17 @@ export async function getStaticPaths() {
 
 type Props = { page: CollectionEntry<'pages'> };
 
-const { page } = Astro.props;
+let page = (Astro.props as Partial<Props> | undefined)?.page as CollectionEntry<'pages'> | undefined;
+
+if (!page) {
+  const slug = Astro.params.slug as string | undefined;
+  const pages = await getCollection('pages');
+  page = pages.find((p) => p.slug === slug);
+  if (!page) {
+    return new Response(null, { status: 404 });
+  }
+}
+
 const { title, seo } = page.data;
 const { Content } = await page.render();
 ---

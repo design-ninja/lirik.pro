@@ -21,7 +21,27 @@ export async function getStaticPaths() {
 
 type Props = { post: CollectionEntry<'blog'>; prevPost: CollectionEntry<'blog'>; nextPost: CollectionEntry<'blog'> };
 
-const { post, prevPost, nextPost } = Astro.props;
+let post: CollectionEntry<'blog'> | undefined = Astro.props?.post as Props['post'] | undefined;
+let prevPost: CollectionEntry<'blog'> | null | undefined = (Astro.props as Props | undefined)?.prevPost ?? undefined;
+let nextPost: CollectionEntry<'blog'> | null | undefined = (Astro.props as Props | undefined)?.nextPost ?? undefined;
+
+// Fallback for SSR or when a path wasn't provided via getStaticPaths props
+if (!post) {
+  const { slug } = Astro.params;
+  const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
+  const index = posts.findIndex((p) => p.slug === slug);
+  if (index !== -1) {
+    post = posts[index];
+    prevPost = index + 1 !== posts.length ? posts[index + 1] : null;
+    nextPost = index !== 0 ? posts[index - 1] : null;
+  }
+}
+
+if (!post) {
+  Astro.response.status = 404;
+  throw new Error('Post not found');
+}
+
 const { title, publishDate, updatedDate, excerpt, tags = [], seo } = post.data;
 const { Content } = await post.render();
 ---
