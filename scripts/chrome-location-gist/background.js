@@ -1,26 +1,4 @@
-const STORAGE_KEYS = {
-  token: 'ghToken',
-  gistId: 'gistId',
-  filename: 'filename',
-  lastUpdateAt: 'lastUpdateAt',
-  lastError: 'lastError',
-  lastLocation: 'lastLocation',
-  googleKey: 'googleApiKey',
-  language: 'language'
-};
-
-const DEFAULTS = {
-  filename: 'location.json',
-  language: 'en'
-};
-
-function storageGet(keys) {
-  return new Promise((resolve) => chrome.storage.sync.get(keys, resolve));
-}
-
-function storageSet(values) {
-  return new Promise((resolve) => chrome.storage.sync.set(values, resolve));
-}
+import { STORAGE_KEYS, DEFAULTS, storageGet, storageSet } from './utils.js';
 
 async function getSettings() {
   const data = await storageGet(null);

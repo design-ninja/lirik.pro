@@ -1,29 +1,4 @@
-const STORAGE_KEYS = {
-  token: "ghToken",
-  gistId: "gistId",
-  filename: "filename",
-  googleKey: "googleApiKey",
-  language: "language"
-};
-
-function storageGet(keys) {
-  return new Promise((resolve) => chrome.storage.sync.get(keys, resolve));
-}
-
-function storageSet(values) {
-  return new Promise((resolve) => chrome.storage.sync.set(values, resolve));
-}
-
-function getCurrentPosition() {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) return reject(new Error("Geolocation API not available"));
-    navigator.geolocation.getCurrentPosition(
-      (pos) => resolve(pos),
-      (err) => reject(err),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
-    );
-  });
-}
+import { STORAGE_KEYS, storageGet, storageSet, getCurrentPosition } from './utils.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("form");

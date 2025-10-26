@@ -1,3 +1,5 @@
+import { getCurrentPosition, storageGet } from './utils.js';
+
 const statusEl = document.getElementById('status');
 const lastEl = document.getElementById('last');
 const updateBtn = document.getElementById('update');
@@ -12,10 +14,6 @@ function tsToText(ts) {
   }
 }
 
-function storageGet(keys) {
-  return new Promise((resolve) => chrome.storage.sync.get(keys, resolve));
-}
-
 async function load() {
   const res = await chrome.runtime.sendMessage({ type: 'getStatus' });
   const loc = res?.lastLocation;
@@ -23,17 +21,6 @@ async function load() {
   statusEl.textContent = `Last location: ${locText}${loc?.method ? ` (${loc.method})` : ''}`;
   lastEl.textContent = `Updated: ${tsToText(res?.lastUpdateAt)}`;
   if (res?.lastError) lastEl.textContent += ` • Error: ${res.lastError}`;
-}
-
-function getCurrentPosition() {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) return reject(new Error('Geolocation API not available'));
-    navigator.geolocation.getCurrentPosition(
-      (pos) => resolve(pos),
-      (err) => reject(err),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
-    );
-  });
 }
 
 updateBtn.addEventListener('click', async () => {
