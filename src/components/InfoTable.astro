@@ -58,8 +58,12 @@
     const el = document.getElementById('location');
     if (!el) return;
 
-    const RAW_URL =
-      'https://gist.githubusercontent.com/design-ninja/b91a17358d2283d38a874a95eda0e94e/raw/a414a9025377e5bab759b4c01e267a73b99e2608/location.json';
+    const RAW_URL = import.meta.env.PUBLIC_LOCATION_JSON_URL;
+
+    if (!RAW_URL) {
+      el.textContent = '—';
+      return;
+    }
 
     try {
       const res = await fetch(RAW_URL, { cache: 'no-store' });
