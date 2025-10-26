@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Location to Gist</title>
+    <style>
+      body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin: 10px; }
+      #row { display: grid; gap: 6px; min-width: 280px; }
+      button { padding: 6px 10px; }
+      .muted { color: #666; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div id="row">
+      <div id="status">–</div>
+      <div id="last" class="muted"></div>
+      <div style="display:flex; gap:8px;">
+        <button id="update">Update now</button>
+        <button id="options">Options</button>
+      </div>
+    </div>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
