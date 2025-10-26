@@ -9,7 +9,7 @@
     <span class='infotable__row-label'>Кодю</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='wakatime'>—</a>
   </div>
   <div class='infotable__row'>
-    <span class='infotable__row-label'>Читаю</span> <a class='infotable__row-value' href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>The Creative Act: A Way of Being</a>
+    <span class='infotable__row-label'>Читаю</span> <a class='infotable__row-value' href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>The Creative Act: A Way of Being by Rick Rubin</a>
   </div>
   <div class='infotable__row'>
     <span class='infotable__row-label'>Учу</span> <a class='infotable__row-value' href='https://www.youtube.com/@letslearnthai' target='_blank' rel='noopener' id='learn'>Тайский язык</a>
@@ -27,9 +27,8 @@
 
     &__row {
       display: flex;
-      align-items: center;
-      gap: var(--space-16);
-      justify-content: space-between;
+      flex-direction: column;
+      gap: var(--space-2);
       opacity: 0.7;
       font-family: monospace;
       font-size: var(--font-size-14);
@@ -41,24 +40,9 @@
         padding-bottom: 0;
       }
 
-      @media screen and (max-width: 768px) {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-2);
-        padding-bottom: var(--space-12);
+      &-value {
+        width: fit-content;
       }
-    }
-    &__row-label {
-      flex: 0 0 auto;
-    }
-    &__row-value {
-      width: fit-content;
-      min-width: 0;
-      display: inline-block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-align: right;
     }
   }
 </style>
