@@ -105,8 +105,15 @@
   }
 
   async function fetchSpotify() {
+    const SPOTIFY_URL = import.meta.env.PUBLIC_SPOTIFY_JSON_URL;
+    if (!SPOTIFY_URL) {
+      updateCache({ spotify: { title: '—', url: '#' } });
+      setAnchor('spotify', '—');
+      return;
+    }
     try {
-      const res = await fetch('/api/spotify-last.json', { cache: 'no-store' });
+      const url = SPOTIFY_URL + (SPOTIFY_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
+      const res = await fetch(url, { cache: 'no-store' });
       if (!res.ok) throw new Error('bad status');
       const data = await res.json();
       if (data?.url && data?.title) {
@@ -123,8 +130,15 @@
   }
 
   async function fetchWakatime() {
+    const WAKATIME_URL = import.meta.env.PUBLIC_WAKATIME_JSON_URL;
+    if (!WAKATIME_URL) {
+      updateCache({ wakatime: { text: '—', href: '#' } });
+      setAnchor('wakatime', '—');
+      return;
+    }
     try {
-      const res = await fetch('/api/wakatime.json?days=7', { cache: 'no-store' });
+      const url = WAKATIME_URL + (WAKATIME_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
+      const res = await fetch(url, { cache: 'no-store' });
       if (!res.ok) throw new Error('bad status');
       const data = await res.json();
       if (data?.totalText) {
