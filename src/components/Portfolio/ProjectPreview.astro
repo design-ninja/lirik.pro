@@ -5,7 +5,7 @@ import { Picture } from 'astro:assets';
 type Props = { project: CollectionEntry<'projects'>; class?: string; headingLevel?: 'h2' | 'h3' };
 
 const { project, headingLevel = 'h2' } = Astro.props;
-const { title, description, tags, link, cover } = project.data;
+const { title, description, cover } = project.data;
 const TitleTag = headingLevel;
 ---
 
@@ -70,7 +70,7 @@ const TitleTag = headingLevel;
       object-fit: cover;
       transition: transform 1s ease-in-out;
       display: block;
-      border-radius: var(--radius-image);
+      border-radius: var(--radius-s);
     }
 
     &:hover .project__image {
