@@ -30,22 +30,25 @@ jobs:
             SPOTIFY_DATA=$(curl -s -H "Authorization: Bearer ${ACCESS_TOKEN}" \
               "https://api.spotify.com/v1/me/player/recently-played?limit=1")
             
-            TRACK_URL=$(echo $SPOTIFY_DATA | jq -r '.items[0].track.external_urls.spotify // null')
-            TRACK_NAME=$(echo $SPOTIFY_DATA | jq -r '.items[0].track.name // null')
-            ARTISTS=$(echo $SPOTIFY_DATA | jq -r '[.items[0].track.artists[].name] | join(", ") // null')
-            
-            if [ "$TRACK_NAME" != "null" ] && [ "$ARTISTS" != "null" ]; then
+            TRACK_URL=$(echo $SPOTIFY_DATA | jq -r '.items[0].track.external_urls.spotify // empty')
+            TRACK_NAME=$(echo $SPOTIFY_DATA | jq -r '.items[0].track.name // empty')
+            ARTISTS=$(echo $SPOTIFY_DATA | jq -r '[.items[0].track.artists[].name] | join(", ") // empty')
+
+            if [ -n "$TRACK_NAME" ] && [ -n "$ARTISTS" ] && [ -n "$TRACK_URL" ]; then
               TITLE="${ARTISTS} — ${TRACK_NAME}"
             else
-              TRACK_URL="null"
-              TITLE="null"
+              TRACK_URL=""
+              TITLE=""
             fi
-            
-            # Create JSON
+
+            # Create JSON (use nulls when empty)
             SPOTIFY_JSON=$(jq -n \
               --arg url "$TRACK_URL" \
               --arg title "$TITLE" \
-              '{url: $url, title: $title}')
+              '{
+                url: (if $url == "" then null else $url end),
+                title: (if $title == "" then null else $title end)
+              }')
             
             echo "Spotify data: $SPOTIFY_JSON"
             
