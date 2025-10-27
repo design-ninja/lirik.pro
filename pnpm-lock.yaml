@@ -39,9 +39,6 @@ importers:
         specifier: ^0.33.5
         version: 0.33.5
     devDependencies:
-      '@astrojs/netlify':
-        specifier: ^6.6.0
-        version: 6.6.0(@types/node@24.1.0)(astro@5.14.6(@netlify/blobs@10.2.1)(@types/node@24.1.0)(jiti@2.6.1)(rollup@4.46.2)(sass@1.89.2)(typescript@5.9.3)(yaml@2.8.1))(jiti@2.6.1)(rollup@4.46.2)(sass@1.89.2)(yaml@2.8.1)
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -75,10 +72,7 @@ packages:
     peerDependencies:
       astro: ^5.0.0
 
-  '@astrojs/netlify@6.6.0':
-    resolution: {integrity: sha512-8sjuht5mHRN6prQukutgREu00sr9jpsftYmXAnC33HnGKbPeJX5hEBfZoLgD6aKSpC8+NikUBq7qc1xkMKOFDQ==}
-    peerDependencies:
-      astro: ^5.7.0
+  
 
   '@astrojs/prism@3.3.0':
     resolution: {integrity: sha512-q8VwfU/fDZNoDOf+r7jUnMC2//H2l0TuQ6FkGJL8vD8nw/q5KiL3DS1KKBI3QhI9UQhpJ5dc7AtqfbXWuOgLCQ==}
@@ -4323,29 +4317,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/netlify@6.6.0(@types/node@24.1.0)(astro@5.14.6(@netlify/blobs@10.2.1)(@types/node@24.1.0)(jiti@2.6.1)(rollup@4.46.2)(sass@1.89.2)(typescript@5.9.3)(yaml@2.8.1))(jiti@2.6.1)(rollup@4.46.2)(sass@1.89.2)(yaml@2.8.1)':
-    dependencies:
-      '@astrojs/internal-helpers': 0.7.4
-      '@astrojs/underscore-redirects': 1.0.0
-      '@netlify/blobs': 10.2.1
-      '@netlify/functions': 4.3.0(rollup@4.46.2)
-      '@netlify/vite-plugin': 2.7.6(rollup@4.46.2)(vite@6.4.0(@types/node@24.1.0)(jiti@2.6.1)(sass@1.89.2)(yaml@2.8.1))
-      '@vercel/nft': 0.30.3(rollup@4.46.2)
-      astro: 5.14.6(@netlify/blobs@10.2.1)(@types/node@24.1.0)(jiti@2.6.1)(rollup@4.46.2)(sass@1.89.2)(typescript@5.9.3)(yaml@2.8.1)
-      esbuild: 0.25.8
-      tinyglobby: 0.2.15
-      vite: 6.4.0(@types/node@24.1.0)(jiti@2.6.1)(sass@1.89.2)(yaml@2.8.1)
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@deno/kv'
-      - '@planetscale/database'
-      - '@types/node'
+  
       - '@upstash/redis'
       - '@vercel/blob'
       - '@vercel/functions'
