@@ -1,0 +1,55 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import { getFirstParagraphFromMarkdown } from '../../utils/markdown';
+
+type Props = { post: CollectionEntry<'blog'>; class?: string; headingLevel?: 'h2' | 'h3' };
+
+const { post, class: className, headingLevel = 'h3' } = Astro.props;
+const { title, publishDate, updatedDate } = post.data;
+const firstParagraph = getFirstParagraphFromMarkdown(post.body);
+const TitleTag = headingLevel;
+---
+
+<div class="postPreview">
+  <div class="postPreview__body">
+    <TitleTag class="postPreview__title"><a href={`/blog/${post.slug}/`}>{title}</a></TitleTag>
+    {firstParagraph && <div class="postPreview__body-text">{firstParagraph}</div>}
+    <div class="postPreview__date">
+      <FormattedDate date={publishDate} />
+      {
+        updatedDate && (
+          <>
+            {' '}
+            <span>
+              (Updated on <FormattedDate date={updatedDate} />)
+            </span>
+          </>
+        )
+      }
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  .postPreview {
+    max-width: 64ch;
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+
+    &__title {
+      margin-top: 0;
+      margin-bottom: var(--space-8);
+    }
+
+    &__date {
+      color: var(--color-text-secondary);
+      margin-top: var(--space-8);
+    }
+  }
+  
+</style>

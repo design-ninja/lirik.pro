@@ -1,0 +1,83 @@
+---
+import SectionTitle from './SectionTitle.astro';
+---
+
+<section class="petProjects" id="pet-projects" aria-label="Pet-проекты">
+  <SectionTitle title="Pet-проекты" />
+
+  <div class="petProjects__grid">
+    <article class="petProjects__card">
+      <h3 class="petProjects__title">Empty Folders Remover</h3>
+      <p class="petProjects__desc">Простое расширение для Visual Studio Code, которое ищет и удаляет пустые папки в проекте</p>
+      <div class="petProjects__links">
+        <a href="https://marketplace.visualstudio.com/items?itemName=lirik.empty-folders-remover" target="_blank" rel="noopener">VS Marketplace</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/design-ninja/empty-folders-remover" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </article>
+
+    <article class="petProjects__card">
+      <h3 class="petProjects__title">#hexPicker</h3>
+      <p class="petProjects__desc">Инструмент для выбора цвета по #hex коду с историей сохраненных цветов</p>
+      <div class="petProjects__links">
+        <a href="https://chromewebstore.google.com/detail/hexpicker-%E2%80%94-a-simple-hex/nbfoiiglmnkmdhhaenkekmodabpcfnhc?hl=en" target="_blank" rel="noopener">Chrome Web Store</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/design-ninja/hex-picker" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </article>
+
+    <article class="petProjects__card">
+      <h3 class="petProjects__title">OiNK - Raise a Cute Pig</h3>
+      <p class="petProjects__desc">Забавная игра для детей в стиле «тамагочи»</p>
+      <div class="petProjects__links">
+        <a href="https://apps.apple.com/ru/app/oink-raise-a-cute-pig/id6739273380?l=en-GB" target="_blank" rel="noopener">App Store</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<style lang="scss">
+  .petProjects {
+    &__grid {
+      display: grid;
+      gap: var(--space-16);
+      grid-template-columns: repeat(3, 1fr);
+
+      @media (max-width: 1200px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (max-width: 700px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    &__card {
+      background: var(--color-bg-raised);
+      padding: var(--space-24);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: var(--space-12);
+      border-radius: var(--radius-m);
+      min-height: 16rem;
+    }
+
+    &__title {
+      font-size: var(--font-size-18);
+      margin: 0;
+    }
+
+    &__desc {
+      margin: 0;
+      color: var(--color-text-secondary);
+    }
+
+    &__links {
+      display: flex;
+      gap: var(--space-8);
+      align-items: center;
+    }
+  }
+</style>
+
+

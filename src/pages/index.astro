@@ -1,48 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-import Hero from '../components/Hero.astro';
-import Services from '../components/Services/Services.astro';
-import Projects from '../components/Projects/Projects.astro';
-import About from '../components/About/About.astro';
-import Testimonials from '../components/Testimonials/Testimonials.astro';
-import PostPreview from '../components/PostPreview.astro';
-import CTA from '../components/CTA.astro';
+import Intro from '../components/Intro.astro';
+import Portfolio from '../components/Portfolio/Portfolio.astro';
+import PetProjects from '../components/PetProjects.astro';
+import LatestPosts from '../components/Blog/LatestPosts.astro';
 import siteConfig from '../data/site-config';
-import { sortItemsByDateDesc } from '../utils/data-utils';
-
-const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
-const featuredPosts = posts.filter(({ data }) => data.isFeatured);
 ---
 
 <BaseLayout description={siteConfig.description} image={siteConfig.image}>
-  <Hero />
-  <Services />
-  <Projects />
-  <!-- {
-    featuredPosts?.length > 0 && (
-      <div>
-        <h2>Writing</h2>
-        {featuredPosts.map((post) => (
-          <PostPreview post={post} />
-        ))}
-        <div>
-          <Button href="/blog">View All Posts</Button>
-        </div>
-      </div>
-    )
-  } -->
-  <About />
-  <Testimonials />
-  <CTA />
+  <Intro />
+  <Portfolio />
+  <PetProjects />
+  <LatestPosts limit={3} />
 </BaseLayout>
-
-<style lang="scss">
-  .projects {
-    &__grid {
-      display: grid;
-      gap: var(--space-80);
-    }
-  }
-</style>

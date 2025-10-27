@@ -1,10 +1,12 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import PostPreview from '../../components/PostPreview.astro';
+import FormattedDate from '../../components/Blog/FormattedDate.astro';
+import PostPreview from '../../components/Blog/PostPreview.astro';
 import { sortItemsByDateDesc } from '../../utils/data-utils';
+export const prerender = true;
 import { slugify } from '../../utils/common-utils';
+import { getFirstParagraphFromMarkdown } from '../../utils/markdown';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
@@ -21,47 +23,71 @@ export async function getStaticPaths() {
 
 type Props = { post: CollectionEntry<'blog'>; prevPost: CollectionEntry<'blog'>; nextPost: CollectionEntry<'blog'> };
 
-const { post, prevPost, nextPost } = Astro.props;
-const { title, publishDate, updatedDate, excerpt, tags = [], seo } = post.data;
+let post: CollectionEntry<'blog'> | undefined = Astro.props?.post as Props['post'] | undefined;
+let prevPost: CollectionEntry<'blog'> | null | undefined = (Astro.props as Props | undefined)?.prevPost ?? undefined;
+let nextPost: CollectionEntry<'blog'> | null | undefined = (Astro.props as Props | undefined)?.nextPost ?? undefined;
+
+// Fallback for SSR or when a path wasn't provided via getStaticPaths props
+if (!post) {
+  const { slug } = Astro.params;
+  const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
+  const index = posts.findIndex((p) => p.slug === slug);
+  if (index !== -1) {
+    post = posts[index];
+    prevPost = index + 1 !== posts.length ? posts[index + 1] : null;
+    nextPost = index !== 0 ? posts[index - 1] : null;
+  }
+}
+
+if (!post) {
+  Astro.response.status = 404;
+  throw new Error('Post not found');
+}
+
+const { title, publishDate, updatedDate, tags = [], seo } = post.data;
 const { Content } = await post.render();
+
+const firstParagraph = getFirstParagraphFromMarkdown(post.body);
 ---
 
-<BaseLayout title={seo?.title ?? title} description={seo?.description ?? excerpt} image={seo?.image} pageType="article">
+<BaseLayout title={seo?.title ?? title} description={seo?.description ?? firstParagraph} image={seo?.image} pageType="article">
   <article class="article">
     <header>
       <h1>{title}</h1>
-      <div>
-        <FormattedDate date={publishDate} />
-        {
-          updatedDate && (
-            <>
-              {' '}
-              <span>
-                (Обновлено: <FormattedDate date={updatedDate} />)
-              </span>
-            </>
-          )
-        }
-      </div>
     </header>
     <div>
       <Content />
-    </div>
-    <div>
-      {
-        tags.length > 0 && (
-          <div>
-            {tags.map((tag) => (
-              <a href={`/tags/${slugify(tag)}`}>#{tag}</a>
-            ))}
-          </div>
-        )
-      }
+      <div class="article__footer">
+        <div>
+          <FormattedDate date={publishDate} />
+          {
+            updatedDate && (
+              <>
+                {' '}
+                <span>
+                  (Обновлено: <FormattedDate date={updatedDate} />)
+                </span>
+              </>
+            )
+          }
+        </div>
+        <div class="article__tags">
+          {
+            tags.length > 0 && (
+              <div class="article__tagslist">
+                {tags.map((tag) => (
+                  <a href={`/tags/${slugify(tag)}`}>#{tag}</a>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </div>
     </div>
     {
       (prevPost || nextPost) && (
         <div>
-          <h3>Читать далее...</h3>
+          <h3>Еще в Блоге</h3>
           {nextPost && <PostPreview post={nextPost} headingLevel="h3" />}
           {prevPost && <PostPreview post={prevPost} headingLevel="h3" />}
         </div>
@@ -70,34 +96,27 @@ const { Content } = await post.render();
   </article>
 </BaseLayout>
 
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const copyUrlButton = document.querySelector('.copy-url-button') as HTMLButtonElement;
-    copyUrlButton?.addEventListener('click', async () => {
-      await copyUrl(copyUrlButton);
-    });
-
-    async function copyUrl(button: HTMLButtonElement) {
-      let url = button.getAttribute('data-url') || '';
-      let label = button.innerText;
-
-      await navigator.clipboard.writeText(url);
-
-      button.innerText = 'Copied';
-
-      setTimeout(() => {
-        button.innerText = label;
-      }, 2500);
-    }
-  });
-</script>
-
 <style lang="scss">
   .article {
     display: grid;
-    gap: var(--space-64);
+    gap: var(--space-40);
     margin: 0 auto;
     max-width: 900px;
+
+    &__tagslist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+      font-size: var(--font-size-14);
+    }
+
+    &__footer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-8);
+      margin-top: var(--space-24);
+    }
 
     &__nav {
       display: flex;
@@ -108,7 +127,7 @@ const { Content } = await post.render();
       padding-top: var(--space-24);
       border-top: 1px solid var(--color-border-primary);
 
-      &Item {
+      &item {
         display: inline-grid;
         gap: var(--space-24);
 

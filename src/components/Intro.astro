@@ -1,0 +1,76 @@
+---
+import siteConfig from '../data/site-config';
+import Avatar from './Avatar.astro';
+import InfoTable from './InfoTable.astro';
+---
+
+<section class='intro' aria-label='Обо мне'>
+  <div class='intro__header'>
+    <div class='intro__avatar'>
+      <Avatar size='medium' loading='eager' />
+    </div>
+    <div class='intro__meta'>
+      <div class='intro__name'>{siteConfig.author}</div>
+    </div>
+  </div>
+  <div class='intro__content'>
+    <div class='intro__about'>
+      <p class='intro__about-main'>
+        Я дизайнер с десятилетним опытом в проектировании <a href='#portfolio' rel='noopener' title='Портфолио'>интерфейсов и дизайн‑систем</a>
+      </p>
+      <p>
+        Сам пишу фронтенд и верстаю, поэтому легко нахожу общий язык с разработчиками. Больше всего мне близки B2B-сервисы, платформы с пользовательским контентом и визуализация данных.
+      </p>
+      <p>
+        Разрабатываю <a href='#pet-projects' rel='noopener'>плагины</a> для Chrome и VSCode. Играю на гитаре и пою в инди-рок группе <a
+          href='https://music.yandex.ru/artist/3135271'
+          target='_blank'
+          rel='noopener'>Limebridge</a
+        >.
+      </p>
+      <p>
+        <a href='https://t.me/lirikpro' target='_blank' rel='noopener' title='Напишите мне в Telegram'>Напишите мне</a>, если у вас есть вопросы по дизайну или разработке.
+      </p>
+    </div>
+    <InfoTable />
+  </div>
+</section>
+
+<style lang='scss'>
+  .intro {
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-16);
+      margin-bottom: var(--space-24);
+    }
+
+    &__content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      align-items: center;
+      gap: var(--space-40);
+    }
+
+    &__name {
+      font-size: var(--font-size-20);
+      font-weight: var(--font-weight-medium);
+    }
+
+    &__about {
+      max-width: 40ch;
+  
+      &-main {
+        font-size: var(--font-size-18);
+        line-height: 140%;
+      }
+      & > p:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  
+</style>
+
+ 

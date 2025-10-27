@@ -1,23 +1,26 @@
-html.dark {
-  --color-bg-action-primary: var(--brand-700);
-  --color-bg-action-secondary: var(--neutral-100);
-  --color-bg-base: var(--neutral-900);
-  --color-bg-brand: var(--brand-600);
-  --color-bg-brand-overlay: var(--alpha-brand-50);
-  --color-bg-black-overlay: var(--alpha-black-50);
-  --color-bg-inverse: var(--neutral-100);
-  --color-bg-raised: var(--neutral-800);
-  --color-border-primary: var(--neutral-700);
-  --color-border-secondary: var(--neutral-500);
-  --color-icon-primary: var(--neutral-100);
-  --color-icon-secondary: var(--neutral-200);
-  --color-icon-tertiary: var(--brand-400);
-  --color-icon-static-white: var(--neutral-0);
-  --color-text-on-action-primary: var(--brand-100);
-  --color-text-on-action-secondary: var(--neutral-900);
-  --color-text-primary: var(--neutral-100);
-  --color-text-secondary: var(--neutral-400);
-  --color-text-tertiary: var(--brand-500);
-  --color-text-link-primary: var(--neutral-100);
-  --color-text-link-secondary: var(--neutral-400);
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-action-primary: var(--brand-700);
+    --color-bg-action-secondary: var(--neutral-100);
+    --color-bg-base: var(--neutral-900);
+    --color-bg-brand: var(--brand-600);
+    --color-bg-brand-overlay: var(--alpha-brand-50);
+    --color-bg-black-overlay: var(--alpha-black-50);
+    --color-bg-inverse: var(--neutral-100);
+    --color-bg-raised: var(--neutral-800);
+    --color-border-primary: var(--neutral-700);
+    --color-border-secondary: var(--neutral-500);
+    --color-border-brand: var(--brand-500);
+    --color-icon-primary: var(--neutral-100);
+    --color-icon-secondary: var(--neutral-200);
+    --color-icon-tertiary: var(--brand-400);
+    --color-icon-static-white: var(--neutral-0);
+    --color-text-on-action-primary: var(--brand-100);
+    --color-text-on-action-secondary: var(--neutral-900);
+    --color-text-primary: var(--neutral-300);
+    --color-text-secondary: var(--neutral-400);
+    --color-text-tertiary: var(--brand-500);
+    --color-text-link-primary: var(--brand-500);
+    --color-text-link-secondary: var(--neutral-400);
+  }
 }

@@ -6,9 +6,10 @@
   --color-bg-brand-overlay: var(--alpha-brand-50);
   --color-bg-black-overlay: var(--alpha-black-50);
   --color-bg-inverse: var(--neutral-900);
-  --color-bg-raised: var(--neutral-50);
+  --color-bg-raised: var(--neutral-100);
   --color-border-primary: var(--neutral-200);
   --color-border-secondary: var(--neutral-300);
+  --color-border-brand: var(--brand-500);
   --color-icon-primary: var(--neutral-900);
   --color-icon-secondary: var(--neutral-200);
   --color-icon-tertiary: var(--neutral-0);
@@ -18,6 +19,6 @@
   --color-text-primary: var(--neutral-900);
   --color-text-secondary: var(--neutral-500);
   --color-text-tertiary: var(--neutral-300);
-  --color-text-link-primary: var(--neutral-900);
+  --color-text-link-primary: var(--brand-600);
   --color-text-link-secondary: var(--neutral-400);
 }

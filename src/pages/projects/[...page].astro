@@ -2,10 +2,12 @@
 import type { GetStaticPathsOptions, Page } from 'astro';
 import { type CollectionEntry, getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Pagination from '../../components/Pagination.astro';
-import ProjectPreview from '../../components/Projects/ProjectPreview.astro';
+import Pagination from '../../components/Blog/Pagination.astro';
+import ProjectPreview from '../../components/Portfolio/ProjectPreview.astro';
 import siteConfig from '../../data/site-config';
 import { sortItemsByDateDesc } from '../../utils/data-utils';
+
+export const prerender = true;
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
@@ -18,8 +20,8 @@ const { page } = Astro.props;
 const portfolio = page.data;
 ---
 
-<BaseLayout title="Проекты" description="Портфолио дизайнера Кирилла Исаченко" image={{ src: '/og-preview.jpg', alt: 'Дизайнер Кирилл Исаченко' }}>
-  <h1>Проекты</h1>
+<BaseLayout title="Портфолио" description="Портфолио дизайнера Кирилла Исаченко" image={{ src: '/og-preview.jpg', alt: 'Дизайнер Кирилл Исаченко' }}>
+  <h1>Портфолио</h1>
   <div class="projects__grid">
     {portfolio.map((project) => <ProjectPreview project={project} />)}
   </div>

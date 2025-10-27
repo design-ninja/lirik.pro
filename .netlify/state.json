@@ -1,3 +1,21 @@
 {
-	"siteId": "503f8165-1c1b-4bf3-aee2-71a2a6f37b48"
+	"siteId": "4679ccf4-e404-4481-a359-922b48149347",
+	"geolocation": {
+		"data": {
+			"city": "Phuket",
+			"country": {
+				"code": "TH",
+				"name": "Thailand"
+			},
+			"subdivision": {
+				"code": "83",
+				"name": "Phuket"
+			},
+			"timezone": "Asia/Bangkok",
+			"latitude": 7.95,
+			"longitude": 98.3564,
+			"postalCode": "83000"
+		},
+		"timestamp": 1761396125746
+	}
 }

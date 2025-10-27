@@ -8,23 +8,8 @@ const currentYear = new Date().getFullYear();
 
 <footer class="footer">
   <span>
-    &copy; 2003—{currentYear} lirik.pro
+    &copy; 2003—{currentYear} lirik
   </span>
-  <nav aria-label="Ссылки на мои соцсети" class="nav">
-    {
-      socialLinks.length > 0 && (
-        <ul class="menu">
-          {socialLinks.map((link) => (
-            <li>
-              <a href={link.href} target="_blank" rel="noopener noreferer" title={link.text}>
-                {link.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
-  </nav>
   <span class="footer__author">{footer?.author && footer.author}</span>
 </footer>
 
@@ -37,11 +22,17 @@ const currentYear = new Date().getFullYear();
     padding: var(--space-40) 0;
     border-top: var(--size-1) solid var(--color-border-primary);
     color: var(--color-text-secondary);
+    margin-top: var(--space-40);
 
     @media (max-width: 992px) {
       flex-direction: column;
       align-items: start;
       gap: var(--space-24);
+    }
+
+    span {
+      font-size: var(--font-size-16);
+      line-height: 140%;
     }
   }
 

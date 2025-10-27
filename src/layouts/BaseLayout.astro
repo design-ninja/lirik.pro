@@ -1,29 +1,46 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
 import BaseHead, { type Props } from '../components/BaseHead.astro';
 
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Avatar from '../components/Avatar.astro';
+import siteConfig from '../data/site-config';
+import { ClientRouter } from 'astro:transitions';
 
 const { ...head } = Astro.props;
+const isHome = Astro.url.pathname === '/';
 ---
 
 <!doctype html>
 <html lang="ru">
   <head>
     <BaseHead {...head} />
-    <script>
-      if (localStorage.theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      }
-    </script>
-    <ViewTransitions />
   </head>
   <body>
-    <main>
-      <Header />
+    <main transition:animate="fade">
+      {!isHome && (
+        <a href="/" class="brandlink" aria-label={siteConfig.author}>
+          <Avatar size="small" loading="eager" />
+          <span class="brandlink__name">{siteConfig.author}</span>
+        </a>
+      )}
       <slot />
       <Footer />
     </main>
+    <style lang="scss">
+      .brandlink {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-12);
+        color: var(--color-text-primary);
+        text-decoration: none;
+        margin-top: var(--space-24);
+        margin-bottom: var(--space-40);
+      }
+
+      .brandlink__name {
+        font-weight: var(--font-weight-medium);
+      }
+    </style>
+    <ClientRouter />
   </body>
 </html>

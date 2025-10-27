@@ -1,0 +1,182 @@
+<div class='infotable'>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Сейчас я здесь</span> <a class='infotable__row-value' href='https://www.google.com/maps/place/Пхукет' target='_blank' rel='noopener' id='location'>—</a>
+  </div>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Слушаю</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='spotify'>—</a>
+  </div>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Кодю</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='wakatime'>—</a>
+  </div>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Читаю</span> <a class='infotable__row-value' href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>The Creative Act: A Way of Being by Rick Rubin</a>
+  </div>
+  <div class='infotable__row'>
+    <span class='infotable__row-label'>Учу</span> <span class='infotable__row-value'><a href='https://www.youtube.com/@letslearnthai' target='_blank' rel='noopener' id='learn'>Тайский язык</a> 🇹🇭</span>
+  </div>
+</div>
+
+<style lang='scss'>
+  .infotable {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    border-radius: var(--radius-m);
+    border: var(--size-1) solid var(--color-border-primary);
+    padding: var(--space-20);
+
+    &__row {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      font-family: monospace;
+      font-size: var(--font-size-14);
+      border-bottom: var(--size-1) solid var(--color-border-primary);
+      padding-bottom: var(--space-8);
+
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      &-label {
+        color: var(--color-text-secondary);
+      }
+
+      &-value {
+        width: fit-content;
+      }
+    }
+  }
+</style>
+
+<script>
+  type InfoCache = {
+    location?: { text: string; href: string };
+    spotify?: { title: string; url: string };
+    wakatime?: { text: string; href: string };
+  };
+
+  const globalScope = window as unknown as {
+    __infoTableCache?: InfoCache;
+    __infoTableInitPromise?: Promise<void>;
+  };
+
+  function setAnchor(id: string, text: string, href?: string) {
+    const el = document.getElementById(id) as HTMLAnchorElement | null;
+    if (!el) return;
+    el.textContent = text || '—';
+    el.href = href || '#';
+  }
+
+  function applyFromCache() {
+    const cache = globalScope.__infoTableCache;
+    if (!cache) return;
+    if (cache.location) setAnchor('location', cache.location.text, cache.location.href);
+    if (cache.spotify) setAnchor('spotify', cache.spotify.title, cache.spotify.url);
+    if (cache.wakatime) setAnchor('wakatime', cache.wakatime.text, cache.wakatime.href);
+  }
+
+  function updateCache(partial: Partial<InfoCache>) {
+    globalScope.__infoTableCache = { ...(globalScope.__infoTableCache || {}), ...partial } as InfoCache;
+  }
+
+  async function fetchLocation() {
+    const RAW_URL = import.meta.env.PUBLIC_LOCATION_JSON_URL;
+    if (!RAW_URL) {
+      updateCache({ location: { text: '—', href: '#' } });
+      setAnchor('location', '—');
+      return;
+    }
+    try {
+      const url = RAW_URL + (RAW_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('bad status');
+      const data = await res.json();
+      const value = [data.city, data.country].filter(Boolean).join(', ');
+      const text = value || '—';
+      const href = value ? `https://www.google.com/maps/place/${encodeURIComponent(value)}` : '#';
+      updateCache({ location: { text, href } });
+      setAnchor('location', text, href);
+    } catch {
+      updateCache({ location: { text: '—', href: '#' } });
+      setAnchor('location', '—');
+    }
+  }
+
+  async function fetchSpotify() {
+    const SPOTIFY_URL = import.meta.env.PUBLIC_SPOTIFY_JSON_URL;
+    if (!SPOTIFY_URL) {
+      updateCache({ spotify: { title: '—', url: '#' } });
+      setAnchor('spotify', '—');
+      return;
+    }
+    try {
+      const url = SPOTIFY_URL + (SPOTIFY_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('bad status');
+      const data = await res.json();
+      if (data?.url && data?.title) {
+        updateCache({ spotify: { title: data.title, url: data.url } });
+        setAnchor('spotify', data.title, data.url);
+      } else {
+        updateCache({ spotify: { title: '—', url: '#' } });
+        setAnchor('spotify', '—');
+      }
+    } catch {
+      updateCache({ spotify: { title: '—', url: '#' } });
+      setAnchor('spotify', '—');
+    }
+  }
+
+  async function fetchWakatime() {
+    const WAKATIME_URL = import.meta.env.PUBLIC_WAKATIME_JSON_URL;
+    if (!WAKATIME_URL) {
+      updateCache({ wakatime: { text: '—', href: '#' } });
+      setAnchor('wakatime', '—');
+      return;
+    }
+    try {
+      const url = WAKATIME_URL + (WAKATIME_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('bad status');
+      const data = await res.json();
+      if (data?.totalText) {
+        const text = `${data.totalText} / 7 days`;
+        const href = 'https://wakatime.com/@lirik';
+        updateCache({ wakatime: { text, href } });
+        setAnchor('wakatime', text, href);
+      } else {
+        updateCache({ wakatime: { text: '—', href: '#' } });
+        setAnchor('wakatime', '—');
+      }
+    } catch {
+      updateCache({ wakatime: { text: '—', href: '#' } });
+      setAnchor('wakatime', '—');
+    }
+  }
+
+  async function initOnce() {
+    if (!globalScope.__infoTableInitPromise) {
+      globalScope.__infoTableInitPromise = (async () => {
+        await Promise.all([fetchLocation(), fetchSpotify(), fetchWakatime()]);
+      })();
+    }
+    await globalScope.__infoTableInitPromise;
+  }
+
+  function initInfoTable() {
+    applyFromCache();
+    if (!globalScope.__infoTableInitPromise) {
+      void initOnce().then(applyFromCache);
+    }
+  }
+
+  // Run on first page load
+  initInfoTable();
+
+  // Re-apply from cache on SPA navigations (no extra network)
+  document.addEventListener('astro:page-load', initInfoTable);
+</script>
+
+

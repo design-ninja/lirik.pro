@@ -5,9 +5,11 @@
   --font-family-display: 'Onest Variable', sans-serif;
 
   --font-weight-regular: 400;
+  --font-weight-medium: 500;
   --font-weight-bold: 700;
   --font-weight-black: 900;
 
+  --font-size-14: var(--size-14);
   --font-size-16: var(--size-16);
   --font-size-18: var(--size-18);
   --font-size-20: var(--size-20);
@@ -15,20 +17,4 @@
   --font-size-32: var(--size-32);
   --font-size-40: var(--size-40);
   --font-size-48: var(--size-48);
-  --font-size-64: var(--size-64);
-  --font-size-200: var(--size-200);
-}
-
-@media (max-width: 992px) {
-  :root {
-    --font-size-16: var(--size-14);
-    --font-size-18: var(--size-16);
-    --font-size-20: var(--size-18);
-    --font-size-24: var(--size-20);
-    --font-size-32: var(--size-24);
-    --font-size-40: var(--size-32);
-    --font-size-48: var(--size-40);
-    --font-size-64: var(--size-48);
-    --font-size-200: var(--size-80);
-  }
 }
