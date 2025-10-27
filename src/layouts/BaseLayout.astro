@@ -4,6 +4,7 @@ import BaseHead, { type Props } from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Avatar from '../components/Avatar.astro';
 import siteConfig from '../data/site-config';
+import { ClientRouter } from 'astro:transitions';
 
 const { ...head } = Astro.props;
 const isHome = Astro.url.pathname === '/';
@@ -15,7 +16,7 @@ const isHome = Astro.url.pathname === '/';
     <BaseHead {...head} />
   </head>
   <body>
-    <main>
+    <main transition:animate="fade">
       {!isHome && (
         <a href="/" class="brandlink" aria-label={siteConfig.author}>
           <Avatar size="small" loading="eager" />
@@ -40,5 +41,6 @@ const isHome = Astro.url.pathname === '/';
         font-weight: var(--font-weight-medium);
       }
     </style>
+    <ClientRouter />
   </body>
 </html>
