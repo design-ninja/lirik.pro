@@ -1,20 +1,6 @@
 [build]
-  command = "pnpm run build"
+  command = "pnpm install && pnpm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
-  NPM_FLAGS = "--version"
-
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-[context.production]
-  command = "pnpm run build"
-
-[context.deploy-preview]
-  command = "pnpm run build"
-
-[context.branch-deploy]
-  command = "pnpm run build"
-
