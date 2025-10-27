@@ -6,6 +6,7 @@ import PostPreview from '../../components/Blog/PostPreview.astro';
 import { sortItemsByDateDesc } from '../../utils/data-utils';
 export const prerender = true;
 import { slugify } from '../../utils/common-utils';
+import { getFirstParagraphFromMarkdown } from '../../utils/markdown';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
@@ -46,14 +47,6 @@ if (!post) {
 const { title, publishDate, updatedDate, tags = [], seo } = post.data;
 const { Content } = await post.render();
 
-function getFirstParagraphFromMarkdown(markdown: string) {
-  if (!markdown) return '';
-  const firstBlock = markdown.trim().split(/\n\s*\n/)[0] || '';
-  const withoutImages = firstBlock.replace(/!\[[^\]]*\]\([^)]*\)/g, '');
-  const withoutLinks = withoutImages.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
-  const withoutFormatting = withoutLinks.replace(/[\\*_`~>]/g, '');
-  return withoutFormatting.trim();
-}
 const firstParagraph = getFirstParagraphFromMarkdown(post.body);
 ---
 
@@ -102,28 +95,6 @@ const firstParagraph = getFirstParagraphFromMarkdown(post.body);
     }
   </article>
 </BaseLayout>
-
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const copyUrlButton = document.querySelector('.copy-url-button') as HTMLButtonElement;
-    copyUrlButton?.addEventListener('click', async () => {
-      await copyUrl(copyUrlButton);
-    });
-
-    async function copyUrl(button: HTMLButtonElement) {
-      let url = button.getAttribute('data-url') || '';
-      let label = button.innerText;
-
-      await navigator.clipboard.writeText(url);
-
-      button.innerText = 'Copied';
-
-      setTimeout(() => {
-        button.innerText = label;
-      }, 2500);
-    }
-  });
-</script>
 
 <style lang="scss">
   .article {

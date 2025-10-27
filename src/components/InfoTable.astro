@@ -114,12 +114,18 @@
     }
   }
 
-  // Load on initial page load and on every navigation (View Transitions)
-  document.addEventListener('astro:page-load', () => {
+  function initInfoTable() {
     loadLocation();
     loadSpotify();
     loadWakatime();
-  });
+  }
+
+  // Run immediately on initial page load
+  initInfoTable();
+
+  // Also run on Astro client navigation events (if enabled)
+  document.addEventListener('astro:page-load', initInfoTable);
+  document.addEventListener('astro:after-swap', initInfoTable);
 </script>
 
 

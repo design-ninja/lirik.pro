@@ -2,6 +2,7 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import siteConfig from '../data/site-config.ts';
 import { sortItemsByDateDesc } from '../utils/data-utils.ts';
+import { getFirstParagraphFromMarkdown } from '../utils/markdown';
 
 export async function GET(context) {
   const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
@@ -16,13 +17,4 @@ export async function GET(context) {
       pubDate: item.data.publishDate.setUTCHours(0)
     }))
   });
-}
-
-function getFirstParagraphFromMarkdown(markdown) {
-  if (!markdown) return '';
-  const firstBlock = markdown.trim().split(/\n\s*\n/)[0] || '';
-  const withoutImages = firstBlock.replace(/!\[[^\]]*\]\([^)]*\)/g, '');
-  const withoutLinks = withoutImages.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
-  const withoutFormatting = withoutLinks.replace(/[\\*_`~>]/g, '');
-  return withoutFormatting.trim();
 }

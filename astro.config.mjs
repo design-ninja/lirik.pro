@@ -8,6 +8,5 @@ export default defineConfig({
   site: 'https://lirik.pro',
   output: 'server',
   adapter: netlify(),
-  integrations: [icon(), mdx(), sitemap()],
-  renderers: ['@astrojs/renderer-postcss']
+  integrations: [icon(), mdx(), sitemap()]
 });
