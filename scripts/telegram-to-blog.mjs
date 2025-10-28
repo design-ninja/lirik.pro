@@ -28,19 +28,20 @@ function truncate(s, n) {
   return s.length <= n ? s : s.slice(0, n - 1) + '…';
 }
 
-function yyyymmdd(d) {
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
+function ddmmyyyy(d) {
   const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const yyyy = d.getFullYear();
+  return `${dd}-${mm}-${yyyy}`;
 }
 
 async function readState() {
   try {
     const data = await fs.readFile(STATE_PATH, 'utf8');
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    return { offset: 0, posts: {}, ...parsed };
   } catch {
-    return { offset: 0 };
+    return { offset: 0, posts: {} };
   }
 }
 
@@ -57,17 +58,70 @@ function parseMessage(text) {
   return { title, body, tags };
 }
 
+function postKey(chatId, messageId) {
+  return `${chatId}:${messageId}`;
+}
+
+async function deletePostByKey(key, state) {
+  const relPath = state.posts?.[key];
+  if (!relPath) return false;
+  const absPath = path.join(ROOT, relPath);
+  try {
+    await fs.unlink(absPath);
+  } catch {
+    // If file is already gone, continue to clean state
+  }
+  delete state.posts[key];
+  return true;
+}
+
+async function findPostPathBySlug(slug, state) {
+  // First, try to resolve from state map
+  const matchesFromState = Object.entries(state.posts || {}).filter(([, rel]) => {
+    return rel.startsWith('src/content/blog/') && (rel.endsWith(`/${slug}.mdx`) || (/\/[^/]+$/.test(rel) && rel.match(new RegExp(`/${slug}-\\d+\\.mdx$`))));
+  });
+  if (matchesFromState.length === 1) return path.join(ROOT, matchesFromState[0][1]);
+
+  // Fallback: scan filesystem and pick the most recently modified matching file
+  const files = await fs.readdir(BLOG_DIR);
+  const candidates = files.filter((f) => f === `${slug}.mdx` || (/^.+-\d+\.mdx$/.test(f) && f.startsWith(`${slug}-`)));
+  if (!candidates.length) return null;
+  let newest = null;
+  let newestMtime = 0;
+  for (const name of candidates) {
+    const p = path.join(BLOG_DIR, name);
+    const s = await fs.stat(p);
+    if (s.mtimeMs >= newestMtime) {
+      newestMtime = s.mtimeMs;
+      newest = p;
+    }
+  }
+  return newest;
+}
+
+async function deletePostBySlug(slug, state) {
+  const abs = await findPostPathBySlug(slug, state);
+  if (!abs) return false;
+  try {
+    await fs.unlink(abs);
+  } catch {
+    return false;
+  }
+  // Also drop any mapping entries pointing to this file
+  for (const [k, rel] of Object.entries(state.posts || {})) {
+    if (path.join(ROOT, rel) === abs) delete state.posts[k];
+  }
+  return true;
+}
+
 function buildMdx({ title, body, tags, publishDate }) {
   const safeBody = body.replace(/^\s*(import|export)[^\n]*\n/gm, '');
-  const description = truncate(safeBody.replace(/\s+/g, ' ').trim(), 160);
   const tagsYaml = tags.length ? tags.map((t) => `  - ${t}`).join('\n') : '';
   return `---
 title: '${escapeYaml(title)}'
 publishDate: '${publishDate}'
 ${tags.length ? `tags:\n${tagsYaml}\n` : ''}
 isFeatured: false
-seo:
-  description: '${escapeYaml(description)}'
 ---
 
 ${safeBody}
@@ -125,6 +179,27 @@ async function main() {
     const chatId = String(msg.chat?.id ?? '');
     if (chatId !== String(ALLOWED_CHAT_ID)) continue;
 
+    const trimmed = msg.text.trim();
+
+    // Handle delete commands: reply to original message or delete by slug
+    const deleteMatch = trimmed.match(/^\/(delete|rm)\b\s*(.*)$/i);
+    if (deleteMatch) {
+      let deleted = false;
+      if (msg.reply_to_message && typeof msg.reply_to_message.message_id === 'number') {
+        const key = postKey(chatId, msg.reply_to_message.message_id);
+        deleted = await deletePostByKey(key, state);
+      }
+      if (!deleted) {
+        const arg = (deleteMatch[2] || '').trim();
+        const slug = slugify(arg);
+        if (slug) deleted = await deletePostBySlug(slug, state);
+      }
+      if (deleted) {
+        if (!created.includes('[deleted]')) created.push('[deleted]');
+      }
+      continue;
+    }
+
     const { title, body, tags } = parseMessage(msg.text);
     if (!title || !body) continue;
 
@@ -133,14 +208,22 @@ async function main() {
     const mdxPath = await uniqueFilePath(mdxPathBase);
 
     const date = new Date((msg.date || Math.floor(Date.now() / 1000)) * 1000);
-    const mdx = buildMdx({ title, body, tags, publishDate: yyyymmdd(date) });
+    const mdx = buildMdx({ title, body, tags, publishDate: ddmmyyyy(date) });
 
     await fs.writeFile(mdxPath, mdx, 'utf8');
     created.push(path.basename(mdxPath));
+
+    // Remember mapping to support future deletion by reply
+    const key = postKey(chatId, msg.message_id);
+    const rel = path.relative(ROOT, mdxPath);
+    state.posts[key] = rel;
   }
 
   if (maxUpdateId > offset) {
-    await writeState({ offset: maxUpdateId });
+    state.offset = maxUpdateId;
+    await writeState(state);
+  } else {
+    await writeState(state);
   }
 
   if (created.length) {

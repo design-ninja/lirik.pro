@@ -15,8 +15,39 @@ const seoSchema = z.object({
 const blog = defineCollection({
   schema: z.object({
     title: z.string(),
-    publishDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
+    publishDate: z.string().transform((s, ctx) => {
+      // Support DD-MM-YYYY and ISO
+      const ddmmyyyy = /^(\d{2})-(\d{2})-(\d{4})$/;
+      const m = s.match(ddmmyyyy);
+      let d: Date | null = null;
+      if (m) {
+        const [_, dd, mm, yyyy] = m;
+        const iso = `${yyyy}-${mm}-${dd}`;
+        d = new Date(iso);
+      } else {
+        d = new Date(s);
+      }
+      if (isNaN(d.getTime())) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid date format' });
+        return z.NEVER;
+      }
+      return d;
+    }),
+    updatedDate: z
+      .union([z.string(), z.date()])
+      .optional()
+      .transform((val) => {
+        if (!val) return undefined;
+        if (val instanceof Date) return val;
+        const ddmmyyyy = /^(\d{2})-(\d{2})-(\d{4})$/;
+        const m = val.match(ddmmyyyy);
+        if (m) {
+          const [_, dd, mm, yyyy] = m;
+          return new Date(`${yyyy}-${mm}-${dd}`);
+        }
+        const d = new Date(val);
+        return isNaN(d.getTime()) ? undefined : d;
+      }),
     isFeatured: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
     seo: seoSchema.optional()

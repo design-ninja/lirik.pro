@@ -1,4 +1,4 @@
-name: telegram-pull
+name: Telegram Posts Pull
 on:
   schedule:
     - cron: '*/5 * * * *'
