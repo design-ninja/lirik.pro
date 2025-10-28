@@ -1,0 +1,38 @@
+name: telegram-pull
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: telegram-pull
+  cancel-in-progress: true
+
+jobs:
+  pull-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node -v
+      - name: Pull Telegram updates and generate posts
+        run: node scripts/telegram-to-blog.mjs
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_ALLOWED_CHAT_ID: ${{ secrets.TELEGRAM_ALLOWED_CHAT_ID }}
+      - name: Commit and push if changed
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "telegram-bot"
+            git config user.email "bot@noreply.local"
+            git add -A
+            git commit -m "feat(blog): publish posts from Telegram"
+            git push
+          fi
