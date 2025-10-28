@@ -53,8 +53,18 @@ async function writeState(state) {
 function parseMessage(text) {
   const lines = text.trim().split('\n');
   const title = (lines.shift() || '').trim();
-  const body = lines.join('\n').trim();
+  const rawBody = lines.join('\n').trim();
   const tags = Array.from(new Set((text.match(/#[\p{L}\p{N}_-]+/gu) || []).map((t) => t.slice(1))));
+
+  // Remove hashtag tokens (e.g. "#tag" or "#tag-name") from the body text
+  const body = rawBody
+    .replace(/(^|\s)#[\p{L}\p{N}_-]+/gu, (m, p1) => p1 || '')
+    .replace(/\s+([.,;:!?])/g, '$1')
+    .split('\n')
+    .map((line) => line.replace(/\s{2,}/g, ' ').trimEnd())
+    .join('\n')
+    .trim();
+
   return { title, body, tags };
 }
 
