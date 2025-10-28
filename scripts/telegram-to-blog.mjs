@@ -119,6 +119,7 @@ async function main() {
   const created = [];
 
   for (const u of updates) {
+    if (u.update_id > maxUpdateId) maxUpdateId = u.update_id;
     const msg = u.message || u.edited_message;
     if (!msg || typeof msg.text !== 'string') continue;
     const chatId = String(msg.chat?.id ?? '');
@@ -136,7 +137,6 @@ async function main() {
 
     await fs.writeFile(mdxPath, mdx, 'utf8');
     created.push(path.basename(mdxPath));
-    if (u.update_id > maxUpdateId) maxUpdateId = u.update_id;
   }
 
   if (maxUpdateId > offset) {
