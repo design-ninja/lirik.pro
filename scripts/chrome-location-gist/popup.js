@@ -29,10 +29,9 @@ updateBtn.addEventListener('click', async () => {
   try {
     const pos = await getCurrentPosition();
     const { latitude, longitude } = pos.coords || {};
-    const cfg = await storageGet(['language']);
-    const language = cfg?.language || 'en';
+    // Always use English for location names
     updateBtn.textContent = 'Updating...';
-    const res = await chrome.runtime.sendMessage({ type: 'updateNow', lat: latitude, lon: longitude, language });
+    const res = await chrome.runtime.sendMessage({ type: 'updateNow', lat: latitude, lon: longitude, language: 'en' });
     if (!res?.ok) alert(res?.error || 'Unknown error');
   } catch (err) {
     const code = typeof err === 'object' && err && 'code' in err ? err.code : undefined;

@@ -2,53 +2,64 @@
 import { type CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
 import { getFirstParagraphFromMarkdown } from '../../utils/markdown';
+import { formatUpdatedLabel, type Locale } from '../../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
-type Props = { post: CollectionEntry<'blog'>; class?: string; headingLevel?: 'h2' | 'h3' };
+type Props = {
+  post: CollectionEntry<'blog'>;
+  class?: string;
+  headingLevel?: 'h2' | 'h3';
+  locale: Locale;
+};
 
-const { post, class: className, headingLevel = 'h3' } = Astro.props;
-const { title, publishDate, updatedDate } = post.data;
+const { post, class: className, headingLevel = 'h3', locale } = Astro.props as Props;
+const { title, publishDate, updatedDate, path } = post.data;
 const firstParagraph = getFirstParagraphFromMarkdown(post.body);
 const TitleTag = headingLevel;
+const postPath = getRelativeLocaleUrl(locale, `/blog/${path}/`);
 ---
 
-<div class="postPreview">
-  <div class="postPreview__body">
-    <TitleTag class="postPreview__title"><a href={`/blog/${post.slug}/`}>{title}</a></TitleTag>
-    {firstParagraph && <div class="postPreview__body-text">{firstParagraph}</div>}
-    <div class="postPreview__date">
-      <FormattedDate date={publishDate} />
-      {
-        updatedDate && (
-          <>
-            {' '}
-            <span>
-              (Updated on <FormattedDate date={updatedDate} />)
-            </span>
-          </>
-        )
-      }
+<div class="PostPreview">
+  <div class="PostPreview__Body">
+    <TitleTag class="PostPreview__Title"><a href={postPath}>{title}</a></TitleTag>
+    {firstParagraph && <div class="PostPreview__BodyText">{firstParagraph}</div>}
+    <div class="PostPreview__Date">
+      <FormattedDate date={publishDate} locale={locale} />
+      {updatedDate && (
+        <span class="PostPreview__Updated">
+          {formatUpdatedLabel(locale)} <FormattedDate date={updatedDate} locale={locale} />
+        </span>
+      )}
     </div>
   </div>
 </div>
 
 <style lang="scss">
-  .postPreview {
+  .PostPreview {
     max-width: 64ch;
 
-    &__body {
+    &__Body {
       display: flex;
       flex-direction: column;
       gap: var(--space-8);
     }
 
-    &__title {
+    &__Title {
       margin-top: 0;
       margin-bottom: var(--space-8);
     }
 
-    &__date {
+    &__BodyText {
+      color: var(--color-text-secondary);
+    }
+
+    &__Date {
       color: var(--color-text-secondary);
       margin-top: var(--space-8);
+    }
+
+    &__Updated {
+      margin-left: var(--space-4);
     }
   }
   

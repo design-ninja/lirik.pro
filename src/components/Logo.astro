@@ -1,22 +1,31 @@
 ---
 import Avatar from './Avatar.astro';
-import siteConfig from '../data/site-config';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { type Locale } from '../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
-const author = siteConfig.author;
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+const author = site.author;
+const homePath = getRelativeLocaleUrl(locale, '/');
 ---
 
-<a href="/" class="logo">
+<a href={homePath} class="Logo">
   <Avatar size="medium" loading="eager" />
-  <span class="logo__label">{author}</span>
+  <span class="Logo__Label">{author}</span>
 </a>
 
 <style>
-  .logo {
+  .Logo {
     display: flex;
     gap: var(--space-16);
     align-items: center;
   }
-  .logo__label {
+  .Logo__Label {
     font-size: var(--font-size-20);
   }
 </style>

@@ -1,0 +1,28 @@
+---
+import ProjectDetailPage from '../../../page-templates/ProjectDetailPage.astro';
+import { getProjectWithNeighbors, getProjects } from '../../../page-templates/projects-pagination';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const projects = await getProjects('en');
+  return projects.map((project) => ({
+    params: { slug: project.data.path }
+  }));
+}
+
+const slugParam = Astro.params.slug;
+
+if (typeof slugParam !== 'string') {
+  return new Response(null, { status: 404 });
+}
+
+const { project, prevProject, nextProject } = await getProjectWithNeighbors('en', slugParam);
+
+if (!project) {
+  return new Response(null, { status: 404 });
+}
+---
+
+<ProjectDetailPage locale="en" project={project} prevProject={prevProject} nextProject={nextProject} />
+

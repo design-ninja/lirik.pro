@@ -1,0 +1,17 @@
+---
+import TagsIndexPage from '../../../page-templates/TagsIndexPage.astro';
+import { getBlogPosts } from '../../../page-templates/blog-pagination';
+import { getAllTags, getPostsByTag } from '../../../utils/data-utils';
+
+const posts = await getBlogPosts('en');
+const tags = getAllTags(posts)
+  .map((tag) => ({
+    name: tag.name,
+    slug: tag.slug,
+    count: getPostsByTag(posts, tag.slug, 'en').length
+  }))
+  .sort((a, b) => b.count - a.count);
+---
+
+<TagsIndexPage locale="en" tags={tags} />
+

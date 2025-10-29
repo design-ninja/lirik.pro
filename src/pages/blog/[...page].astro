@@ -1,30 +1,14 @@
 ---
-import type { GetStaticPathsOptions, Page } from 'astro';
-import { type CollectionEntry, getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Pagination from '../../components/Blog/Pagination.astro';
-import PostPreview from '../../components/Blog/PostPreview.astro';
-import siteConfig from '../../data/site-config';
-import { sortItemsByDateDesc } from '../../utils/data-utils';
+import type { Page } from 'astro';
+import BlogListPage from '../../page-templates/BlogListPage.astro';
+import { createBlogPagination, type BlogEntry } from '../../page-templates/blog-pagination';
+
 export const prerender = true;
+export const getStaticPaths = createBlogPagination('ru');
 
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
-  return paginate(posts, { pageSize: siteConfig.postsPerPage || 4 });
-}
+type Props = { page: Page<BlogEntry> };
 
-type Props = { page: Page<CollectionEntry<'blog'>> };
-
-const { page } = Astro.props;
-const blog = page.data;
+const { page } = Astro.props as Props;
 ---
 
-<BaseLayout
-  title="Блог Кирилла Исаченко"
-  description="Посты о дизайне и разработке от Кирилла Исаченко"
-  image={{ src: '/og-preview.jpg', alt: 'Дизайнер Кирилл Исаченко' }}
->
-  <h1>Блог</h1>
-  {blog.map((post) => <PostPreview post={post} />)}
-  <Pagination page={page} />
-</BaseLayout>
+<BlogListPage locale="ru" page={page} />

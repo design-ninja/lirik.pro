@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Intro from '../components/Intro.astro';
+import Portfolio from '../components/Portfolio/Portfolio.astro';
+import PetProjects from '../components/PetProjects.astro';
+import LatestPosts from '../components/Blog/LatestPosts.astro';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { type Locale } from '../utils/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+---
+
+<BaseLayout locale={locale} description={site.description} image={site.image}>
+  <Intro locale={locale} />
+  <Portfolio locale={locale} />
+  <PetProjects locale={locale} />
+  <LatestPosts locale={locale} limit={3} />
+</BaseLayout>
+

@@ -7,7 +7,8 @@ async function getSettings() {
     gistId: data[STORAGE_KEYS.gistId] || '',
     filename: data[STORAGE_KEYS.filename] || DEFAULTS.filename,
     googleKey: data[STORAGE_KEYS.googleKey] || '',
-    language: data[STORAGE_KEYS.language] || DEFAULTS.language
+    // Always use English for location names
+    language: 'en'
   };
 }
 

@@ -1,0 +1,29 @@
+---
+import StaticPage from '../../page-templates/StaticPage.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', (entry) => entry.data.locale === 'en');
+  return pages.map((page) => ({
+    params: { slug: page.data.path }
+  }));
+}
+
+const slugParam = Astro.params.slug;
+
+if (typeof slugParam !== 'string') {
+  return new Response(null, { status: 404 });
+}
+
+const pages = await getCollection('pages', (entry) => entry.data.locale === 'en');
+const page = pages.find((entry) => entry.data.path === slugParam) as CollectionEntry<'pages'> | undefined;
+
+if (!page) {
+  return new Response(null, { status: 404 });
+}
+---
+
+<StaticPage locale="en" page={page} />
+

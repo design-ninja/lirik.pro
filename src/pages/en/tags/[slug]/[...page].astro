@@ -1,0 +1,32 @@
+---
+import type { GetStaticPathsOptions, Page } from 'astro';
+import TagPostsPage from '../../../../page-templates/TagPostsPage.astro';
+import { getBlogPosts } from '../../../../page-templates/blog-pagination';
+import { getAllTags, getPostsByTag } from '../../../../utils/data-utils';
+import type { BlogEntry } from '../../../../page-templates/blog-pagination';
+
+export const prerender = true;
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts = await getBlogPosts('en');
+  const tags = getAllTags(posts);
+
+  return tags.flatMap((tag) => {
+    const filteredPosts = getPostsByTag(posts, tag.slug, 'en');
+    if (filteredPosts.length === 0) {
+      return [];
+    }
+    return paginate(filteredPosts, {
+      params: { slug: tag.slug },
+      props: { tagName: tag.name }
+    });
+  });
+}
+
+type Props = { page: Page<BlogEntry>; tagName: string };
+
+const { page, tagName } = Astro.props as Props;
+---
+
+<TagPostsPage locale="en" page={page} tagName={tagName} />
+

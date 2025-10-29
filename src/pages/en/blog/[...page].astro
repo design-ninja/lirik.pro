@@ -1,0 +1,15 @@
+---
+import type { Page } from 'astro';
+import BlogListPage from '../../../page-templates/BlogListPage.astro';
+import { createBlogPagination, type BlogEntry } from '../../../page-templates/blog-pagination';
+
+export const prerender = true;
+export const getStaticPaths = createBlogPagination('en');
+
+type Props = { page: Page<BlogEntry> };
+
+const { page } = Astro.props as Props;
+---
+
+<BlogListPage locale="en" page={page} />
+

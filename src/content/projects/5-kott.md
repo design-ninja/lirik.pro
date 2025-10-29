@@ -1,4 +1,7 @@
 ---
+locale: 'ru'
+path: 'kott'
+translationKey: 'kott'
 title: 'KOTT. Wear'
 description: 'Современный бренд и минималистичный сайт Shopify для дизайнерской одежды'
 tags: ['Прототипирование', 'Брендинг', 'Веб-дизайн']

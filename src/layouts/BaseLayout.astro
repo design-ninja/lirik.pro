@@ -1,33 +1,43 @@
 ---
-import BaseHead, { type Props } from '../components/BaseHead.astro';
-
+import BaseHead, { type Props as HeadProps } from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Avatar from '../components/Avatar.astro';
-import siteConfig from '../data/site-config';
 import { ClientRouter } from 'astro:transitions';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { type Locale } from '../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
-const { ...head } = Astro.props;
-const isHome = Astro.url.pathname === '/';
+interface LayoutProps extends HeadProps {
+  locale: Locale;
+}
+
+const { locale, ...head } = Astro.props as LayoutProps;
+const site = getSiteLocaleConfig(locale);
+const homePath = getRelativeLocaleUrl(locale, '/');
+const normalizedPathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const isHome = normalizedPathname === homePath;
+const brandHref = getRelativeLocaleUrl(locale, '/');
+const canonicalHref = new URL(Astro.request.url, Astro.site).toString();
 ---
 
 <!doctype html>
-<html lang="ru">
+<html lang={locale}>
   <head>
-    <BaseHead {...head} />
+    <BaseHead locale={locale} canonicalHref={canonicalHref} {...head} />
   </head>
   <body>
     <main transition:animate="fade">
       {!isHome && (
-        <a href="/" class="brandlink" aria-label={siteConfig.author}>
+        <a href={brandHref} class="BrandLink" aria-label={site.author}>
           <Avatar size="small" loading="eager" />
-          <span class="brandlink__name">{siteConfig.author}</span>
+          <span class="BrandLink__Name">{site.author}</span>
         </a>
       )}
       <slot />
-      <Footer />
+      <Footer locale={locale} />
     </main>
     <style lang="scss">
-      .brandlink {
+      .BrandLink {
         display: inline-flex;
         align-items: center;
         gap: var(--space-12);
@@ -37,7 +47,7 @@ const isHome = Astro.url.pathname === '/';
         margin-bottom: var(--space-40);
       }
 
-      .brandlink__name {
+      .BrandLink__Name {
         font-weight: var(--font-weight-medium);
       }
     </style>

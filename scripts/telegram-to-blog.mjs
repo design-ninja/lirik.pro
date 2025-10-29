@@ -14,6 +14,48 @@ const STATE_PATH = path.join(ROOT, '.github', 'telegram-state.json');
 
 function slugify(input = '') {
   let slug = input.toLowerCase().trim();
+
+  // Cyrillic to Latin conversion
+  const ruToEn = {
+    а: 'a',
+    б: 'b',
+    в: 'v',
+    г: 'g',
+    д: 'd',
+    е: 'e',
+    ё: 'yo',
+    ж: 'zh',
+    з: 'z',
+    и: 'i',
+    й: 'y',
+    к: 'k',
+    л: 'l',
+    м: 'm',
+    н: 'n',
+    о: 'o',
+    п: 'p',
+    р: 'r',
+    с: 's',
+    т: 't',
+    у: 'u',
+    ф: 'f',
+    х: 'h',
+    ц: 'ts',
+    ч: 'ch',
+    ш: 'sh',
+    щ: 'sch',
+    ъ: '',
+    ы: 'y',
+    ь: '',
+    э: 'e',
+    ю: 'yu',
+    я: 'ya'
+  };
+
+  slug = slug
+    .split('')
+    .map((char) => ruToEn[char] || char)
+    .join('');
   slug = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   slug = slug.replace(/[^a-z0-9\s-]/g, ' ').trim();
   slug = slug.replace(/[\s-]+/g, '-');
@@ -124,12 +166,15 @@ async function deletePostBySlug(slug, state) {
   return true;
 }
 
-function buildMdx({ title, body, tags, publishDate }) {
+function buildMdx({ title, body, tags, publishDate, slug }) {
   const safeBody = body.replace(/^\s*(import|export)[^\n]*\n/gm, '');
   // Escape potential raw HTML so MDX doesn't fail on unclosed/invalid tags
   const escapedBody = safeBody.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const tagsYaml = tags.length ? tags.map((t) => `  - ${t}`).join('\n') : '';
   return `---
+locale: 'ru'
+path: '${slug}'
+translationKey: '${slug}'
 title: '${escapeYaml(title)}'
 publishDate: '${publishDate}'
 ${tags.length ? `tags:\n${tagsYaml}\n` : ''}
@@ -240,7 +285,8 @@ async function main() {
     }
 
     const date = new Date((msg.date || Math.floor(Date.now() / 1000)) * 1000);
-    const mdx = buildMdx({ title, body, tags, publishDate: ddmmyyyy(date) });
+    const slug = path.basename(targetPath, '.mdx');
+    const mdx = buildMdx({ title, body, tags, publishDate: ddmmyyyy(date), slug });
 
     await fs.writeFile(targetPath, mdx, 'utf8');
     created.push(path.basename(targetPath));

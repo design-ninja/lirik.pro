@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Pagination from '../components/Blog/Pagination.astro';
+import PostPreview from '../components/Blog/PostPreview.astro';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { type Locale } from '../utils/i18n';
+import type { Page } from 'astro';
+import type { BlogEntry } from './blog-pagination';
+
+interface Props {
+  locale: Locale;
+  page: Page<BlogEntry>;
+}
+
+const { locale, page } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+const posts = page.data;
+const listing = site.blog.listing;
+---
+
+<BaseLayout locale={locale} title={listing.title} description={listing.description} image={site.image}>
+  <h1>{listing.title}</h1>
+  {posts.map((post) => (
+    <PostPreview post={post} locale={locale} />
+  ))}
+  <Pagination page={page} locale={locale} />
+</BaseLayout>
+

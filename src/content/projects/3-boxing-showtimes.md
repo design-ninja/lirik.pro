@@ -1,4 +1,7 @@
 ---
+locale: 'ru'
+path: 'boxing-showtimes'
+translationKey: 'boxing-showtimes'
 title: 'Boxing Showtimes'
 description: 'Полный редизайн iOS приложения'
 tags: ['Мобильное приложение', 'UI/UX', 'Дизайн‑система', 'Темизация', 'iOS']

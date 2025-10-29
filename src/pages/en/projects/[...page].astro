@@ -1,0 +1,15 @@
+---
+import type { Page } from 'astro';
+import ProjectsListPage from '../../../page-templates/ProjectsListPage.astro';
+import { createProjectsPagination, type ProjectEntry } from '../../../page-templates/projects-pagination';
+
+export const prerender = true;
+export const getStaticPaths = createProjectsPagination('en');
+
+type Props = { page: Page<ProjectEntry> };
+
+const { page } = Astro.props as Props;
+---
+
+<ProjectsListPage locale="en" page={page} />
+

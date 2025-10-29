@@ -1,16 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-
-import Intro from '../components/Intro.astro';
-import Portfolio from '../components/Portfolio/Portfolio.astro';
-import PetProjects from '../components/PetProjects.astro';
-import LatestPosts from '../components/Blog/LatestPosts.astro';
-import siteConfig from '../data/site-config';
+import HomePage from '../page-templates/HomePage.astro';
 ---
 
-<BaseLayout description={siteConfig.description} image={siteConfig.image}>
-  <Intro />
-  <Portfolio />
-  <PetProjects />
-  <LatestPosts limit={3} />
-</BaseLayout>
+<HomePage locale="ru" />

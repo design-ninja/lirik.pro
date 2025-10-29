@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { type Locale } from '../utils/i18n';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  page: CollectionEntry<'pages'>;
+}
+
+const { locale, page } = Astro.props as Props;
+const { title, seo } = page.data;
+const { Content } = await page.render();
+---
+
+<BaseLayout locale={locale} title={seo?.title ?? title} description={seo?.description} image={seo?.image}>
+  <article class="StaticPage">
+    <header>
+      <h1>{title}</h1>
+    </header>
+    <div class="StaticPage__Content">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style lang="scss">
+  .StaticPage {
+    display: grid;
+    gap: var(--space-24);
+    max-width: 760px;
+  }
+  .StaticPage__Content {
+    display: grid;
+    gap: var(--space-16);
+  }
+</style>
+
