@@ -1,7 +1,8 @@
 ---
 import { type CollectionEntry } from 'astro:content';
 import { Picture } from 'astro:assets';
-import { getLocalizedPath, type Locale } from '../../utils/i18n';
+import { type Locale } from '../../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 type Props = {
   project: CollectionEntry<'projects'>;
@@ -13,7 +14,7 @@ type Props = {
 const { project, headingLevel = 'h2', locale } = Astro.props as Props;
 const { title, description, cover, path } = project.data;
 const TitleTag = headingLevel;
-const projectPath = getLocalizedPath(`/projects/${path}/`, locale);
+const projectPath = getRelativeLocaleUrl(locale, `/projects/${path}/`);
 ---
 
 <a href={projectPath} aria-label={title} class="Project">

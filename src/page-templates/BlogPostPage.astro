@@ -4,7 +4,8 @@ import FormattedDate from '../components/Blog/FormattedDate.astro';
 import PostPreview from '../components/Blog/PostPreview.astro';
 import { getFirstParagraphFromMarkdown } from '../utils/markdown';
 import { slugify } from '../utils/common-utils';
-import { formatUpdatedLabel, getLocalizedPath, type Locale } from '../utils/i18n';
+import { formatUpdatedLabel, type Locale } from '../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { getSiteLocaleConfig } from '../data/site-config';
 import type { BlogEntry } from './blog-pagination';
 
@@ -42,7 +43,7 @@ const relatedHeading = site.blog.relatedHeading;
         {tags.length > 0 && (
           <div class="Article__Tags">
             {tags.map((tag) => (
-              <a href={getLocalizedPath(`/tags/${slugify(tag)}`, locale)}>
+              <a href={getRelativeLocaleUrl(locale, `/tags/${slugify(tag)}`)}>
                 #{tag}
               </a>
             ))}

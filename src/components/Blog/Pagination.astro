@@ -1,6 +1,7 @@
 ---
 import Button from '../Button.astro';
-import { formatPaginationAria, formatPaginationLabel, translate, type Locale } from '../../utils/i18n';
+import { formatPaginationAria, formatPaginationLabel, type Locale } from '../../utils/i18n';
+import { getSiteLocaleConfig } from '../../data/site-config';
 
 type Props = {
   page: any;
@@ -8,7 +9,8 @@ type Props = {
 };
 
 const { page, locale } = Astro.props as Props;
-const navLabel = translate(locale, 'paginationNavLabel');
+const site = getSiteLocaleConfig(locale);
+const navLabel = site.ui.paginationNavLabel;
 ---
 
 <nav aria-label={navLabel} class="Paginator">

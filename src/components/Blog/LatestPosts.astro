@@ -5,7 +5,8 @@ import FormattedDate from './FormattedDate.astro';
 import { sortPostsByDateDesc } from '../../utils/data-utils';
 import { slugify } from '../../utils/common-utils';
 import { getSiteLocaleConfig } from '../../data/site-config';
-import { formatUpdatedLabel, getLocalizedPath, type Locale } from '../../utils/i18n';
+import { formatUpdatedLabel, type Locale } from '../../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
   limit?: number;
@@ -21,7 +22,7 @@ const firstPosts = await Promise.all(
 const sectionLabel = site.blog.sectionAriaLabel;
 const sectionTitle = site.blog.sectionTitle;
 const moreLinkLabel = site.blog.moreLinkLabel;
-const blogPath = getLocalizedPath('/blog', locale);
+const blogPath = getRelativeLocaleUrl(locale, '/blog');
 ---
 
 {posts?.length > 0 && (
@@ -29,7 +30,7 @@ const blogPath = getLocalizedPath('/blog', locale);
     <SectionTitle title={sectionTitle} />
     <div class="LatestPosts__List">
       {firstPosts.map(({ post, Content }) => {
-        const postPath = getLocalizedPath(`/blog/${post.data.path}/`, locale);
+        const postPath = getRelativeLocaleUrl(locale, `/blog/${post.data.path}/`);
         return (
           <article class="LatestPosts__Post">
             <h3 class="LatestPosts__Title">
@@ -50,7 +51,7 @@ const blogPath = getLocalizedPath('/blog', locale);
               {(post.data.tags?.length ?? 0) > 0 && (
                 <div class="LatestPosts__Tags">
                   {post.data.tags.map((tag) => (
-                    <a href={getLocalizedPath(`/tags/${slugify(tag)}`, locale)}>
+                    <a href={getRelativeLocaleUrl(locale, `/tags/${slugify(tag)}`)}>
                       #{tag}
                     </a>
                   ))}

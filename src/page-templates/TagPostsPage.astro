@@ -3,7 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostPreview from '../components/Blog/PostPreview.astro';
 import Pagination from '../components/Blog/Pagination.astro';
 import { getSiteLocaleConfig } from '../data/site-config';
-import { getLocalizedPath, type Locale } from '../utils/i18n';
+import { type Locale } from '../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Page } from 'astro';
 import type { BlogEntry } from './blog-pagination';
 

@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Avatar from './Avatar.astro';
 import InfoTable from './InfoTable.astro';
 import { getSiteLocaleConfig } from '../data/site-config';
-import { translate, type Locale } from '../utils/i18n';
+import { type Locale } from '../utils/i18n';
 
 type Props = {
   locale: Locale;
@@ -13,7 +13,7 @@ const { locale } = Astro.props as Props;
 const site = getSiteLocaleConfig(locale);
 const [introData] = await getCollection('components', (entry) => entry.data.id === 'intro' && entry.data.locale === locale);
 const introTexts = introData?.data.texts || {};
-const ariaLabel = translate(locale, 'introAriaLabel');
+const ariaLabel = site.ui.introAriaLabel;
 ---
 
 <section class="Intro" aria-label={ariaLabel}>

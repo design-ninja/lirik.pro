@@ -3,7 +3,8 @@ import type { APIContext } from 'astro';
 import { getBlogPosts } from '../page-templates/blog-pagination';
 import { getSiteLocaleConfig } from '../data/site-config';
 import { getFirstParagraphFromMarkdown } from '../utils/markdown';
-import { getLocalizedPath, type Locale } from '../utils/i18n';
+import { type Locale } from '../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const locales: Locale[] = ['ru', 'en'];
 
@@ -20,7 +21,7 @@ export async function GET(context: APIContext) {
     const site = getSiteLocaleConfig(locale);
 
     for (const post of posts) {
-      const link = getLocalizedPath(`/blog/${post.data.path}/`, locale);
+      const link = getRelativeLocaleUrl(locale, `/blog/${post.data.path}/`);
       items.push({
         title: post.data.title,
         description: getFirstParagraphFromMarkdown(post.body) || post.data.seo?.description || site.blog.listing.description,
@@ -39,4 +40,3 @@ export async function GET(context: APIContext) {
     items
   });
 }
-

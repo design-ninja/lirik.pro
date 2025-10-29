@@ -4,7 +4,8 @@ import Footer from '../components/Footer.astro';
 import Avatar from '../components/Avatar.astro';
 import { ClientRouter } from 'astro:transitions';
 import { getSiteLocaleConfig } from '../data/site-config';
-import { getHtmlLang, getLocalizedPath, type Locale } from '../utils/i18n';
+import { type Locale } from '../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface LayoutProps extends HeadProps {
   locale: Locale;
@@ -12,15 +13,15 @@ interface LayoutProps extends HeadProps {
 
 const { locale, ...head } = Astro.props as LayoutProps;
 const site = getSiteLocaleConfig(locale);
-const homePath = getLocalizedPath('/', locale);
+const homePath = getRelativeLocaleUrl(locale, '/');
 const normalizedPathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const isHome = normalizedPathname === homePath;
-const brandHref = getLocalizedPath('/', locale);
+const brandHref = getRelativeLocaleUrl(locale, '/');
 const canonicalHref = new URL(Astro.request.url, Astro.site).toString();
 ---
 
 <!doctype html>
-<html lang={getHtmlLang(locale)}>
+<html lang={locale}>
   <head>
     <BaseHead locale={locale} canonicalHref={canonicalHref} {...head} />
   </head>

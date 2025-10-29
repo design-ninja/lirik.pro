@@ -1,7 +1,8 @@
 ---
 import Avatar from './Avatar.astro';
 import { getSiteLocaleConfig } from '../data/site-config';
-import { getLocalizedPath, type Locale } from '../utils/i18n';
+import { type Locale } from '../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 type Props = {
   locale: Locale;
@@ -10,7 +11,7 @@ type Props = {
 const { locale } = Astro.props as Props;
 const site = getSiteLocaleConfig(locale);
 const author = site.author;
-const homePath = getLocalizedPath('/', locale);
+const homePath = getRelativeLocaleUrl(locale, '/');
 ---
 
 <a href={homePath} class="Logo">

@@ -3,76 +3,8 @@ export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = 'ru';
 
-const LOCALE_PREFIX: Record<Locale, string> = {
-  ru: '',
-  en: '/en'
-};
-
-const HTML_LANG: Record<Locale, string> = {
-  ru: 'ru',
-  en: 'en'
-};
-
-const OG_LOCALE: Record<Locale, string> = {
-  ru: 'ru_RU',
-  en: 'en_US'
-};
-
-const UI_STRINGS = {
-  introAriaLabel: {
-    ru: 'Обо мне',
-    en: 'About me'
-  },
-  latestPostsSectionLabel: {
-    ru: 'Последние записи',
-    en: 'Latest posts'
-  },
-  petProjectsSectionLabel: {
-    ru: 'Pet-проекты',
-    en: 'Side projects'
-  },
-  paginationNavLabel: {
-    ru: 'Навигация по страницам',
-    en: 'Pagination'
-  }
-} as const;
-
-export type TranslationKey = keyof typeof UI_STRINGS;
-
-export function translate(locale: Locale, key: TranslationKey) {
-  return UI_STRINGS[key][locale];
-}
-
-export function isSupportedLocale(value: unknown): value is Locale {
-  return typeof value === 'string' && SUPPORTED_LOCALES.includes(value as Locale);
-}
-
-export function getLocalePrefix(locale: Locale) {
-  return LOCALE_PREFIX[locale];
-}
-
-export function getHtmlLang(locale: Locale) {
-  return HTML_LANG[locale];
-}
-
-export function getOgLocale(locale: Locale) {
-  return OG_LOCALE[locale];
-}
-
-export function getAlternateLocale(locale: Locale): Locale {
-  return locale === 'ru' ? 'en' : 'ru';
-}
-
-export function getLocalizedPath(pathname: string, locale: Locale) {
-  const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
-  const prefix = getLocalePrefix(locale);
-  if (!prefix) {
-    return normalizedPath;
-  }
-  if (normalizedPath === '/') {
-    return `${prefix}/`;
-  }
-  return `${prefix}${normalizedPath}`.replace(/\/{2,}/g, '/');
+export function getOgLocale(locale: Locale): string {
+  return locale === 'ru' ? 'ru_RU' : 'en_US';
 }
 
 export function formatPaginationLabel(locale: Locale, current: number, total: number) {
@@ -80,9 +12,7 @@ export function formatPaginationLabel(locale: Locale, current: number, total: nu
 }
 
 export function formatPaginationAria(locale: Locale, target: number, total: number) {
-  return locale === 'ru'
-    ? `Перейти к странице ${target} из ${total}`
-    : `Go to page ${target} of ${total}`;
+  return locale === 'ru' ? `Перейти к странице ${target} из ${total}` : `Go to page ${target} of ${total}`;
 }
 
 export function formatUpdatedLabel(locale: Locale) {
@@ -120,4 +50,3 @@ export function formatListWithConjunction(locale: Locale, values: string[]) {
   const conjunction = locale === 'ru' ? ' и ' : ' and ';
   return `${items.join(', ')}${conjunction}${lastItem}`;
 }
-

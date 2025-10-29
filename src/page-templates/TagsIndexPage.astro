@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getSiteLocaleConfig } from '../data/site-config';
-import { formatPostsCounter, formatTagArchiveCta, getLocalizedPath, type Locale } from '../utils/i18n';
+import { formatPostsCounter, formatTagArchiveCta, type Locale } from '../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface TagSummary {
   name: string;
@@ -24,7 +25,7 @@ const archiveCta = formatTagArchiveCta(locale);
   <h1>{tagsIndex.title}</h1>
   <div class="TagsIndex__List">
     {tags.map((tag) => (
-      <a href={getLocalizedPath(`/tags/${tag.slug}`, locale)} class="TagsIndex__Card">
+      <a href={getRelativeLocaleUrl(locale, `/tags/${tag.slug}`)} class="TagsIndex__Card">
         <div>
           <h2 class="TagsIndex__Title">{tag.name}</h2>
           <div class="TagsIndex__Count">

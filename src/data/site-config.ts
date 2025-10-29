@@ -52,6 +52,10 @@ export type SiteLocaleConfig = {
   description: string;
   image?: Image;
   footer: Footer;
+  ui: {
+    introAriaLabel: string;
+    paginationNavLabel: string;
+  };
   portfolio: {
     title: string;
     ariaLabel: string;
@@ -90,6 +94,10 @@ const siteConfig: SiteConfig = {
       },
       footer: {
         author: 'Дизайн и разработка: lirik 🖤'
+      },
+      ui: {
+        introAriaLabel: 'Обо мне',
+        paginationNavLabel: 'Навигация по страницам'
       },
       portfolio: {
         title: 'Портфолио',
@@ -177,6 +185,10 @@ const siteConfig: SiteConfig = {
       },
       footer: {
         author: 'Design and development: lirik 🖤'
+      },
+      ui: {
+        introAriaLabel: 'About me',
+        paginationNavLabel: 'Pagination'
       },
       portfolio: {
         title: 'Portfolio',

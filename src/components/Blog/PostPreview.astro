@@ -2,7 +2,8 @@
 import { type CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
 import { getFirstParagraphFromMarkdown } from '../../utils/markdown';
-import { formatUpdatedLabel, getLocalizedPath, type Locale } from '../../utils/i18n';
+import { formatUpdatedLabel, type Locale } from '../../utils/i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 type Props = {
   post: CollectionEntry<'blog'>;
@@ -15,7 +16,7 @@ const { post, class: className, headingLevel = 'h3', locale } = Astro.props as P
 const { title, publishDate, updatedDate, path } = post.data;
 const firstParagraph = getFirstParagraphFromMarkdown(post.body);
 const TitleTag = headingLevel;
-const postPath = getLocalizedPath(`/blog/${path}/`, locale);
+const postPath = getRelativeLocaleUrl(locale, `/blog/${path}/`);
 ---
 
 <div class="PostPreview">
