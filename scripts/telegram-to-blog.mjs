@@ -187,6 +187,7 @@ async function main() {
   for (const u of updates) {
     if (u.update_id > maxUpdateId) maxUpdateId = u.update_id;
     const msg = u.message || u.edited_message;
+    const isEdited = Boolean(u.edited_message);
     if (!msg || typeof msg.text !== 'string') continue;
     const chatId = String(msg.chat?.id ?? '');
     if (chatId !== String(ALLOWED_CHAT_ID)) continue;
@@ -216,18 +217,37 @@ async function main() {
     if (!title || !body) continue;
 
     const slugBase = slugify(title) || `post-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}`;
-    const mdxPathBase = path.join(BLOG_DIR, `${slugBase}.mdx`);
-    const mdxPath = await uniqueFilePath(mdxPathBase);
+
+    // Decide target path: update existing on edits, otherwise create new
+    let targetPath = undefined;
+    if (isEdited) {
+      const key = postKey(chatId, msg.message_id);
+      const mappedRel = state.posts[key];
+      if (mappedRel) {
+        targetPath = path.join(ROOT, mappedRel);
+      } else {
+        const found = await findPostPathBySlug(slugBase, state);
+        if (found) {
+          targetPath = found;
+          state.posts[key] = path.relative(ROOT, found);
+        }
+      }
+    }
+
+    if (!targetPath) {
+      const mdxPathBase = path.join(BLOG_DIR, `${slugBase}.mdx`);
+      targetPath = await uniqueFilePath(mdxPathBase);
+    }
 
     const date = new Date((msg.date || Math.floor(Date.now() / 1000)) * 1000);
     const mdx = buildMdx({ title, body, tags, publishDate: ddmmyyyy(date) });
 
-    await fs.writeFile(mdxPath, mdx, 'utf8');
-    created.push(path.basename(mdxPath));
+    await fs.writeFile(targetPath, mdx, 'utf8');
+    created.push(path.basename(targetPath));
 
     // Remember mapping to support future deletion by reply
     const key = postKey(chatId, msg.message_id);
-    const rel = path.relative(ROOT, mdxPath);
+    const rel = path.relative(ROOT, targetPath);
     state.posts[key] = rel;
   }
 
