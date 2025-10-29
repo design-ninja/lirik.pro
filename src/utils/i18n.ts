@@ -75,28 +75,6 @@ export function getLocalizedPath(pathname: string, locale: Locale) {
   return `${prefix}${normalizedPath}`.replace(/\/{2,}/g, '/');
 }
 
-export function parseAcceptLanguage(header: string | null | undefined): Locale | null {
-  if (!header) {
-    return null;
-  }
-  const languageTokens = header
-    .split(',')
-    .map((token) => token.trim().split(';')[0]?.toLowerCase())
-    .filter(Boolean) as string[];
-
-  for (const token of languageTokens) {
-    if (isSupportedLocale(token)) {
-      return token;
-    }
-    const shortToken = token.split('-')[0];
-    if (isSupportedLocale(shortToken)) {
-      return shortToken;
-    }
-  }
-
-  return null;
-}
-
 export function formatPaginationLabel(locale: Locale, current: number, total: number) {
   return locale === 'ru' ? `Страница ${current} из ${total}` : `Page ${current} of ${total}`;
 }
