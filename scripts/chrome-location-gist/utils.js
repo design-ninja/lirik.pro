@@ -11,7 +11,7 @@ export const STORAGE_KEYS = {
 
 export const DEFAULTS = {
   filename: 'location.json',
-  language: 'en'
+  language: 'en' // Always use English for location names
 };
 
 export function storageGet(keys) {
