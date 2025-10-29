@@ -1,4 +1,7 @@
 ---
+locale: 'ru'
+path: 'about'
+translationKey: 'about'
 title: 'О проекте'
 seo:
   title: 'О проекте - Lirik.pro'

@@ -1,31 +1,36 @@
 ---
 import { getCollection } from 'astro:content';
+import { type Locale } from '../utils/i18n';
 
-const allComponents = await getCollection('components');
-const infoTableData = allComponents.find(item => item.data.id === 'info-table');
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const [infoTableData] = await getCollection('components', (entry) => entry.data.id === 'info-table' && entry.data.locale === locale);
 const infoTableTexts = infoTableData?.data.texts || {};
 ---
 
-<div class='infotable'>
-  <div class='infotable__row'>
-    <span class='infotable__row-label'>{infoTableTexts.location_label}</span> <a class='infotable__row-value' href='https://www.google.com/maps/place/Пхукет' target='_blank' rel='noopener' id='location'>—</a>
+<div class="InfoTable">
+  <div class="InfoTable__Row">
+    <span class="InfoTable__RowLabel">{infoTableTexts.location_label}</span> <a class="InfoTable__RowValue" href='https://www.google.com/maps/place/Пхукет' target='_blank' rel='noopener' id='location'>-</a>
   </div>
-  <div class='infotable__row'>
-    <span class='infotable__row-label'>{infoTableTexts.spotify_label}</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='spotify'>—</a>
+  <div class="InfoTable__Row">
+    <span class="InfoTable__RowLabel">{infoTableTexts.spotify_label}</span> <a class="InfoTable__RowValue" href='#' target='_blank' rel='noopener' id='spotify'>-</a>
   </div>
-  <div class='infotable__row'>
-    <span class='infotable__row-label'>{infoTableTexts.wakatime_label}</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='wakatime'>—</a>
+  <div class="InfoTable__Row">
+    <span class="InfoTable__RowLabel">{infoTableTexts.wakatime_label}</span> <a class="InfoTable__RowValue" href='#' target='_blank' rel='noopener' id='wakatime'>-</a>
   </div>
-  <div class='infotable__row'>
-    <span class='infotable__row-label'>{infoTableTexts.book_label}</span> <a class='infotable__row-value' href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>{infoTableTexts.book_value}</a>
+  <div class="InfoTable__Row">
+    <span class="InfoTable__RowLabel">{infoTableTexts.book_label}</span> <a class="InfoTable__RowValue" href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>{infoTableTexts.book_value}</a>
   </div>
-  <div class='infotable__row'>
-    <span class='infotable__row-label'>{infoTableTexts.learn_label}</span> <span class='infotable__row-value'><a href='https://www.youtube.com/@letslearnthai' target='_blank' rel='noopener' id='learn'>{infoTableTexts.learn_value}</a></span>
+  <div class="InfoTable__Row">
+    <span class="InfoTable__RowLabel">{infoTableTexts.learn_label}</span> <span class="InfoTable__RowValue"><a href='https://www.youtube.com/@letslearnthai' target='_blank' rel='noopener' id='learn'>{infoTableTexts.learn_value}</a></span>
   </div>
 </div>
 
 <style lang='scss'>
-  .infotable {
+  .InfoTable {
     display: flex;
     flex-direction: column;
     gap: var(--space-8);
@@ -33,7 +38,7 @@ const infoTableTexts = infoTableData?.data.texts || {};
     border: var(--size-1) solid var(--color-border-primary);
     padding: var(--space-20);
 
-    &__row {
+    &__Row {
       display: flex;
       flex-direction: column;
       gap: var(--space-2);
@@ -47,11 +52,11 @@ const infoTableTexts = infoTableData?.data.texts || {};
         padding-bottom: 0;
       }
 
-      &-label {
+      &Label {
         color: var(--color-text-secondary);
       }
 
-      &-value {
+      &Value {
         width: fit-content;
       }
     }
@@ -73,7 +78,7 @@ const infoTableTexts = infoTableData?.data.texts || {};
   function setAnchor(id: string, text: string, href?: string) {
     const el = document.getElementById(id) as HTMLAnchorElement | null;
     if (!el) return;
-    el.textContent = text || '—';
+    el.textContent = text || '-';
     el.href = href || '#';
   }
 
@@ -92,8 +97,8 @@ const infoTableTexts = infoTableData?.data.texts || {};
   async function fetchLocation() {
     const RAW_URL = import.meta.env.PUBLIC_LOCATION_JSON_URL;
     if (!RAW_URL) {
-      updateCache({ location: { text: '—', href: '#' } });
-      setAnchor('location', '—');
+      updateCache({ location: { text: '-', href: '#' } });
+      setAnchor('location', '-');
       return;
     }
     try {
@@ -102,21 +107,21 @@ const infoTableTexts = infoTableData?.data.texts || {};
       if (!res.ok) throw new Error('bad status');
       const data = await res.json();
       const value = [data.city, data.country].filter(Boolean).join(', ');
-      const text = value || '—';
+      const text = value || '-';
       const href = value ? `https://www.google.com/maps/place/${encodeURIComponent(value)}` : '#';
       updateCache({ location: { text, href } });
       setAnchor('location', text, href);
     } catch {
-      updateCache({ location: { text: '—', href: '#' } });
-      setAnchor('location', '—');
+      updateCache({ location: { text: '-', href: '#' } });
+      setAnchor('location', '-');
     }
   }
 
   async function fetchSpotify() {
     const SPOTIFY_URL = import.meta.env.PUBLIC_SPOTIFY_JSON_URL;
     if (!SPOTIFY_URL) {
-      updateCache({ spotify: { title: '—', url: '#' } });
-      setAnchor('spotify', '—');
+      updateCache({ spotify: { title: '-', url: '#' } });
+      setAnchor('spotify', '-');
       return;
     }
     try {
@@ -128,20 +133,20 @@ const infoTableTexts = infoTableData?.data.texts || {};
         updateCache({ spotify: { title: data.title, url: data.url } });
         setAnchor('spotify', data.title, data.url);
       } else {
-        updateCache({ spotify: { title: '—', url: '#' } });
-        setAnchor('spotify', '—');
+        updateCache({ spotify: { title: '-', url: '#' } });
+        setAnchor('spotify', '-');
       }
     } catch {
-      updateCache({ spotify: { title: '—', url: '#' } });
-      setAnchor('spotify', '—');
+      updateCache({ spotify: { title: '-', url: '#' } });
+      setAnchor('spotify', '-');
     }
   }
 
   async function fetchWakatime() {
     const WAKATIME_URL = import.meta.env.PUBLIC_WAKATIME_JSON_URL;
     if (!WAKATIME_URL) {
-      updateCache({ wakatime: { text: '—', href: '#' } });
-      setAnchor('wakatime', '—');
+      updateCache({ wakatime: { text: '-', href: '#' } });
+      setAnchor('wakatime', '-');
       return;
     }
     try {
@@ -155,12 +160,12 @@ const infoTableTexts = infoTableData?.data.texts || {};
         updateCache({ wakatime: { text, href } });
         setAnchor('wakatime', text, href);
       } else {
-        updateCache({ wakatime: { text: '—', href: '#' } });
-        setAnchor('wakatime', '—');
+        updateCache({ wakatime: { text: '-', href: '#' } });
+        setAnchor('wakatime', '-');
       }
     } catch {
-      updateCache({ wakatime: { text: '—', href: '#' } });
-      setAnchor('wakatime', '—');
+      updateCache({ wakatime: { text: '-', href: '#' } });
+      setAnchor('wakatime', '-');
     }
   }
 

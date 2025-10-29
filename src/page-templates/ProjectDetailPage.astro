@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectPreview from '../components/Portfolio/ProjectPreview.astro';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { formatListWithConjunction, type Locale } from '../utils/i18n';
+import type { ProjectEntry } from './projects-pagination';
+
+interface Props {
+  locale: Locale;
+  project: ProjectEntry;
+  prevProject?: ProjectEntry | null;
+  nextProject?: ProjectEntry | null;
+}
+
+const { locale, project, prevProject = null, nextProject = null } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+const { Content } = await project.render();
+const { title, description, seo, tags = [], link } = project.data;
+const relatedHeading = site.projects.relatedHeading;
+const formattedTags = tags.length ? formatListWithConjunction(locale, tags) : null;
+---
+
+<BaseLayout
+  locale={locale}
+  title={seo?.title ?? title}
+  description={seo?.description ?? description}
+  image={seo?.image}
+  pageType="article"
+>
+  <article class="ProjectArticle">
+    <header>
+      <h1>{title}</h1>
+      <div class="ProjectArticle__Meta">
+        {formattedTags && <span class="ProjectArticle__Tags">{formattedTags}</span>}
+        {link && (
+          <a href={link} target="_blank" rel="noopener noreferer" class="ProjectArticle__Link" title={title}>
+            {link}
+          </a>
+        )}
+      </div>
+    </header>
+    <div class="ProjectArticle__Content">
+      <Content />
+    </div>
+    {(prevProject || nextProject) && (
+      <section class="ProjectArticle__Related">
+        <h2>{relatedHeading}</h2>
+        <div class="ProjectArticle__RelatedList">
+          {nextProject && <ProjectPreview project={nextProject} headingLevel="h3" locale={locale} />}
+          {prevProject && <ProjectPreview project={prevProject} headingLevel="h3" locale={locale} />}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style lang="scss">
+  .ProjectArticle {
+    display: grid;
+    gap: var(--space-40);
+    margin: 0 auto;
+    max-width: 900px;
+
+    &__Meta {
+      display: grid;
+      gap: var(--space-8);
+      justify-items: start;
+    }
+
+    &__Tags {
+      color: var(--color-text-secondary);
+    }
+
+    &__Content {
+      display: grid;
+    }
+
+    &__Related {
+      display: grid;
+      gap: var(--space-24);
+    }
+
+    &__RelatedList {
+      display: grid;
+      gap: var(--space-24);
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+  }
+</style>
+

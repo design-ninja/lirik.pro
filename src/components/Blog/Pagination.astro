@@ -1,21 +1,38 @@
 ---
 import Button from '../Button.astro';
+import { formatPaginationAria, formatPaginationLabel, translate, type Locale } from '../../utils/i18n';
 
-const { page } = Astro.props;
+type Props = {
+  page: any;
+  locale: Locale;
+};
+
+const { page, locale } = Astro.props as Props;
+const navLabel = translate(locale, 'paginationNavLabel');
 ---
 
-<nav aria-label="Навигация">
+<nav aria-label={navLabel} class="Paginator">
   {
     page.url.prev && (
-      <Button class="paginator__button" color="ghost" href={page.url.prev} aria-label={`Перейти к странице ${page.currentPage - 1} из ${page.lastPage}`}>
+      <Button
+        class="Paginator__Button"
+        color="ghost"
+        href={page.url.prev}
+        aria-label={formatPaginationAria(locale, page.currentPage - 1, page.lastPage)}
+      >
         ←
       </Button>
     )
   }
-  <span aria-current="page">Страница {page.currentPage} из {page.lastPage}</span>
+  <span aria-current="page">{formatPaginationLabel(locale, page.currentPage, page.lastPage)}</span>
   {
     page.url.next && (
-      <Button class="paginator__button" color="ghost" href={page.url.next} aria-label={`Перейти к странице ${page.currentPage + 1} из ${page.lastPage}`}>
+      <Button
+        class="Paginator__Button"
+        color="ghost"
+        href={page.url.next}
+        aria-label={formatPaginationAria(locale, page.currentPage + 1, page.lastPage)}
+      >
         →
       </Button>
     )
@@ -23,8 +40,8 @@ const { page } = Astro.props;
 </nav>
 
 <style lang="scss">
-  .paginator {
-    &__button {
+  .Paginator {
+    &__Button {
       font-size: var(--font-size-24);
       padding: var(--space-8) var(--space-16);
     }

@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormattedDate from '../components/Blog/FormattedDate.astro';
+import PostPreview from '../components/Blog/PostPreview.astro';
+import { getFirstParagraphFromMarkdown } from '../utils/markdown';
+import { slugify } from '../utils/common-utils';
+import { formatUpdatedLabel, getLocalizedPath, type Locale } from '../utils/i18n';
+import { getSiteLocaleConfig } from '../data/site-config';
+import type { BlogEntry } from './blog-pagination';
+
+interface Props {
+  locale: Locale;
+  post: BlogEntry;
+  prevPost?: BlogEntry | null;
+  nextPost?: BlogEntry | null;
+}
+
+const { locale, post, prevPost = null, nextPost = null } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+const { title, publishDate, updatedDate, tags = [], seo } = post.data;
+const { Content } = await post.render();
+const firstParagraph = getFirstParagraphFromMarkdown(post.body);
+const relatedHeading = site.blog.relatedHeading;
+---
+
+<BaseLayout locale={locale} title={seo?.title ?? title} description={seo?.description ?? firstParagraph} image={seo?.image} pageType="article">
+  <article class="Article">
+    <header>
+      <h1>{title}</h1>
+    </header>
+    <div>
+      <Content />
+      <div class="Article__Meta">
+        <div class="Article__Dates">
+          <FormattedDate date={publishDate} locale={locale} />
+          {updatedDate && (
+            <span class="Article__Updated">
+              {formatUpdatedLabel(locale)} <FormattedDate date={updatedDate} locale={locale} />
+            </span>
+          )}
+        </div>
+        {tags.length > 0 && (
+          <div class="Article__Tags">
+            {tags.map((tag) => (
+              <a href={getLocalizedPath(`/tags/${slugify(tag)}`, locale)}>
+                #{tag}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+    {(prevPost || nextPost) && (
+      <section class="Article__Related">
+        <h3>{relatedHeading}</h3>
+        <div class="Article__RelatedList">
+          {nextPost && <PostPreview post={nextPost} headingLevel="h3" locale={locale} />}
+          {prevPost && <PostPreview post={prevPost} headingLevel="h3" locale={locale} />}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style lang="scss">
+  .Article {
+    display: grid;
+    gap: var(--space-40);
+    margin: 0 auto;
+    max-width: 900px;
+
+    &__Meta {
+      display: grid;
+      gap: var(--space-16);
+      margin-top: var(--space-32);
+    }
+
+    &__Dates {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-14);
+    }
+
+    &__Updated {
+      color: var(--color-text-secondary);
+    }
+
+    &__Tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+      font-size: var(--font-size-14);
+    }
+
+    &__Related {
+      display: grid;
+      gap: var(--space-24);
+    }
+
+    &__RelatedList {
+      display: grid;
+      gap: var(--space-24);
+    }
+  }
+</style>
+

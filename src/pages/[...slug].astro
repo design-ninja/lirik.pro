@@ -1,42 +1,28 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import StaticPage from '../page-templates/StaticPage.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const pages = await getCollection('pages');
-  return pages.map((page) => {
-    return {
-      params: { slug: page.slug },
-      props: { page }
-    };
-  });
+  const pages = await getCollection('pages', (entry) => entry.data.locale === 'ru');
+  return pages.map((page) => ({
+    params: { slug: page.data.path }
+  }));
 }
 
-type Props = { page: CollectionEntry<'pages'> };
+const slugParam = Astro.params.slug;
 
-let page = (Astro.props as Partial<Props> | undefined)?.page as CollectionEntry<'pages'> | undefined;
+if (typeof slugParam !== 'string') {
+  return new Response(null, { status: 404 });
+}
+
+const pages = await getCollection('pages', (entry) => entry.data.locale === 'ru');
+const page = pages.find((entry) => entry.data.path === slugParam) as CollectionEntry<'pages'> | undefined;
 
 if (!page) {
-  const slug = Astro.params.slug as string | undefined;
-  const pages = await getCollection('pages');
-  page = pages.find((p) => p.slug === slug);
-  if (!page) {
-    return new Response(null, { status: 404 });
-  }
+  return new Response(null, { status: 404 });
 }
-
-const { title, seo } = page.data;
-const { Content } = await page.render();
 ---
 
-<BaseLayout title={seo?.title ?? title} description={seo?.description} image={seo?.image}>
-  <article>
-    <header>
-      <h1>{title}</h1>
-    </header>
-    <div>
-      <Content />
-    </div>
-  </article>
-</BaseLayout>
+<StaticPage locale="ru" page={page} />

@@ -1,0 +1,28 @@
+---
+import BlogPostPage from '../../../page-templates/BlogPostPage.astro';
+import { getBlogPostWithNeighbors, getBlogPosts } from '../../../page-templates/blog-pagination';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const posts = await getBlogPosts('en');
+  return posts.map((post) => ({
+    params: { slug: post.data.path }
+  }));
+}
+
+const slugParam = Astro.params.slug;
+
+if (typeof slugParam !== 'string') {
+  return new Response(null, { status: 404 });
+}
+
+const { post, prevPost, nextPost } = await getBlogPostWithNeighbors('en', slugParam);
+
+if (!post) {
+  return new Response(null, { status: 404 });
+}
+---
+
+<BlogPostPage locale="en" post={post} prevPost={prevPost} nextPost={nextPost} />
+

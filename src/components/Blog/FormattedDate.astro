@@ -1,12 +1,15 @@
 ---
-type Props = { date: Date };
+import { type Locale } from '../../utils/i18n';
 
-const { date } = Astro.props;
+type Props = { date: Date; locale: Locale };
+
+const { date, locale } = Astro.props as Props;
+const localeCode = locale === 'ru' ? 'ru-RU' : 'en-US';
 ---
 
 <time datetime={date.toISOString()}>
   {
-    date.toLocaleDateString('ru-RU', {
+    date.toLocaleDateString(localeCode, {
       year: 'numeric',
       month: 'long',
       day: 'numeric'

@@ -1,4 +1,7 @@
 ---
+locale: 'ru'
+path: 'vinyls'
+translationKey: 'vinyls'
 title: 'Vinyls.Pro'
 description: 'Дизайн интерфейса сервиса для коллекционеров и диджеев'
 tags: ['Веб‑приложение', 'UI/UX', 'Дизайн‑система', 'Мобильный дизайн']

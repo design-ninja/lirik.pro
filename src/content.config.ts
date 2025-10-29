@@ -1,5 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 
+const localeEnum = z.enum(['ru', 'en']);
+
 const seoSchema = z.object({
   title: z.string().min(5).max(120).optional(),
   description: z.string().min(15).max(160).optional(),
@@ -13,9 +15,13 @@ const seoSchema = z.object({
 });
 
 const blog = defineCollection({
-  schema: z.object({
-    title: z.string(),
-    publishDate: z.string().transform((s, ctx) => {
+  schema: ({ image }) =>
+    z.object({
+      locale: localeEnum,
+      path: z.string().min(1),
+      translationKey: z.string().min(1),
+      title: z.string(),
+      publishDate: z.string().transform((s, ctx) => {
       // Support DD-MM-YYYY and ISO
       const ddmmyyyy = /^(\d{2})-(\d{2})-(\d{4})$/;
       const m = s.match(ddmmyyyy);
@@ -32,11 +38,11 @@ const blog = defineCollection({
         return z.NEVER;
       }
       return d;
-    }),
-    updatedDate: z
-      .union([z.string(), z.date()])
-      .optional()
-      .transform((val) => {
+      }),
+      updatedDate: z
+        .union([z.string(), z.date()])
+        .optional()
+        .transform((val) => {
         if (!val) return undefined;
         if (val instanceof Date) return val;
         const ddmmyyyy = /^(\d{2})-(\d{2})-(\d{4})$/;
@@ -47,15 +53,19 @@ const blog = defineCollection({
         }
         const d = new Date(val);
         return isNaN(d.getTime()) ? undefined : d;
-      }),
-    isFeatured: z.boolean().default(false),
-    tags: z.array(z.string()).default([]),
-    seo: seoSchema.optional()
-  })
+        }),
+      isFeatured: z.boolean().default(false),
+      tags: z.array(z.string()).default([]),
+      cover: image().optional(),
+      seo: seoSchema.optional()
+    })
 });
 
 const pages = defineCollection({
   schema: z.object({
+    locale: localeEnum,
+    path: z.string().min(1),
+    translationKey: z.string().min(1),
     title: z.string(),
     seo: seoSchema.optional()
   })
@@ -64,6 +74,9 @@ const pages = defineCollection({
 const projects = defineCollection({
   schema: ({ image }) =>
     z.object({
+      locale: localeEnum,
+      path: z.string().min(1),
+      translationKey: z.string().min(1),
       title: z.string(),
       description: z.string().optional(),
       tags: z.array(z.string()).default([]),
@@ -77,6 +90,7 @@ const projects = defineCollection({
 const components = defineCollection({
   schema: z.object({
     id: z.string(),
+    locale: localeEnum,
     texts: z.record(z.string())
   })
 });

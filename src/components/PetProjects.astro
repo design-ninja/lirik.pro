@@ -1,45 +1,45 @@
 ---
 import SectionTitle from './SectionTitle.astro';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { type Locale } from '../utils/i18n';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+const petProjects = site.petProjects;
 ---
 
-<section class="petProjects" id="pet-projects" aria-label="Pet-проекты">
-  <SectionTitle title="Pet-проекты" />
+{petProjects && (
+  <section class="PetProjects" id="pet-projects" aria-label={petProjects.ariaLabel}>
+    <SectionTitle title={petProjects.title} />
 
-  <div class="petProjects__grid">
-    <article class="petProjects__card">
-      <h3 class="petProjects__title">Empty Folders Remover</h3>
-      <p class="petProjects__desc">Простое расширение для Visual Studio Code, которое ищет и удаляет пустые папки в проекте</p>
-      <div class="petProjects__links">
-        <a href="https://marketplace.visualstudio.com/items?itemName=lirik.empty-folders-remover" target="_blank" rel="noopener">VS Marketplace</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://github.com/design-ninja/empty-folders-remover" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </article>
-
-    <article class="petProjects__card">
-      <h3 class="petProjects__title">#hexPicker</h3>
-      <p class="petProjects__desc">Инструмент для выбора цвета по #hex коду с историей сохраненных цветов</p>
-      <div class="petProjects__links">
-        <a href="https://chromewebstore.google.com/detail/hexpicker-%E2%80%94-a-simple-hex/nbfoiiglmnkmdhhaenkekmodabpcfnhc?hl=en" target="_blank" rel="noopener">Chrome Web Store</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://github.com/design-ninja/hex-picker" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </article>
-
-    <article class="petProjects__card">
-      <h3 class="petProjects__title">OiNK - Raise a Cute Pig</h3>
-      <p class="petProjects__desc">Забавная игра для детей в стиле «тамагочи»</p>
-      <div class="petProjects__links">
-        <a href="https://apps.apple.com/ru/app/oink-raise-a-cute-pig/id6739273380?l=en-GB" target="_blank" rel="noopener">App Store</a>
-      </div>
-    </article>
-
-  </div>
-</section>
+    <div class="PetProjects__Grid">
+      {petProjects.items.map((project) => (
+        <article class="PetProjects__Card">
+          <h3 class="PetProjects__Title">{project.title}</h3>
+          <p class="PetProjects__Description">{project.description}</p>
+          {project.links?.length ? (
+            <div class="PetProjects__Links">
+              {project.links.map((link, index) => (
+                <span class="PetProjects__LinkWrapper">
+                  <a href={link.href} target="_blank" rel="noopener">{link.text}</a>
+                  {index < project.links.length - 1 && <span aria-hidden="true">•</span>}
+                </span>
+              ))}
+            </div>
+          ) : null}
+        </article>
+      ))}
+    </div>
+  </section>
+)}
 
 <style lang="scss">
-  .petProjects {
-    &__grid {
+  .PetProjects {
+    &__Grid {
       display: grid;
       gap: var(--space-16);
       grid-template-columns: repeat(3, 1fr);
@@ -52,7 +52,7 @@ import SectionTitle from './SectionTitle.astro';
       }
     }
 
-    &__card {
+    &__Card {
       background: var(--color-bg-raised);
       padding: var(--space-24);
       display: grid;
@@ -62,20 +62,26 @@ import SectionTitle from './SectionTitle.astro';
       min-height: 16rem;
     }
 
-    &__title {
+    &__Title {
       font-size: var(--font-size-18);
       margin: 0;
     }
 
-    &__desc {
+    &__Description {
       margin: 0;
       color: var(--color-text-secondary);
     }
 
-    &__links {
+    &__Links {
       display: flex;
       gap: var(--space-8);
       align-items: center;
+    }
+
+    &__LinkWrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-8);
     }
   }
 </style>

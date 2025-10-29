@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { formatPostsCounter, formatTagArchiveCta, getLocalizedPath, type Locale } from '../utils/i18n';
+
+interface TagSummary {
+  name: string;
+  slug: string;
+  count: number;
+}
+
+interface Props {
+  locale: Locale;
+  tags: TagSummary[];
+}
+
+const { locale, tags } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+const tagsIndex = site.blog.tagsIndex;
+const archiveCta = formatTagArchiveCta(locale);
+---
+
+<BaseLayout locale={locale} title={tagsIndex.title} description={tagsIndex.description} image={site.image}>
+  <h1>{tagsIndex.title}</h1>
+  <div class="TagsIndex__List">
+    {tags.map((tag) => (
+      <a href={getLocalizedPath(`/tags/${tag.slug}`, locale)} class="TagsIndex__Card">
+        <div>
+          <h2 class="TagsIndex__Title">{tag.name}</h2>
+          <div class="TagsIndex__Count">
+            {tag.count} {formatPostsCounter(locale, tag.count)}
+          </div>
+        </div>
+        <div class="TagsIndex__Cta">{archiveCta}</div>
+      </a>
+    ))}
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  .TagsIndex {
+    &__List {
+      display: grid;
+      gap: var(--space-24);
+    }
+
+    &__Card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-16);
+      padding: var(--space-24);
+      border-radius: var(--radius-m);
+      border: 1px solid var(--color-border-primary);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    &__Title {
+      margin: 0;
+    }
+
+    &__Count {
+      font-size: var(--font-size-14);
+      color: var(--color-text-secondary);
+    }
+
+    &__Cta {
+      font-size: var(--font-size-14);
+    }
+  }
+</style>
+

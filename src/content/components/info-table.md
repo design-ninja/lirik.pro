@@ -1,5 +1,6 @@
 ---
 id: 'info-table'
+locale: 'ru'
 texts:
   location_label: 'Сейчас я здесь'
   spotify_label: 'Слушаю'

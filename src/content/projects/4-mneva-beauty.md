@@ -1,12 +1,15 @@
 ---
+locale: 'ru'
+path: 'mneva-beauty'
+translationKey: 'mneva-beauty'
 title: 'Mneva Beauty'
-description: Дизайн интернет-магазина премиум-косметики
+description: 'Дизайн интернет-магазина премиум-косметики'
 tags: ['Брендинг', 'Веб-дизайн', 'E-commerce', 'SEO', 'Контент', 'Яндекс.Директ']
 link: https://mnevabeauty.ru
 seo:
   image:
     src: '../../assets/mneva_beauty/mneva_beauty.png'
-    alt: Mneva Beauty
+    alt: 'Mneva Beauty'
 cover: '../../assets/mneva_beauty/mneva_beauty.png'
 isFeatured: true
 ---

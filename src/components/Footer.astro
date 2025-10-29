@@ -1,20 +1,26 @@
 ---
-import siteConfig from '../data/site-config';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { type Locale } from '../utils/i18n';
 
-const socialLinks = siteConfig.socialLinks || [];
-const footer = siteConfig.footer;
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+const footer = site.footer;
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="footer">
+<footer class="Footer">
   <span>
     &copy; 2003—{currentYear} lirik
   </span>
-  <span class="footer__author">{footer?.author && footer.author}</span>
+  {footer?.author && <span class="Footer__Author">{footer.author}</span>}
 </footer>
 
 <style lang="scss">
-  .footer {
+  .Footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -36,19 +42,7 @@ const currentYear = new Date().getFullYear();
     }
   }
 
-  .menu {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--space-40);
-    padding: 0;
-
-    @media (max-width: 992px) {
-      gap: var(--space-16);
-    }
-  }
-
-  .menu li {
-    list-style: none;
+  .Footer__Author {
+    font-weight: var(--font-weight-medium);
   }
 </style>

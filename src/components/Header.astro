@@ -1,12 +1,16 @@
 ---
-import Nav from './Nav.astro';
-
 import Logo from './Logo.astro';
+import { type Locale } from '../utils/i18n';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
 ---
 
 <header>
-  <Logo />
-  <Nav />
+  <Logo locale={locale} />
 </header>
 
 <style lang="scss">

@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostPreview from '../components/Blog/PostPreview.astro';
+import Pagination from '../components/Blog/Pagination.astro';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { getLocalizedPath, type Locale } from '../utils/i18n';
+import type { Page } from 'astro';
+import type { BlogEntry } from './blog-pagination';
+
+interface Props {
+  locale: Locale;
+  page: Page<BlogEntry>;
+  tagName: string;
+}
+
+const { locale, page, tagName } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+const tagConfig = site.blog.taggedPosts;
+
+function applyTemplate(template: string, value: string) {
+  return template.replace('{tag}', value);
+}
+
+const pageTitle = applyTemplate(tagConfig.titleTemplate, tagName);
+const pageDescription = applyTemplate(tagConfig.descriptionTemplate, tagName);
+const posts = page.data;
+---
+
+<BaseLayout locale={locale} title={pageTitle} description={pageDescription} image={site.image}>
+  <h1>{pageTitle}</h1>
+  {posts.map((post) => (
+    <PostPreview post={post} headingLevel="h2" locale={locale} />
+  ))}
+  <Pagination page={page} locale={locale} />
+</BaseLayout>
+

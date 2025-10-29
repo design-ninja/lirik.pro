@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Pagination from '../components/Blog/Pagination.astro';
+import ProjectPreview from '../components/Portfolio/ProjectPreview.astro';
+import { getSiteLocaleConfig } from '../data/site-config';
+import { type Locale } from '../utils/i18n';
+import type { Page } from 'astro';
+import type { ProjectEntry } from './projects-pagination';
+
+interface Props {
+  locale: Locale;
+  page: Page<ProjectEntry>;
+}
+
+const { locale, page } = Astro.props as Props;
+const site = getSiteLocaleConfig(locale);
+const projects = page.data;
+const listing = site.projects.listing;
+---
+
+<BaseLayout locale={locale} title={listing.title} description={listing.description} image={site.image}>
+  <h1>{listing.title}</h1>
+  <div class="ProjectsPage__Grid">
+    {projects.map((project) => (
+      <ProjectPreview project={project} headingLevel="h2" locale={locale} />
+    ))}
+  </div>
+  <Pagination page={page} locale={locale} />
+</BaseLayout>
+
+<style lang="scss">
+  .ProjectsPage__Grid {
+    display: grid;
+    gap: var(--space-40);
+  }
+</style>
+
