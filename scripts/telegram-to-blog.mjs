@@ -126,6 +126,8 @@ async function deletePostBySlug(slug, state) {
 
 function buildMdx({ title, body, tags, publishDate }) {
   const safeBody = body.replace(/^\s*(import|export)[^\n]*\n/gm, '');
+  // Escape potential raw HTML so MDX doesn't fail on unclosed/invalid tags
+  const escapedBody = safeBody.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const tagsYaml = tags.length ? tags.map((t) => `  - ${t}`).join('\n') : '';
   return `---
 title: '${escapeYaml(title)}'
@@ -134,7 +136,7 @@ ${tags.length ? `tags:\n${tagsYaml}\n` : ''}
 isFeatured: false
 ---
 
-${safeBody}
+${escapedBody}
 `;
 }
 
