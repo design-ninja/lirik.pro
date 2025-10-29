@@ -13,17 +13,5 @@ export default defineConfig({
       prefixDefaultLocale: false
     }
   },
-  integrations: [
-    icon(),
-    mdx(),
-    sitemap({
-      i18n: {
-        defaultLocale: 'ru',
-        locales: {
-          ru: 'https://lirik.pro',
-          en: 'https://lirik.pro/en'
-        }
-      }
-    })
-  ]
+  integrations: [icon(), mdx(), sitemap()]
 });
