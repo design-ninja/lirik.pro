@@ -74,4 +74,11 @@ const projects = defineCollection({
     })
 });
 
-export const collections = { blog, pages, projects };
+const components = defineCollection({
+  schema: z.object({
+    id: z.string(),
+    texts: z.record(z.string())
+  })
+});
+
+export const collections = { blog, pages, projects, components };

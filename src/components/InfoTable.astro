@@ -1,18 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+
+const allComponents = await getCollection('components');
+const infoTableData = allComponents.find(item => item.data.id === 'info-table');
+const infoTableTexts = infoTableData?.data.texts || {};
+---
+
 <div class='infotable'>
   <div class='infotable__row'>
-    <span class='infotable__row-label'>Сейчас я здесь</span> <a class='infotable__row-value' href='https://www.google.com/maps/place/Пхукет' target='_blank' rel='noopener' id='location'>—</a>
+    <span class='infotable__row-label'>{infoTableTexts.location_label}</span> <a class='infotable__row-value' href='https://www.google.com/maps/place/Пхукет' target='_blank' rel='noopener' id='location'>—</a>
   </div>
   <div class='infotable__row'>
-    <span class='infotable__row-label'>Слушаю</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='spotify'>—</a>
+    <span class='infotable__row-label'>{infoTableTexts.spotify_label}</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='spotify'>—</a>
   </div>
   <div class='infotable__row'>
-    <span class='infotable__row-label'>Кодю</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='wakatime'>—</a>
+    <span class='infotable__row-label'>{infoTableTexts.wakatime_label}</span> <a class='infotable__row-value' href='#' target='_blank' rel='noopener' id='wakatime'>—</a>
   </div>
   <div class='infotable__row'>
-    <span class='infotable__row-label'>Читаю</span> <a class='infotable__row-value' href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>The Creative Act: A Way of Being by Rick Rubin</a>
+    <span class='infotable__row-label'>{infoTableTexts.book_label}</span> <a class='infotable__row-value' href='https://www.amazon.com/Creative-Act-Way-Being/dp/0593652886' target='_blank' rel='noopener' id='book'>{infoTableTexts.book_value}</a>
   </div>
   <div class='infotable__row'>
-    <span class='infotable__row-label'>Учу</span> <span class='infotable__row-value'><a href='https://www.youtube.com/@letslearnthai' target='_blank' rel='noopener' id='learn'>Тайский язык</a> 🇹🇭</span>
+    <span class='infotable__row-label'>{infoTableTexts.learn_label}</span> <span class='infotable__row-value'><a href='https://www.youtube.com/@letslearnthai' target='_blank' rel='noopener' id='learn'>{infoTableTexts.learn_value}</a></span>
   </div>
 </div>
 
