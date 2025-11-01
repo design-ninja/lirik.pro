@@ -9,12 +9,15 @@ type Props = {
   class?: string;
   headingLevel?: 'h2' | 'h3';
   locale: Locale;
+  index?: number;
 };
 
 const { project, headingLevel = 'h2', locale } = Astro.props as Props;
 const { title, description, cover, path } = project.data;
 const TitleTag = headingLevel;
 const projectPath = getRelativeLocaleUrl(locale, `/projects/${path}/`);
+const loading = 'lazy';
+const sizes = '(max-width: 700px) 100vw, 50vw';
 ---
 
 <a href={projectPath} aria-label={title} class="Project">
@@ -27,7 +30,10 @@ const projectPath = getRelativeLocaleUrl(locale, `/projects/${path}/`);
         height={720}
         formats={['avif', 'webp']}
         fallbackFormat="png"
-        class="Project__Image"
+        class="Project__Picture"
+        sizes={sizes}
+        widths={[480, 720, 960, 1280]}
+        loading={loading}
       />
     )}
   </div>
@@ -72,16 +78,22 @@ const projectPath = getRelativeLocaleUrl(locale, `/projects/${path}/`);
       border-radius: var(--radius-s);
     }
 
-    &__Image {
+    &__Picture {
+      display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      transition: transform 1s ease-in-out;
-      display: block;
-      border-radius: var(--radius-s);
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1s ease-in-out;
+        display: block;
+        border-radius: var(--radius-s);
+      }
     }
 
-    &:hover .Project__Image {
+    &:hover .Project__Picture img {
       transform: scale(1.03);
     }
   }
