@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import criticalCSS from 'astro-critical-css';
+import inline from '@playform/inline';
 
 export default defineConfig({
   site: 'https://lirik.pro',
@@ -16,5 +16,5 @@ export default defineConfig({
       prefixDefaultLocale: false
     }
   },
-  integrations: [mdx(), sitemap(), criticalCSS()]
+  integrations: [mdx(), sitemap(), inline()]
 });

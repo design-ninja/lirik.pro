@@ -30,14 +30,8 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile=false
-      - name: Install Chromium for Puppeteer
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium chromium-sandbox || sudo apt-get install -y chromium-browser
       - run: pnpm build
         env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: false
-          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
           PUBLIC_LOCATION_JSON_URL: ${{ vars.PUBLIC_LOCATION_JSON_URL }}
           PUBLIC_SPOTIFY_JSON_URL: ${{ vars.PUBLIC_SPOTIFY_JSON_URL }}
           PUBLIC_WAKATIME_JSON_URL: ${{ vars.PUBLIC_WAKATIME_JSON_URL }}

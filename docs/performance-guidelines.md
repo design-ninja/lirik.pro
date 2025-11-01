@@ -2,7 +2,7 @@
 
 ## Tooling
 
-- `astro-critical-css` inlines above-the-fold styles during build. Keep global styles lean and avoid blocking imports in `_global.scss`.
+- `@playform/inline` inlines above-the-fold styles during build. Keep global styles lean and avoid blocking imports in `_global.scss`.
 - `ClientRouter` remains enabled for transition animations. Run `pnpm astro check` after changing transitions.
 - Use `@fontsource-variable/onest/wght.css` only. Subset files are not published and break the dev server.
 
