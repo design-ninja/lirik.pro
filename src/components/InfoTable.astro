@@ -217,15 +217,29 @@ const infoTableTexts = infoTableData?.data.texts || {};
     applyFromCache();
     const run = () => initInfoTable();
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(run);
+      requestIdleCallback(run, { timeout: 5000 });
     } else {
-      setTimeout(run, 150);
+      setTimeout(run, 2000);
     }
   }
 
-  scheduleInfoTableInit();
+  if (document.readyState === 'complete') {
+    scheduleInfoTableInit();
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(scheduleInfoTableInit, 1000);
+    });
+  }
 
-  document.addEventListener('astro:page-load', scheduleInfoTableInit);
+  document.addEventListener('astro:page-load', () => {
+    if (document.readyState === 'complete') {
+      setTimeout(scheduleInfoTableInit, 1000);
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(scheduleInfoTableInit, 1000);
+      }, { once: true });
+    }
+  });
 </script>
 
 
