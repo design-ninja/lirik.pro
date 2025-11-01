@@ -23,7 +23,11 @@ const absoluteImage = resolvedImage?.src ? new URL(resolvedImage.src, Astro.site
 const canonical = canonicalHref ?? new URL(Astro.request.url, Astro.site ?? Astro.request.url).toString();
 
 // Generate alternate URLs for all locales
-const currentPath = Astro.url.pathname.replace(/^\/en/, '').replace(/\/$/, '') || '/';
+let currentPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
+// Remove trailing slash except for root path, then add it back for non-root paths
+if (currentPath !== '/' && !currentPath.endsWith('/')) {
+  currentPath = `${currentPath}/`;
+}
 const alternateUrls = SUPPORTED_LOCALES.map((loc) => ({
   locale: loc,
   url: getAbsoluteLocaleUrl(loc, currentPath)
