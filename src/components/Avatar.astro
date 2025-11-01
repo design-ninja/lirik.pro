@@ -7,10 +7,20 @@ interface Props {
   loading?: 'lazy' | 'eager';
 }
 
-const { size = 'medium', loading } = Astro.props as Props;
+const { size = 'medium', loading = 'lazy' } = Astro.props as Props;
+const fetchpriority = loading === 'eager' ? 'high' : 'auto';
+const decoding = loading === 'eager' ? 'sync' : 'async';
 ---
 
-<Image src={avatarImage} alt="Kirill Isachenko" class={`avatar avatar--${size}`} loading={loading} />
+<Image
+  src={avatarImage}
+  alt="Kirill Isachenko"
+  class={`avatar avatar--${size}`}
+  loading={loading}
+  format="webp"
+  fetchpriority={fetchpriority}
+  decoding={decoding}
+/>
 
 <style lang="scss">
   .avatar {

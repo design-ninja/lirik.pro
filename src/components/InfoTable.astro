@@ -11,7 +11,7 @@ const [infoTableData] = await getCollection('components', (entry) => entry.data.
 const infoTableTexts = infoTableData?.data.texts || {};
 ---
 
-<div class="InfoTable">
+<div class="InfoTable" id="info-table" data-loading="true">
   <div class="InfoTable__Row">
     <span class="InfoTable__RowLabel">{infoTableTexts.location_label}</span> <a class="InfoTable__RowValue" href='#' target='_blank' rel='noopener' id='location'>-</a>
   </div>
@@ -58,12 +58,20 @@ const infoTableTexts = infoTableData?.data.texts || {};
 
       &Value {
         width: fit-content;
+        min-height: var(--size-24);
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
       }
     }
   }
+
 </style>
 
 <script>
+  const INFO_TABLE_ROOT_ID = 'info-table';
+
   type InfoCache = {
     location?: { text: string; href: string };
     spotify?: { title: string; url: string };
@@ -74,6 +82,16 @@ const infoTableTexts = infoTableData?.data.texts || {};
     __infoTableCache?: InfoCache;
     __infoTableInitPromise?: Promise<void>;
   };
+
+  function getRoot() {
+    return document.getElementById(INFO_TABLE_ROOT_ID);
+  }
+
+  function setLoadingState(isLoading: boolean) {
+    const root = getRoot();
+    if (!root) return;
+    root.dataset.loading = isLoading ? 'true' : 'false';
+  }
 
   function setAnchor(id: string, text: string, href?: string) {
     const el = document.getElementById(id) as HTMLAnchorElement | null;
@@ -88,6 +106,14 @@ const infoTableTexts = infoTableData?.data.texts || {};
     if (cache.location) setAnchor('location', cache.location.text, cache.location.href);
     if (cache.spotify) setAnchor('spotify', cache.spotify.title, cache.spotify.url);
     if (cache.wakatime) setAnchor('wakatime', cache.wakatime.text, cache.wakatime.href);
+    const hasData = Boolean(
+      (cache.location && cache.location.text && cache.location.text !== '-') ||
+      (cache.spotify && cache.spotify.title && cache.spotify.title !== '-') ||
+      (cache.wakatime && cache.wakatime.text && cache.wakatime.text !== '-')
+    );
+    if (hasData) {
+      setLoadingState(false);
+    }
   }
 
   function updateCache(partial: Partial<InfoCache>) {
@@ -172,7 +198,11 @@ const infoTableTexts = infoTableData?.data.texts || {};
   async function initOnce() {
     if (!globalScope.__infoTableInitPromise) {
       globalScope.__infoTableInitPromise = (async () => {
-        await Promise.all([fetchLocation(), fetchSpotify(), fetchWakatime()]);
+        try {
+          await Promise.all([fetchLocation(), fetchSpotify(), fetchWakatime()]);
+        } finally {
+          setLoadingState(false);
+        }
       })();
     }
     await globalScope.__infoTableInitPromise;
@@ -180,16 +210,22 @@ const infoTableTexts = infoTableData?.data.texts || {};
 
   function initInfoTable() {
     applyFromCache();
-    if (!globalScope.__infoTableInitPromise) {
-      void initOnce().then(applyFromCache);
+    void initOnce().then(applyFromCache);
+  }
+
+  function scheduleInfoTableInit() {
+    applyFromCache();
+    const run = () => initInfoTable();
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(run);
+    } else {
+      setTimeout(run, 150);
     }
   }
 
-  // Run on first page load
-  initInfoTable();
+  scheduleInfoTableInit();
 
-  // Re-apply from cache on SPA navigations (no extra network)
-  document.addEventListener('astro:page-load', initInfoTable);
+  document.addEventListener('astro:page-load', scheduleInfoTableInit);
 </script>
 
 

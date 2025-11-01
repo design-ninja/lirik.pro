@@ -3,6 +3,8 @@ import { getSiteLocaleConfig } from '../data/site-config';
 import { getOgLocale, SUPPORTED_LOCALES, type Locale } from '../utils/i18n';
 import { getAbsoluteLocaleUrl } from 'astro:i18n';
 import '../styles/index.css';
+import onestCyrillicUrl from '@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2?url';
+import onestLatinUrl from '@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url';
 
 export type Props = {
   locale: Locale;
@@ -32,10 +34,28 @@ const alternateUrls = SUPPORTED_LOCALES.map((loc) => ({
   locale: loc,
   url: getAbsoluteLocaleUrl(loc, currentPath)
 }));
+const criticalStyles = `
+  :root { color-scheme: light dark; }
+  body { margin: 0; font-family: 'Onest Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--color-bg-base, oklch(0.975 0.0053 106.5)); color: var(--color-text-primary, oklch(0.2161 0.0061 56.04)); font-size: 16px; }
+  main { display: grid; gap: 2.5rem; margin: auto; padding: 1rem; max-width: 1024px; }
+  section { padding: 1.5rem 0; }
+  .Intro__Header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+  .Intro__Content { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center; gap: 2.5rem; }
+  .Intro__Name { font-size: 1.25rem; font-weight: 500; }
+  .Intro__AboutMain { font-size: 1.125rem; line-height: 1.4; }
+  .InfoTable { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.25rem; border-radius: var(--radius-m, 16px); border: 1px solid var(--color-border-primary, oklch(0.9232 0.0026 48.72)); background: var(--color-bg-raised, oklch(0.9515 0.0067 97.35)); }
+  .InfoTable__Row { display: flex; flex-direction: column; gap: 0.125rem; font-family: monospace; font-size: 0.875rem; border-bottom: 1px solid var(--color-border-primary, oklch(0.9232 0.0026 48.72)); padding-bottom: 0.5rem; }
+  .InfoTable__Row:last-child { border-bottom: none; padding-bottom: 0; }
+  .InfoTable__RowLabel { color: var(--color-text-secondary, oklch(0.5534 0.0116 58.07)); }
+  .InfoTable__RowValue { min-height: 1.5rem; display: inline-flex; align-items: center; }
+`;
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preload" as="font" type="font/woff2" href={onestLatinUrl} crossorigin />
+<link rel="preload" as="font" type="font/woff2" href={onestCyrillicUrl} crossorigin />
+<style is:inline set:html={criticalStyles}></style>
 <title>{metaTitle}</title>
 <meta name="description" content={metaDescription} />
 <link rel="canonical" href={canonical} />

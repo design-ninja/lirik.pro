@@ -21,7 +21,9 @@ const title = site.portfolio.title;
   <SectionTitle title={title || 'Портфолио'} />
 
   <div class="Portfolio__Grid">
-    {featuredProjects.map((project) => <ProjectPreview project={project} headingLevel="h3" locale={locale} />)}
+    {featuredProjects.map((project, index) => (
+      <ProjectPreview project={project} headingLevel="h3" locale={locale} index={index} />
+    ))}
   </div>
 </section>
 

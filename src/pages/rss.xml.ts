@@ -36,7 +36,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: defaultLocale.title,
     description: defaultLocale.description,
-    site: context.site,
+    site: context.site ?? 'https://lirik.pro',
     items
   });
 }
