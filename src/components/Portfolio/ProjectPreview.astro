@@ -12,11 +12,13 @@ type Props = {
   index?: number;
 };
 
-const { project, headingLevel = 'h2', locale } = Astro.props as Props;
+const { project, headingLevel = 'h2', locale, index } = Astro.props as Props;
 const { title, description, cover, path } = project.data;
 const TitleTag = headingLevel;
 const projectPath = getRelativeLocaleUrl(locale, `/projects/${path}/`);
-const loading = 'lazy';
+const isTopProject = index !== undefined && index < 2;
+const loading = isTopProject ? 'eager' : 'lazy';
+const fetchpriority = isTopProject ? 'high' : 'auto';
 const sizes = '(max-width: 700px) 100vw, 50vw';
 ---
 
@@ -34,6 +36,7 @@ const sizes = '(max-width: 700px) 100vw, 50vw';
         sizes={sizes}
         widths={[480, 720, 960, 1280]}
         loading={loading}
+        fetchpriority={fetchpriority}
       />
     )}
   </div>
