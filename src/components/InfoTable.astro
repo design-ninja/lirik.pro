@@ -129,7 +129,10 @@ const infoTableTexts = infoTableData?.data.texts || {};
     }
     try {
       const url = RAW_URL + (RAW_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
-      const res = await fetch(url, { cache: 'no-store' });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(url, { cache: 'no-store', signal: controller.signal });
+      clearTimeout(timeoutId);
       if (!res.ok) throw new Error('bad status');
       const data = await res.json();
       const value = [data.city, data.country].filter(Boolean).join(', ');
@@ -152,7 +155,10 @@ const infoTableTexts = infoTableData?.data.texts || {};
     }
     try {
       const url = SPOTIFY_URL + (SPOTIFY_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
-      const res = await fetch(url, { cache: 'no-store' });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(url, { cache: 'no-store', signal: controller.signal });
+      clearTimeout(timeoutId);
       if (!res.ok) throw new Error('bad status');
       const data = await res.json();
       if (data?.url && data?.title) {
@@ -177,7 +183,10 @@ const infoTableTexts = infoTableData?.data.texts || {};
     }
     try {
       const url = WAKATIME_URL + (WAKATIME_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
-      const res = await fetch(url, { cache: 'no-store' });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(url, { cache: 'no-store', signal: controller.signal });
+      clearTimeout(timeoutId);
       if (!res.ok) throw new Error('bad status');
       const data = await res.json();
       if (data?.totalText) {
