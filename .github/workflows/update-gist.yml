@@ -74,11 +74,19 @@ jobs:
 
           # Get Wakatime data
           AUTH_HEADER=$(echo -n "${WAKATIME_API_KEY}:" | base64)
-          WAKATIME_DATA=$(curl -s -H "Authorization: Basic ${AUTH_HEADER}" \
-            "https://wakatime.com/api/v1/users/current/summaries?start=${START_DATE}&end=${END_DATE}")
+          WAKATIME_DATA=$(curl -fsS -H "Authorization: Basic ${AUTH_HEADER}" \
+            -H "Accept: application/json" \
+            "https://wakatime.com/api/v1/users/current/summaries?start=${START_DATE}&end=${END_DATE}" || true)
 
-          TOTAL_SECONDS=$(echo $WAKATIME_DATA | jq -r '.cumulative_total.seconds // 0')
-          TOTAL_TEXT=$(echo $WAKATIME_DATA | jq -r '.cumulative_total.text // "0 mins"')
+          # Validate JSON to avoid jq parse errors
+          if ! echo "${WAKATIME_DATA}" | jq -e . >/dev/null 2>&1; then
+            echo "Invalid Wakatime response (skipping update)."
+            echo "Response sample:"; echo "${WAKATIME_DATA}" | head -c 200
+            exit 0
+          fi
+
+          TOTAL_SECONDS=$(jq -r '.cumulative_total.seconds // 0 | floor' <<<"${WAKATIME_DATA}")
+          TOTAL_TEXT=$(jq -r '.cumulative_total.text // "0 mins"' <<<"${WAKATIME_DATA}")
 
           # Create JSON
           WAKATIME_JSON=$(jq -n \
