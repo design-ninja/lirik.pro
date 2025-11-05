@@ -3,8 +3,7 @@ import { getSiteLocaleConfig } from '../data/site-config';
 import { getOgLocale, SUPPORTED_LOCALES, type Locale } from '../utils/i18n';
 import { getAbsoluteLocaleUrl } from 'astro:i18n';
 import '../styles/index.css';
-import onestCyrillicUrl from '@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2?url';
-import onestLatinUrl from '@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url';
+import { Font } from 'astro:assets';
 
 export type Props = {
   locale: Locale;
@@ -36,7 +35,7 @@ const alternateUrls = SUPPORTED_LOCALES.map((loc) => ({
 }));
 const criticalStyles = `
   :root { color-scheme: light dark; }
-  body { margin: 0; font-family: 'Onest Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--color-bg-base, oklch(0.975 0.0053 106.5)); color: var(--color-text-primary, oklch(0.2161 0.0061 56.04)); font-size: 16px; }
+  body { margin: 0; font-family: var(--font-family-body); background: var(--color-bg-base, oklch(0.975 0.0053 106.5)); color: var(--color-text-primary, oklch(0.2161 0.0061 56.04)); font-size: 16px; }
   main { display: grid; gap: 2.5rem; margin: auto; padding: 1rem; max-width: 1024px; }
   section { padding: 1.5rem 0; }
   .Intro__Header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
@@ -53,8 +52,14 @@ const criticalStyles = `
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="preload" as="font" type="font/woff2" href={onestLatinUrl} crossorigin />
-<link rel="preload" as="font" type="font/woff2" href={onestCyrillicUrl} crossorigin />
+<Font
+  cssVariable="--font-onest"
+  preload={[
+    { subset: 'cyrillic', style: 'normal' },
+    { subset: 'latin', style: 'normal' },
+    { weight: '400' }
+  ]}
+/>
 <link rel="dns-prefetch" href="https://gist.githubusercontent.com" />
 <link rel="dns-prefetch" href="https://i.ytimg.com" />
 <style is:inline set:html={criticalStyles}></style>
