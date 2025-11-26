@@ -29,7 +29,7 @@ Maria asked me to craft a fresh, expressive identity for her designer clothing s
 
 ### Logo and typography
 
-I explored several typographic and graphic directions to capture the brand’s character.
+I explored several typographic and graphic directions to capture the brand's character.
 
 ![Logo variations](../../assets/kott/logos.png)
 
@@ -43,7 +43,7 @@ I prepared mockups to show how the identity works across different materials.
 
 ### Finding references
 
-I studied different visual approaches to collect inspiration and define the brand’s vibe.
+I studied different visual approaches to collect inspiration and define the brand's vibe.
 
 ![Reference moodboard](../../assets/kott/examples.png)
 
