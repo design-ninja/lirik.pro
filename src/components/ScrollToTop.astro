@@ -1,0 +1,98 @@
+---
+---
+
+<button class="ScrollToTop" aria-label="Scroll to top" type="button">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 16V4M10 4L4 10M10 4L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<style lang="scss">
+  .ScrollToTop {
+    position: fixed;
+    bottom: var(--space-24);
+    right: var(--space-24);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    background-color: var(--color-bg-black-overlay);
+    backdrop-filter: blur(8px);
+    color: var(--color-icon-static-white);
+    border: none;
+    border-radius: var(--radius-round);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease,
+      transform 0.3s ease;
+
+    &.ScrollToTop_visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+</style>
+
+<script>
+  let scrollHandler: (() => void) | null = null;
+  let clickHandler: (() => void) | null = null;
+  let currentButton: Element | null = null;
+
+  function cleanup() {
+    if (scrollHandler) {
+      window.removeEventListener('scroll', scrollHandler);
+      scrollHandler = null;
+    }
+    if (clickHandler && currentButton) {
+      currentButton.removeEventListener('click', clickHandler);
+      clickHandler = null;
+      currentButton = null;
+    }
+  }
+
+  function initScrollToTop() {
+    cleanup();
+
+    const button = document.querySelector('.ScrollToTop');
+    if (!button) return;
+
+    currentButton = button;
+    const threshold = window.innerHeight;
+
+    scrollHandler = function toggleVisibility() {
+      if (window.scrollY > threshold) {
+        button.classList.add('ScrollToTop_visible');
+      } else {
+        button.classList.remove('ScrollToTop_visible');
+      }
+    };
+
+    clickHandler = function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
+
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    button.addEventListener('click', clickHandler);
+
+    scrollHandler();
+  }
+
+  document.addEventListener('astro:page-load', initScrollToTop);
+  document.addEventListener('astro:before-swap', cleanup);
+</script>
+

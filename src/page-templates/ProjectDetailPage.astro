@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectPreview from '../components/Portfolio/ProjectPreview.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
 import { getSiteLocaleConfig } from '../data/site-config';
 import { formatListWithConjunction, type Locale } from '../utils/i18n';
 import type { ProjectEntry } from './projects-pagination';
@@ -52,6 +53,7 @@ const formattedTags = tags.length ? formatListWithConjunction(locale, tags) : nu
       </section>
     )}
   </article>
+  <ScrollToTop />
 </BaseLayout>
 
 <style lang="scss">

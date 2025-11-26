@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FormattedDate from '../components/Blog/FormattedDate.astro';
 import PostPreview from '../components/Blog/PostPreview.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
 import { getFirstParagraphFromMarkdown } from '../utils/markdown';
 import { slugify } from '../utils/common-utils';
 import { formatUpdatedLabel, type Locale } from '../utils/i18n';
@@ -61,6 +62,7 @@ const relatedHeading = site.blog.relatedHeading;
       </section>
     )}
   </article>
+  <ScrollToTop />
 </BaseLayout>
 
 <style lang="scss">
