@@ -33,46 +33,66 @@
       visibility 0.3s ease,
       transform 0.3s ease;
 
-    &:hover {
-      opacity: 0.9;
-    }
-
     &.ScrollToTop_visible {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 </style>
 
 <script>
+  let scrollHandler: (() => void) | null = null;
+  let clickHandler: (() => void) | null = null;
+  let currentButton: Element | null = null;
+
+  function cleanup() {
+    if (scrollHandler) {
+      window.removeEventListener('scroll', scrollHandler);
+      scrollHandler = null;
+    }
+    if (clickHandler && currentButton) {
+      currentButton.removeEventListener('click', clickHandler);
+      clickHandler = null;
+      currentButton = null;
+    }
+  }
+
   function initScrollToTop() {
+    cleanup();
+
     const button = document.querySelector('.ScrollToTop');
     if (!button) return;
 
+    currentButton = button;
     const threshold = window.innerHeight;
 
-    function toggleVisibility() {
+    scrollHandler = function toggleVisibility() {
       if (window.scrollY > threshold) {
-        button?.classList.add('ScrollToTop_visible');
+        button.classList.add('ScrollToTop_visible');
       } else {
-        button?.classList.remove('ScrollToTop_visible');
+        button.classList.remove('ScrollToTop_visible');
       }
-    }
+    };
 
-    function scrollToTop() {
+    clickHandler = function scrollToTop() {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
-    }
+    };
 
-    window.addEventListener('scroll', toggleVisibility, { passive: true });
-    button.addEventListener('click', scrollToTop);
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    button.addEventListener('click', clickHandler);
 
-    toggleVisibility();
+    scrollHandler();
   }
 
   document.addEventListener('astro:page-load', initScrollToTop);
+  document.addEventListener('astro:before-swap', cleanup);
 </script>
 
