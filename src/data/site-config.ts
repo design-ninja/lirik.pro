@@ -169,6 +169,20 @@ const siteConfig: SiteConfig = {
                 href: 'https://apps.apple.com/ru/app/oink-raise-a-cute-pig/id6739273380?l=en-GB'
               }
             ]
+          },
+          {
+            title: 'Thai TM30 Helper',
+            description: 'Расширение для Chrome для автозаполнения иммиграционных форм TM30 в Таиланде',
+            links: [
+              {
+                text: 'Chrome Web Store',
+                href: 'https://chromewebstore.google.com/detail/thai-tm30-helper/dodmpjhindfijnojfiikocaklabohlac'
+              },
+              {
+                text: 'GitHub',
+                href: 'https://github.com/design-ninja/thai-tm30-helper'
+              }
+            ]
           }
         ]
       }
@@ -258,6 +272,20 @@ const siteConfig: SiteConfig = {
               {
                 text: 'App Store',
                 href: 'https://apps.apple.com/ru/app/oink-raise-a-cute-pig/id6739273380?l=en-GB'
+              }
+            ]
+          },
+          {
+            title: 'Thai TM30 Helper',
+            description: 'Chrome extension for auto-filling TM30 immigration forms in Thailand.',
+            links: [
+              {
+                text: 'Chrome Web Store',
+                href: 'https://chromewebstore.google.com/detail/thai-tm30-helper/dodmpjhindfijnojfiikocaklabohlac'
+              },
+              {
+                text: 'GitHub',
+                href: 'https://github.com/design-ninja/thai-tm30-helper'
               }
             ]
           }
